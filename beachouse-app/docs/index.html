@@ -66,14 +66,14 @@ p{margin:0}
 .chip{padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;white-space:nowrap}
 .chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:rgba(11,11,11,.96);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
-nav.tabs .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr)}
-nav.tabs button{padding:10px 0 12px;display:grid;justify-items:center;gap:4px;font-size:9.5px;letter-spacing:.02em;text-transform:uppercase;color:var(--muted)}
+nav.tabs .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav.tabs button{padding:10px 0 12px;display:grid;justify-items:center;gap:4px;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 nav.tabs button[aria-current="page"]{color:var(--fg)}
 nav.tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5}
 .scanbtn{display:grid;place-items:center;gap:6px;aspect-ratio:2.4/1;max-width:100%;border:1px dashed var(--line);border-radius:14px;background:var(--surface);text-align:center}
 .scanbtn svg{width:30px;height:30px;stroke:var(--fg);fill:none;stroke-width:1.4}
 .sets{display:grid;gap:6px}
-.set{display:grid;grid-template-columns:28px 1fr 1fr 36px;gap:8px;align-items:center}
+.set{display:grid;grid-template-columns:24px 1fr 1fr 44px 28px;gap:8px;align-items:center}
 .set input{width:100%;min-width:0;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--fg);font:inherit;font-variant-numeric:tabular-nums;text-align:center}
 .set .n{color:var(--muted);font-size:13px;text-align:center}
 .set button{height:36px;border-radius:10px;border:1px solid var(--line);color:var(--muted)}
@@ -140,6 +140,13 @@ nav.tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1
 .price small{font-size:13px;color:var(--muted);font-weight:400}
 ul.ticks{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:13px;color:var(--muted)}
 ul.ticks li::before{content:"—  ";color:var(--line)}
+.restbar{position:fixed;left:50%;transform:translateX(-50%);top:calc(70px + env(safe-area-inset-top,0px));z-index:45;background:var(--fg);color:var(--bg);border-radius:999px;padding:8px 8px 8px 18px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 30px rgba(0,0,0,.5);font-variant-numeric:tabular-nums}
+.restbar b{font-size:20px;font-weight:600;min-width:52px}
+.restbar button{border-radius:999px;padding:8px 12px;background:rgba(0,0,0,.08);font-size:13px;font-weight:600;color:var(--bg)}
+.set.done input{border-color:var(--good)}
+.tick{height:36px;border-radius:10px;border:1px solid var(--line);color:var(--muted);font-size:16px}
+.tick[aria-pressed="true"]{background:var(--good);border-color:var(--good);color:#0b0b0b}
+.ib{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;border:1px solid var(--line);color:var(--muted);font-size:11px;font-style:italic;font-family:Georgia,serif;margin-left:6px;vertical-align:middle;line-height:1;cursor:pointer}
 .badge{font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--fg);color:var(--bg);font-weight:600}
 </style>
 <script>
@@ -153,7 +160,7 @@ const ICONS={
  club:'<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg>',
  scan:'<svg viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/></svg>'
 };
-const TABS=[['home','Home'],['train','Train'],['bath','Recovery'],['progress','Progress'],['medical','Medical'],['club','Club']];
+const TABS=[['home','Today'],['train','Train'],['bath','Recover'],['medical','Health'],['club','Club']];
 
 // Starter machine list — Beachouse will name its own machines (e.g. "Leg Press 1") once Marc sends the list.
 const MACHINES=[
@@ -250,6 +257,7 @@ function weatherCard(){return `<section class="card" style="grid-template-column
   <div class="stack" style="gap:4px;min-width:0"><div class="row between"><b style="font-size:20px;font-weight:500">${WX.t}° · ${WXT[WX.code]||'Bondi'}</b><span class="muted" style="font-size:12px;white-space:nowrap">H ${WX.max}° L ${WX.min}°</span></div>
   <span class="muted" style="font-size:12px">Bondi Beach · Water ${Math.round(WX.sea)}° · Waves ${Number(WX.wave).toFixed(1)}m · Wind ${WX.wind} km/h · UV ${WX.uv}</span></div></section>`;}
 
+function ib(txt){return `<button class="ib" aria-label="More info" data-info="${esc(txt)}">i</button>`;}
 // ---------- state ----------
 const KEY='bhc-app-v3';
 function dayISO(off){const d=new Date();d.setDate(d.getDate()-off);return d.toISOString().slice(0,10);}
@@ -268,7 +276,7 @@ function seed(){
   logs.push({m:'chest-press',date:dayISO(1),sets:[[60,10],[60,10],[60,9]],fb:'easy'});
   logs.push({m:'shoulder-press',date:dayISO(1),sets:[[42.5,8],[42.5,7],[42.5,6]],fb:'hard'});
   const rec=[{r:'sauna',date:dayISO(0)},{r:'plunge',date:dayISO(0)},{r:'sauna',date:dayISO(2)},{r:'plunge',date:dayISO(2)},{r:'bath38',date:dayISO(5)},{r:'sauna',date:dayISO(9)},{r:'plunge',date:dayISO(9)}];
-  return {dexa:[{date:dayISO(110),v:{bf:22.4,lean:63.1,fat:18.9,vat:640,bone:0.8}},{date:dayISO(18),v:{bf:20.1,lean:64.6,fat:16.8,vat:560,bone:0.9}}],bloods:[{date:dayISO(120),v:{hb:148,ferritin:120,iron:18,b12:310,vitd:58,glucose:5.1,hba1c:5.3,chol:5.4,ldl:3.2,hdl:1.2,trig:1.4,alt:31,egfr:96,crp:1.2,tsh:1.8,testo:16}},{date:dayISO(20),v:{hb:151,ferritin:135,iron:20,b12:340,vitd:44,glucose:4.9,hba1c:5.2,chol:5.6,ldl:3.3,hdl:1.3,trig:1.1,alt:28,egfr:98,crp:0.9,tsh:1.7,testo:18}}],sex:'m',name:'Matt',goal:'build',plan:'start',planDay:0,logs,rec,example:true,bw:[[dayISO(35),88.2],[dayISO(28),87.6],[dayISO(21),87.1],[dayISO(14),86.4],[dayISO(7),86.0],[dayISO(0),85.5]]};
+  return {onboarded:true,wear:null,dexa:[{date:dayISO(110),v:{bf:22.4,lean:63.1,fat:18.9,vat:640,bone:0.8}},{date:dayISO(18),v:{bf:20.1,lean:64.6,fat:16.8,vat:560,bone:0.9,la:3.5,ra:3.8,ll:10.9,rl:11.6,tr:31.2}}],bloods:[{date:dayISO(120),v:{hb:148,ferritin:120,iron:18,b12:310,vitd:58,glucose:5.1,hba1c:5.3,chol:5.4,ldl:3.2,hdl:1.2,trig:1.4,alt:31,egfr:96,crp:1.2,tsh:1.8,testo:16}},{date:dayISO(20),v:{hb:151,ferritin:135,iron:20,b12:340,vitd:44,glucose:4.9,hba1c:5.2,chol:5.6,ldl:3.3,hdl:1.3,trig:1.1,alt:28,egfr:98,crp:0.9,tsh:1.7,testo:18}}],sex:'m',name:'Matt',goal:'build',plan:'start',planDay:0,logs,rec,example:true,bw:[[dayISO(35),88.2],[dayISO(28),87.6],[dayISO(21),87.1],[dayISO(14),86.4],[dayISO(7),86.0],[dayISO(0),85.5]]};
 }
 let S=load();
 let tab=(location.hash||'').replace('#','')||'home';const deep=(location.hash.match(/m=([a-z0-9-]+)/)||[])[1];if(deep)tab='home';
@@ -345,7 +353,7 @@ function weekTotals(p){const ws=periodStart(p||'week');
   S.rec.filter(r=>r.date>=ws).forEach(r=>{const R=RITUALS.find(x=>x.id===r.r);const m=r.mins||R.mins;if(R.kind==='cold'){cold+=m;coldN++;}else{heat+=m;heatN++;}});
   return {workouts,heat,cold,heatN,coldN};}
 function goalRow(label,val,goal,unit,note,col){const p=Math.min(100,Math.round(val/goal*100));col=col||'var(--good)';
-  return `<div class="stack" style="gap:6px"><div class="row between"><span>${label}</span><span class="muted" style="font-variant-numeric:tabular-nums">${val}/${goal}${unit}${p>=100?' · done':''}</span></div><div class="bar" style="height:8px"><i style="width:${p}%;background:${col};opacity:${p>=100?1:.85}"></i></div>${note?`<span class="muted" style="font-size:12px">${note}</span>`:''}</div>`;}
+  return `<div class="stack" style="gap:6px"><div class="row between"><span>${label}${note?ib(note):''}</span><span class="muted" style="font-variant-numeric:tabular-nums">${val}/${goal}${unit}${p>=100?' · done':''}</span></div><div class="bar" style="height:8px"><i style="width:${p}%;background:${col};opacity:${p>=100?1:.85}"></i></div></div>`;}
 
 // ---------- Training + recovery balance ----------
 const FOCUS={balanced:{label:'Balanced',w:1,h:1,c:1},perform:{label:'Train harder',w:1,h:1.2,c:1.2},recover:{label:'Recovery first',w:0.67,h:1.4,c:1.25}};
@@ -359,7 +367,7 @@ function swapFor(id){const m=M(id);if(!blocked(id))return id;
 function loadRatio(){const ws=weekStart();const wk=S.logs.filter(l=>l.date>=ws&&!M(l.m).cardio).reduce((a,l)=>a+vol(l),0);
   const past=S.logs.filter(l=>l.date<ws&&l.date>=dayISO(35)&&!M(l.m).cardio).reduce((a,l)=>a+vol(l),0)/4;return past?wk/past:0;}
 
-function goalTargets(p){const sc=PERIODS[p].scale;const days=S.days||3;const f=FOCUS[S.focus||'balanced'];const hard=(loadRatio()>1.25?1.15:1)*(hasTip('recover')?1.2:1);
+function goalTargets(p){const sc=PERIODS[p].scale;const days=S.days||3;const f=FOCUS[S.focus||'balanced'];const rd=readiness();const hard=(loadRatio()>1.25?1.15:1)*(hasTip('recover')?1.2:1)*(rd!=null&&rd<34?1.2:1);
   return {workouts:p==='day'?1:Math.max(1,Math.round(days*sc*f.w)),heat:Math.round(HEAT_GOAL*sc*f.h*hard),cold:Math.max(2,Math.round(COLD_GOAL*sc*f.c*hard))};}
 function coachNote(){const r=loadRatio();const f=S.focus||'balanced';const inj=(S.injuries||[]).map(k=>INJURIES[k].toLowerCase());
   const bits=[];if(r>1.25)bits.push(`You've trained ${Math.round((r-1)*100)}% harder than your usual week, so your recovery goal is higher.`);
@@ -369,9 +377,8 @@ function coachNote(){const r=loadRatio();const f=S.focus||'balanced';const inj=(
 function periodSwitch(){const p=S.period||'week';return `<div class="seg" style="grid-template-columns:repeat(3,1fr)" role="group" aria-label="Goal period">${['day','week','month'].map(k=>`<button data-period="${k}" aria-pressed="${p===k}">${k==='day'?'Daily':k==='week'?'Weekly':'Monthly'}</button>`).join('')}</div>`;}
 function goalsCard(){const p=S.period||'week';const t=weekTotals(p);const g=goalTargets(p);const days=S.days||3;
   const tips={day:['One session today','A sauna round of about 8 minutes','One quick plunge'],week:['','Sauna, steam or the 38° bath. About 3–4 sessions.','About 4 plunges of 2–3 minutes.'],month:['','About 15 heat sessions across the month.','About 16 short plunges across the month.']}[p];
-  return `<section class="card"><div class="row between"><h2>${PERIODS[p].label}</h2><button class="muted" style="font-size:12px" data-act="days">${days} days a week ›</button></div>
+  return `<section class="card"><div class="row between"><h2>${PERIODS[p].label}${(()=>{const n=coachNote().replace(/<[^>]+>/g,'');return n?ib(n):''})()}</h2><button class="muted" style="font-size:12px" data-act="days">${days} days a week ›</button></div>
    ${periodSwitch()}
-   ${coachNote()}
    ${goalRow('Workouts',t.workouts,g.workouts,'',tips[0])}
    ${hasTip('cardio')?goalRow('Cardio (from your results)',p==='week'?cardioWeek():Math.round(cardioWeek()*PERIODS[p].scale),Math.round(150*PERIODS[p].scale),' min','Treadmill walk, bike or rower. Each cardio log counts 20 min.','var(--fg)'):''}
    ${goalRow('Heat at 38°',t.heat,g.heat,' min',tips[1],'var(--heat)')}
@@ -397,37 +404,27 @@ function lineChart(points){
 }
 
 // ---------- views ----------
-function sessionItems(){const plan=PLANS.find(p=>p.id===S.plan);const d=plan.days[S.planDay%plan.days.length];const items=[...new Set(d.items.map(swapFor).filter(Boolean))];return {title:plan.name,day:d.name,items};}
+function sessionItems(){const plan=PLANS.find(p=>p.id===S.plan);const d=plan.days[S.planDay%plan.days.length];const items=[...new Set(d.items.concat(planAdds()).map(swapFor).filter(Boolean))].slice(0,8);return {title:plan.name,day:d.name,items};}
 function recBar(p){return `<div class="bar"><i class="${p<50?'low':p<85?'mid':''}" style="width:${p}%"></i></div>`;}
 
 function viewHome(){
-  const ses=sessionItems();const rec=recovery();
-  const sessions=new Set(S.logs.filter(l=>l.date>=dayISO(29)).map(l=>l.date)).size;
-  const recov=S.rec.filter(r=>r.date>=dayISO(29)).length;
+  const ses=sessionItems();
   return `
   <section class="stack">
     <p class="tag">${new Date().toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long'})}</p>
     <h1>${S.name?'Hi, '+esc(S.name):'Welcome to Beachouse'}</h1>
-    ${!S.name?'<button class="btn ghost small" style="justify-self:start" id="avatarBtn2" data-act="profile">Add your name and goal</button>':''}
-    ${S.example?'<p class="note">Showing example history so you can see how tracking works. Clear it in your profile.</p>':''}
+    ${S.example?'<p class="note">Showing example history so you can see how it works. Clear it in your profile.</p>':''}
   </section>
-  <button class="item" style="border:1px solid var(--line);border-radius:14px" data-act="coach"><span><span class="ai">Ask Coach</span><br><b>Questions about training or recovery?</b></span><span class="chev">›</span></button>
-  <button class="scanbtn" data-act="scan">${ICONS.scan}<span><b>Scan a machine</b><br><span class="muted" style="font-size:13px">Scan the QR code on any machine to see today's weight and log your sets.</span></span></button>
-  ${goalsCard()}
+  ${pendingCard()}
   <section class="card">
-    <div class="row between"><h2>Today · ${esc(ses.title)} · ${esc(ses.day)}</h2><span class="ai">Auto weights</span></div>
+    <div class="row between"><h2>Today's session${ib('Tap Start session, then open each machine. Tick each set as you finish it and the rest timer starts on its own: '+fmtS(REST[S.goal||'build'])+' for your goal ('+GOALS[S.goal||'build'].label.toLowerCase()+'), plus 30 seconds on big leg lifts.')}</h2><span class="muted" style="font-size:12px">${esc(ses.day)}</span></div>
     <div class="list">${ses.items.map(id=>{const m=M(id);const t=target(id);return `<button class="item" data-machine="${id}"><span><b>${m.name}</b><br><span class="meta">${esc(t.text)}</span></span><span class="chev">›</span></button>`}).join('')}</div>
-    <button class="btn ghost small" data-act="nextday">Mark day done</button>
+    ${S.sess?`<div class="row between" style="background:var(--surface-2);border-radius:12px;padding:10px 14px"><span><span class="ai">Session running</span> <b id="sessclock" style="font-variant-numeric:tabular-nums">${fmtS((Date.now()-S.sess)/1000)}</b></span><button class="btn ghost small" data-act="nextday">Finish</button></div>
+    <button class="btn small" data-act="scan">Scan a machine</button>`:`<div class="row"><button class="btn small" style="flex:1" data-act="startsess">Start session</button><button class="btn ghost small" style="flex:1" data-act="scan">Scan a machine</button></div>`}
   </section>
-  <section class="stack">
-    <div class="row between"><h2>Muscle recovery</h2><span class="muted" style="font-size:12px">38° sessions speed this up</span></div>
-    <div class="rec-grid">${Object.keys(MUSCLES).slice(0,6).map(k=>`<div><span>${MUSCLES[k]} <span class="muted">${rec[k]}%</span></span>${recBar(rec[k])}</div>`).join('')}</div>
-  </section>
-  <section class="stats">
-    <div class="stat"><b>${sessions}</b><span>Sessions 30d</span></div>
-    <div class="stat"><b>${streak()}</b><span>Week streak</span></div>
-    <div class="stat"><b>${recov}</b><span>38° visits 30d</span></div>
-  </section>
+  ${goalsCard()}
+  <div class="row"><button class="item" style="flex:1;border:1px solid var(--line);border-radius:14px" data-act="coach"><span><span class="ai">Ask Coach</span><br><b>Ask anything</b></span></button>${S.wear?'':`<button class="item" style="flex:1;border:1px solid var(--line);border-radius:14px" data-act="addwear"><span><span class="muted" style="font-size:11px;letter-spacing:.08em">WEARABLE</span><br><b>+ Connect</b></span></button>`}</div>
+  ${S.wear?wearCard():''}
   <section class="stack">
     <h2>What's on</h2>
     <div class="list">${EVENTS.map(e=>{const d=new Date();d.setDate(d.getDate()+e.d);return `<div class="item"><div class="event"><span class="date">${d.toLocaleDateString('en-AU',{month:'short'})}<b>${d.getDate()}</b></span><span><b>${esc(e.title)}</b><br><span class="meta">${esc(e.sub)}</span></span></div></div>`}).join('')}</div>
@@ -435,13 +432,13 @@ function viewHome(){
   <section class="stack">
     <div class="row between"><h2>@beachousebondi</h2><a class="muted" style="font-size:12px" href="https://www.instagram.com/beachousebondi/" target="_blank" rel="noopener">Open Instagram ›</a></div>
     <div class="ig">${IG.map(p=>`<a href="${p.h}" target="_blank" rel="noopener" style="padding:0;background:#111" aria-label="${esc(p.a)}"><img src="${p.d}" alt="${esc(p.a)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></a>`).join('')}</div>
-    
   </section>`;
 }
 
 let zone='All',trainView='machines';
 function viewTrain(){
-  const seg=`<div class="seg" role="group" aria-label="Train view"><button data-tv="machines" aria-pressed="${trainView==='machines'}">Machines</button><button data-tv="plans" aria-pressed="${trainView==='plans'}">Plans</button></div>`;
+  const seg=`<div class="seg" style="grid-template-columns:repeat(3,1fr)" role="group" aria-label="Train view"><button data-tv="machines" aria-pressed="${trainView==='machines'}">Machines</button><button data-tv="plans" aria-pressed="${trainView==='plans'}">Plans</button><button data-tv="progress" aria-pressed="${trainView==='progress'}">Progress</button></div>`;
+  if(trainView==='progress')return `<section class="stack"><h1>Train</h1></section>${seg}${viewProgress(true)}`;
   if(trainView==='plans')return `<section class="stack"><h1>Train</h1></section>${seg}
    <section class="card"><h2>Your goal</h2><div class="chips">${Object.entries(GOALS).map(([k,g])=>`<button class="chip" data-goal="${k}" aria-pressed="${S.goal===k}">${g.label}</button>`).join('')}</div><div class="row between"><span>Training days a week</span><button class="btn ghost small" data-act="days">${S.days||3} days</button></div><p class="muted" style="font-size:13px">Sets the rep range: ${GOALS[S.goal].reps[0]}–${GOALS[S.goal].reps[1]} reps, ${GOALS[S.goal].sets} sets.</p></section>
    ${PLANS.map(p=>`<section class="card">
@@ -494,7 +491,7 @@ function rangeBar(mk,v){const [lo,hi]=rng(mk);const max=hi*1.5||1,min=lo>0?lo*0.
 let progView='training';
 function viewHealth(){
   const t=lastTest();const due=nextDue();
-  let out=`<section class="card"><h2>Blood tests</h2><p>Order a blood test, keep your results in one place and compare them every 3 months.</p>
+  let out=`<section class="card"><h2>Blood tests${ib('Order a test, add your results, and compare each test with the last. Ranges are typical lab ranges; your lab report takes priority. Results stay private to you.')}</h2>
    <div class="row" style="flex-wrap:wrap"><button class="btn small" data-act="orderblood">Order a blood test</button><button class="btn ghost small" data-act="addblood">Add my results</button></div>
    ${due?`<p class="muted" style="font-size:13px">Next test due: <b style="color:var(--fg)">${fmtDate(due)}</b>${due<=dayISO(0)?' · due now':''}</p>`:''}</section>`;
   if(!t)return out+`<p class="note">No results yet. Once you add your first test, each marker shows here against the typical range.</p>`;
@@ -507,7 +504,7 @@ function viewHealth(){
    ${groups.map(g=>{const ms=MARKERS.filter(m=>m.grp===g&&t.v[m.id]!=null);if(!ms.length)return '';return `<div class="card"><h3 style="font-size:14px">${g}</h3>${ms.map(mk=>{const v=t.v[mk.id];const p=prevValue(mk.id,t.date);const [lo,hi]=rng(mk);const st=mstatus(mk,v);
      return `<div class="stack" style="gap:6px"><div class="row between"><span>${mk.name}</span><span style="font-variant-numeric:tabular-nums">${v} <span class="muted">${mk.unit}</span>${p!=null?` <span class="muted">${v>p?'↑':v<p?'↓':'→'} ${p}</span>`:''}</span></div>${rangeBar(mk,v)}<span class="muted" style="font-size:11px">Typical ${lo>0?lo+'–':'under '}${hi} ${mk.unit}${st!=='ok'?` · <span class="heat">${st==='low'?'below':'above'} range</span>`:''}</span></div>`}).join('')}</div>`}).join('')}
   </section>
-  <p class="note">This is general information, not medical advice. Ranges vary between labs; the ranges on your lab report take priority. Your results are stored on this phone only.</p>`;
+`;
   return out;
 }
 function orderSheet(){
@@ -550,7 +547,7 @@ Guidelines:
 - If asked about anything unrelated to health, fitness or Beachouse, politely steer back.`;
 function coachContext(){const t=weekTotals('week');const lt=lastTest();const flagged=lt?MARKERS.filter(mk=>lt.v[mk.id]!=null&&mstatus(mk,lt.v[mk.id])!=='ok').map(m=>m.name):[];
   const recent=S.logs.slice().sort((a,b)=>a.date<b.date?1:-1).slice(0,6).map(l=>`${l.date} ${M(l.m).name}: ${l.sets.map(x=>x[0]+'x'+x[1]).join(', ')}${l.fb?' ('+l.fb+')':''}`).join('; ');
-  return `Member context: name ${S.name||'unknown'}; goal ${GOALS[S.goal||'build'].label}; ${S.days||3} training days a week; focus ${FOCUS[S.focus||'balanced'].label}; injuries ${(S.injuries||[]).map(k=>INJURIES[k]).join(', ')||'none'}; this week ${t.workouts} workouts, ${t.heat} min heat, ${t.cold} min cold; recent sets: ${recent||'none'}; blood markers outside range: ${flagged.join(', ')||'none recorded'}; app suggestions from results: ${resultTips().map(x=>x.title).join(', ')||'none'}.`;}
+  return `Member context: name ${S.name||'unknown'}; goal ${GOALS[S.goal||'build'].label}; ${S.days||3} training days a week; focus ${FOCUS[S.focus||'balanced'].label}; injuries ${(S.injuries||[]).map(k=>INJURIES[k]).join(', ')||'none'}; this week ${t.workouts} workouts, ${t.heat} min heat, ${t.cold} min cold; recent sets: ${recent||'none'}; blood markers outside range: ${flagged.join(', ')||'none recorded'}; app suggestions from results: ${resultTips().map(x=>x.title).join(', ')||'none'}; food focus: ${appliedFood().map(k=>FOOD_FOCUS[k].t).join(', ')||'none'}; DEXA suggestions pending: ${dexaSuggestions().map(x=>x.title).join(', ')||'none'}; wearable: ${S.wear?DEVICES[S.wear]+' recovery '+WEAR_DEMO.recovery+'%, HRV '+WEAR_DEMO.hrv+' ms, sleep '+WEAR_DEMO.sleep+' h':'none connected'}.`;}
 async function askCoach(history,onText){
   const sys=COACH_RULES+'\n\n'+coachContext();
   if(location.protocol.startsWith('http')&&!/claude|claudeusercontent/.test(location.host)){
@@ -580,10 +577,10 @@ function coachSheet(){
 
 // ---------- DEXA body composition ----------
 // DEXA is the most accurate common way to measure body fat, muscle and bone. Partner clinic to be confirmed.
-const DEXA_FIELDS=[{id:'bf',name:'Body fat',unit:'%'},{id:'lean',name:'Lean mass',unit:'kg'},{id:'fat',name:'Fat mass',unit:'kg'},{id:'vat',name:'Visceral fat',unit:'g'},{id:'bone',name:'Bone density (T-score)',unit:''}];
+const DEXA_FIELDS=[{id:'bf',name:'Body fat',unit:'%'},{id:'lean',name:'Lean mass',unit:'kg'},{id:'fat',name:'Fat mass',unit:'kg'},{id:'vat',name:'Visceral fat',unit:'g'},{id:'bone',name:'Bone density (T-score)',unit:''},{id:'la',name:'Left arm lean',unit:'kg'},{id:'ra',name:'Right arm lean',unit:'kg'},{id:'ll',name:'Left leg lean',unit:'kg'},{id:'rl',name:'Right leg lean',unit:'kg'},{id:'tr',name:'Trunk lean',unit:'kg'}];
 function viewDexa(){const sc=(S.dexa||[]).slice().sort((a,b)=>a.date<b.date?-1:1);const last=sc[sc.length-1],prev=sc[sc.length-2];
   let due=null;if(last){const d=new Date(last.date+'T00:00');d.setMonth(d.getMonth()+3);due=d.toISOString().slice(0,10);}
-  return `<section class="card"><h2>Body composition (DEXA)</h2><p>The most accurate scan for body fat, muscle and bone. Scan every 3 months to see what your training is really changing.</p>
+  return `<section class="card"><h2>Body composition (DEXA)${ib('DEXA is the most accurate everyday scan for body fat, muscle and bone. Scan every 3 months to see what your training is changing.')}</h2>
    <div class="row" style="flex-wrap:wrap"><button class="btn small" data-act="dexainfo">Book a DEXA scan</button><button class="btn ghost small" data-act="adddexa">Add my scan</button></div>
    ${due?`<p class="muted" style="font-size:13px">Next scan due: <b style="color:var(--fg)">${fmtDate(due)}</b></p>`:''}
    ${last?`<div class="stats" style="grid-template-columns:repeat(3,1fr)">${['bf','lean','fat'].map(k=>{const f=DEXA_FIELDS.find(x=>x.id===k);const v=last.v[k];const p=prev&&prev.v[k];return v!=null?`<div class="stat"><b>${v}${f.unit==='%'?'%':''}</b><span>${f.name}${f.unit&&f.unit!=='%'?' '+f.unit:''}${p!=null?` · ${v>p?'↑':v<p?'↓':'→'}${Math.abs(Math.round((v-p)*10)/10)}`:''}</span></div>`:''}).join('')}</div>
@@ -595,7 +592,7 @@ function addDexaSheet(){const inp='style="background:var(--surface-2);border:1px
    ${DEXA_FIELDS.map(f=>`<div class="set" style="grid-template-columns:1fr 110px"><label for="dx_${f.id}" style="font-size:14px">${f.name} <span class="muted" style="font-size:11px">${f.unit}</span></label><input id="dx_${f.id}" inputmode="decimal" ${inp}></div>`).join('')}
    <button class="btn block" id="dxs">Save scan</button>`,
   s=>s.querySelector('#dxs').onclick=()=>{const v={};DEXA_FIELDS.forEach(f=>{const x=parseFloat(s.querySelector('#dx_'+f.id).value);if(!isNaN(x))v[f.id]=x;});if(!Object.keys(v).length){toast('Add at least one result');return;}
-    S.dexa=(S.dexa||[]).concat([{date:s.querySelector('#dxd').value||dayISO(0),v}]);save();closeSheet();render();toast('Scan saved. Next one in 3 months');});}
+    S.dexa=(S.dexa||[]).concat([{date:s.querySelector('#dxd').value||dayISO(0),v}]);S.dexaDone=[];save();closeSheet();tab='medical';render();toast(dexaSuggestions().length?'Scan saved. We have suggestions for your plan':'Scan saved. Next one in 3 months');});}
 
 
 // ---------- Training suggestions from results ----------
@@ -606,15 +603,160 @@ function resultTips(){const t=lastTest();const tips=[];if(!t)return tips;const s
   if(st('crp')==='high')tips.push({k:'recover',title:'Prioritise recovery',body:'Your inflammation marker is up. We’ve eased your training and raised your heat and cold goal for now. Check with your doctor if it stays high.'});
   if(st('ferritin')==='low'||st('hb')==='low'||st('iron')==='low')tips.push({k:'easy',title:'Keep intensity moderate',body:'Iron or haemoglobin is below range, which can make hard sessions feel tougher. Keep sessions moderate and talk to your doctor before pushing intensity.'});
   return tips;}
-function hasTip(k){return resultTips().some(x=>x.k===k);}
+function hasTip(k){const t=lastTest();return !!t&&(S.applied||{})[t.date]&&resultTips().some(x=>x.k===k);}
 function cardioWeek(){const ws=weekStart();return S.logs.filter(l=>l.date>=ws&&M(l.m).cardio).length*20;}
-function tipsCard(){const tips=resultTips();if(!tips.length)return '';
-  return `<section class="card"><div class="row between"><h2>From your results</h2><span class="ai">Plan adjusted</span></div>
+function tipsCard(){const tips=resultTips();const food=resultFood();if(!tips.length&&!food.length)return '';const t=lastTest();const done=(S.applied||{})[t.date];
+  return `<section class="card" style="border-color:${done?'var(--line)':'var(--good)'}"><div class="row between"><h2>From your blood results${ib('General guidance, not medical advice. Talk to your doctor about your results.')}</h2><span class="ai">${done?'Applied':'Ready to apply'}</span></div>
    ${tips.map(x=>`<div class="stack" style="gap:4px"><b>${x.title}</b><span class="muted" style="font-size:13px">${x.body}</span></div>`).join('')}
-   <p class="note">General fitness guidance, not medical advice. Talk to your doctor about your results.</p></section>`;}
+   ${food.length?`<div class="stack" style="gap:4px"><b>Food focus</b><span class="muted" style="font-size:13px">${food.map(k=>FOOD_FOCUS[k].t).join(', ')}. See Health › Food.</span></div>`:''}
+   ${done?`<button class="muted" style="font-size:12px;text-decoration:underline;justify-self:start" data-act="unapply">Undo changes</button>`:`<button class="btn block" data-act="applyres">Approve all: update my training, recovery and food</button>`}
+</section>`;}
+
+
+
+// ---------- Food guide (a guide, not a food diary) ----------
+// Everyday food sources from Australian dietary guidance. No supplement doses; supplements are a doctor's call.
+const FOOD_FOCUS={
+ iron:{t:'Iron-rich foods',f:'Lean red meat, chicken thigh, lentils, chickpeas, spinach, tofu. Pair with vitamin C (citrus, capsicum) and keep tea and coffee away from meals.'},
+ b12:{t:'Vitamin B12',f:'Eggs, fish, dairy, lean meat. If you eat plant-based, ask your doctor about B12.'},
+ vitd:{t:'Vitamin D',f:'Oily fish (salmon, sardines), eggs, UV-exposed mushrooms, plus safe morning sun.'},
+ heart:{t:'Heart-friendly swaps',f:'Oats, beans and lentils, nuts, olive oil, oily fish twice a week. Cut back on fried food, processed meat and butter.'},
+ sugar:{t:'Steady blood sugar',f:'Wholegrains, plenty of fibre, protein at every meal. Swap soft drinks and juice for water.'},
+ calm:{t:'Calm inflammation',f:'Oily fish, colourful veg and berries, extra-virgin olive oil. Go easy on alcohol and ultra-processed snacks.'}};
+function resultFood(){const t=lastTest();if(!t)return [];const st=id=>{const mk=MARKERS.find(m=>m.id===id);return t.v[id]!=null?mstatus(mk,t.v[id]):'ok';};const out=[];
+  if(['ferritin','iron','hb'].some(k=>st(k)==='low'))out.push('iron');if(st('b12')==='low')out.push('b12');if(st('vitd')==='low')out.push('vitd');
+  if(['ldl','chol','trig'].some(k=>st(k)==='high')||st('hdl')==='low')out.push('heart');if(['glucose','hba1c'].some(k=>st(k)==='high'))out.push('sugar');if(st('crp')==='high')out.push('calm');return out;}
+function appliedFood(){const t=lastTest();return t&&(S.applied||{})[t.date]?resultFood():[];}
+function bodyKg(){const b=(S.bw||[]).slice(-1)[0];return b?b[1]:75;}
+function foodTargets(){const kg=bodyKg();const g={strength:1.6,build:1.8,fit:1.4}[S.goal||'build'];const protein=Math.round(kg*g/5)*5;
+  return {protein,palms:Math.round(protein/25),veg:5,water:Math.round((kg*0.033+(sessionDoneToday()?0.5:0))*10)/10};}
+function sessionDoneToday(){return S.logs.some(l=>l.date===dayISO(0));}
+function foodToday(){const d=(S.food||{})[dayISO(0)]||{p:0,v:0,w:0};return d;}
+function viewFood(){const ft=foodTargets();const d=foodToday();const focus=appliedFood();
+  const row=(k,label,val,goal,unit,col)=>`<div class="stack" style="gap:6px"><div class="row between"><span>${label}</span><span class="row" style="gap:8px"><span class="muted" style="font-variant-numeric:tabular-nums">${val}/${goal}${unit}</span><button class="btn ghost small" style="min-height:32px;padding:0 12px" data-fd="${k}">+</button></span></div><div class="bar" style="height:8px"><i style="width:${Math.min(100,Math.round(val/goal*100))}%;background:${col}"></i></div></div>`;
+  return `<section class="card"><div class="row between"><h2>Today's food guide${ib('A guide, not a diet. Protein is about '+({strength:1.6,build:1.8,fit:1.4}[S.goal||'build'])+' g per kg of body weight for your goal. A palm-sized serve is about 25 g of protein. For allergies, conditions or supplements, see your doctor or a dietitian.')}</h2><span class="muted" style="font-size:12px">${GOALS[S.goal||'build'].label}</span></div>
+   <p class="muted" style="font-size:13px">About <b style="color:var(--fg)">${ft.protein} g protein</b> a day. Tap + as you go.</p>
+   ${row('p','Protein (palm-sized serves)',d.p,ft.palms,'','var(--good)')}
+   ${row('v','Veg and fruit (handfuls)',d.v,ft.veg,'','var(--good)')}
+   ${row('w','Water',d.w,ft.water,' L','var(--cold)')}</section>
+  <section class="card"><h2>Your plate</h2><div class="stack" style="font-size:14px"><span>½ veg and salad</span><span>¼ protein: meat, fish, eggs, tofu or legumes</span><span>¼ smart carbs: rice, potato, oats, wholegrain bread</span><span class="muted" style="font-size:13px">${sessionDoneToday()?'Training day: add a carb serve and protein within a couple of hours of your session.':'Rest day: keep protein up, carbs a little lower.'}</span></div></section>
+  ${focus.length?`<section class="card" style="border-color:var(--good)"><div class="row between"><h2>Focus foods from your results</h2><span class="ai">Applied</span></div>${focus.map(k=>`<div class="stack" style="gap:2px"><b>${FOOD_FOCUS[k].t}</b><span class="muted" style="font-size:13px">${FOOD_FOCUS[k].f}</span></div>`).join('')}</section>`:''}
+  `;}
+function pendingCard(){const t=lastTest();const tips=resultTips();const sg=dexaSuggestions();
+  const bloodPending=t&&tips.length&&!(S.applied||{})[t.date];if(!bloodPending&&!sg.length)return '';
+  return `<button class="item" style="border:1px solid var(--good);border-radius:14px" data-act="gohealth"><span><span class="ai">New suggestions</span><br><b>${bloodPending?'Your blood results':'Your DEXA scan'} can update your plan</b></span><span class="chev">›</span></button>`;}
+
+// ---------- Wearables (Whoop, Garmin, Apple Watch, Oura) ----------
+// Live app: Whoop via its official developer login (recovery %, strain, sleep); Garmin, Apple Watch and Oura via Apple Health / Health Connect.
+// Preview shows example data once a device is "connected".
+const DEVICES={whoop:'WHOOP',garmin:'Garmin',apple:'Apple Watch',oura:'Oura'};
+const WEAR_DEMO={recovery:68,hrv:58,rhr:52,sleep:7.4,strain:12.6};
+function readiness(){if(!S.wear)return null;const r=WEAR_DEMO.recovery;return r;}
+
+function wearSheet(){
+  const STEPS={whoop:['Tap Continue and sign in to your WHOOP account.','Approve Beachouse to read your recovery, sleep, strain and workouts.','Done. Your recovery shows on Home and shapes today’s plan.'],
+   garmin:['Make sure Garmin Connect is syncing to Apple Health (Garmin Connect > Settings > Health app).','Tap Continue and allow Beachouse to read heart rate, HRV, sleep and workouts in Apple Health.','Done. Your Garmin data flows in through Apple Health.'],
+   apple:['Tap Continue.','Allow Beachouse to read heart rate, HRV, sleep and workouts in Apple Health.','Done. Your Apple Watch data shows on Home.'],
+   oura:['Make sure the Oura app is syncing to Apple Health (Oura > Settings > Apple Health).','Tap Continue and allow Beachouse to read sleep, HRV and resting heart rate.','Done. Your Oura data flows in through Apple Health.']};
+  let dev='whoop';
+  openSheet(`<h1 style="font-size:22px">Add a wearable</h1><p class="muted" style="font-size:13px">Your recovery and sleep shape your daily training and 38° goals.</p>
+   <label class="stack" for="wdev"><span class="tag">Choose your device</span></label>
+   <select id="wdev" style="background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;color:var(--fg);font:inherit">${Object.entries(DEVICES).map(([k,l])=>`<option value="${k}">${l}</option>`).join('')}</select>
+   <ol id="wsteps" class="stack" style="margin:0;padding-left:20px;gap:8px"></ol>
+   <button class="btn block" id="wgo">Continue</button>`,
+  s=>{const draw=()=>{s.querySelector('#wsteps').innerHTML=STEPS[dev].map(x=>`<li>${x}</li>`).join('');};draw();
+   s.querySelector('#wdev').onchange=e=>{dev=e.target.value;draw();};
+   s.querySelector('#wgo').onclick=()=>{S.wear=dev;save();closeSheet();render();toast(DEVICES[dev]+' connected (example data in preview)');};});
+}
+
+function wearCard(){
+  if(!S.wear)return `<button class="item" style="border:1px solid var(--line);border-radius:14px" data-act="addwear"><span><b>+ Add a wearable</b><br><span class="meta">WHOOP, Garmin, Apple Watch or Oura</span></span><span class="chev">›</span></button>`;
+  const d=WEAR_DEMO;const col=d.recovery>=67?'var(--good)':d.recovery>=34?'var(--heat)':'#d97a6c';
+  const adv=d.recovery>=67?'Green light: go for your planned session.':d.recovery>=34?'Moderate recovery: keep today steady and add a 38° heat round.':'Low recovery: take a lighter session and prioritise sauna and cold.';
+  return `<section class="card"><div class="row between"><h2>${DEVICES[S.wear]} · today</h2><button class="muted" style="font-size:12px" data-act="unwear">Disconnect</button></div>
+   <div class="row" style="gap:16px;align-items:center">
+    <div style="width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(${col} ${d.recovery*3.6}deg,var(--surface-2) 0);flex:none"><div style="width:62px;height:62px;border-radius:50%;background:var(--surface);display:grid;place-items:center"><b style="font-size:20px;font-weight:500">${d.recovery}%</b></div></div>
+    <div class="stack" style="gap:2px;font-size:13px;min-width:0"><span><span class="muted">Recovery</span></span><span>HRV <b>${d.hrv} ms</b> · Resting HR <b>${d.rhr}</b></span><span>Sleep <b>${d.sleep} h</b> · Strain <b>${d.strain}</b></span></div></div>
+   <p class="note">${adv}</p></section>`;}
+
+
+// ---------- Quick start (first time on Train) ----------
+function quickStart(){
+  const st={name:S.name||'',goal:S.goal||'build',days:S.days||3,focus:S.focus||'balanced',level:'start',injuries:(S.injuries||[]).slice(),w:{}};
+  const LV={start:['New to the gym','start'],some:['Trained before','strength'],lots:['Train most weeks','build']};
+  const steps=['name','goal','days','level','body','weights','done'];let i=0;
+  const inp='style="background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;color:var(--fg);font:inherit;width:100%;min-width:0"';
+  const chip=(attr,k,l,on)=>`<button class="chip" ${attr}="${k}" aria-pressed="${on}">${l}</button>`;
+  function body(){const s=steps[i];
+    if(s==='name')return `<h1 style="font-size:22px">Welcome to Beachouse</h1><p class="muted">Let's set up your training in under a minute.</p><label class="stack"><span class="tag">What should we call you?</span><input id="qn" ${inp} value="${esc(st.name)}"></label>`;
+    if(s==='goal')return `<h1 style="font-size:22px">What do you want to achieve?</h1><div class="stack">${Object.entries(GOALS).map(([k,g])=>`<button class="item" style="border:1px solid ${st.goal===k?'var(--fg)':'var(--line)'};border-radius:12px" data-qg="${k}"><span><b>${g.label}</b><br><span class="meta">${g.reps[0]}–${g.reps[1]} reps, ${g.sets} sets</span></span><span>${st.goal===k?'●':'○'}</span></button>`).join('')}</div>`;
+    if(s==='days')return `<h1 style="font-size:22px">How many days a week can you train?</h1><div class="chips" style="flex-wrap:wrap">${[2,3,4,5,6].map(n=>chip('data-qd',n,n+' days',st.days===n)).join('')}</div><p class="muted" style="font-size:13px">Most people do best on 3 or 4.</p>`;
+    if(s==='level')return `<h1 style="font-size:22px">How much have you trained before?</h1><div class="stack">${Object.entries(LV).map(([k,[l]])=>`<button class="item" style="border:1px solid ${st.level===k?'var(--fg)':'var(--line)'};border-radius:12px" data-ql="${k}"><b>${l}</b><span>${st.level===k?'●':'○'}</span></button>`).join('')}</div>`;
+    if(s==='body')return `<h1 style="font-size:22px">Anything we should work around?</h1><span class="tag">Focus</span><div class="chips" style="flex-wrap:wrap">${Object.entries(FOCUS).map(([k,f])=>chip('data-qf',k,f.label,st.focus===k)).join('')}</div><span class="tag">Injuries</span><div class="chips" style="flex-wrap:wrap">${Object.entries(INJURIES).map(([k,l])=>chip('data-qi',k,l,st.injuries.includes(k))).join('')}</div><p class="muted" style="font-size:13px">Machines that load an injured area are swapped out of your plan.</p>`;
+    if(s==='weights'){const plan=PLANS.find(p=>p.id===LV[st.level][1]);const pi=S.injuries;S.injuries=st.injuries;const ids=[...new Set(plan.days.flatMap(d=>d.items).map(swapFor).filter(id=>id&&!M(id).cardio))].slice(0,6);S.injuries=pi;
+      return `<h1 style="font-size:22px">Know your weights?</h1><p class="muted" style="font-size:13px">Optional. Add what you can lift for about 10 reps and we'll start you there. Leave blank and the app works it out as you go.</p>${ids.map(id=>`<div class="set" style="grid-template-columns:1fr 110px"><label for="qw_${id}" style="font-size:14px">${M(id).name}</label><input id="qw_${id}" inputmode="decimal" placeholder="kg" ${inp} style="text-align:center" value="${st.w[id]||''}"></div>`).join('')}`;}
+    const plan=PLANS.find(p=>p.id===LV[st.level][1]);
+    return `<h1 style="font-size:22px">You're set, ${esc(st.name||'there')}</h1><div class="card"><b>${plan.name}</b><span class="muted" style="font-size:13px">${plan.about}</span><span class="muted" style="font-size:13px">Goal: ${GOALS[st.goal].label} · ${st.days} days a week</span></div><p class="muted" style="font-size:13px">Scan the QR code on any machine to see your weight for today. You can change all of this in your profile.</p>`;}
+  function read(s){const q=x=>s.querySelector(x);if(steps[i]==='name')st.name=(q('#qn').value||'').trim();
+    if(steps[i]==='weights')s.querySelectorAll('[id^=qw_]').forEach(e=>{const v=parseFloat(e.value);if(v>0)st.w[e.id.slice(3)]=v;});}
+  function draw(s){s.querySelector('#qb').innerHTML=body();s.querySelector('#qp').style.width=Math.round((i)/(steps.length-1)*100)+'%';
+    s.querySelector('#qback').hidden=i===0;s.querySelector('#qnext').textContent=i===steps.length-1?'Start training':'Next';}
+  openSheet(`<div class="bar" style="height:4px"><i id="qp" style="background:var(--good)"></i></div><div id="qb" class="stack" style="gap:14px"></div><div class="row between"><button class="btn ghost small" id="qback">Back</button><button class="btn" id="qnext">Next</button></div>`,s=>{
+    draw(s);
+    s.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+      if(b.dataset.qg){st.goal=b.dataset.qg;draw(s);}else if(b.dataset.qd){st.days=+b.dataset.qd;draw(s);}else if(b.dataset.ql){st.level=b.dataset.ql;draw(s);}
+      else if(b.dataset.qf){st.focus=b.dataset.qf;draw(s);}else if(b.dataset.qi){const k=b.dataset.qi;st.injuries=st.injuries.includes(k)?st.injuries.filter(x=>x!==k):st.injuries.concat(k);draw(s);}
+      else if(b.id==='qback'){read(s);i--;draw(s);}
+      else if(b.id==='qnext'){read(s);if(i<steps.length-1){i++;draw(s);return;}
+        Object.assign(S,{name:st.name||S.name,goal:st.goal,days:st.days,focus:st.focus,injuries:st.injuries,plan:LV[st.level][1],planDay:0,onboarded:true});
+        Object.entries(st.w).forEach(([id,kg])=>S.logs.push({m:id,date:dayISO(0),sets:[[kg,10]],fb:'right',start:true}));
+        save();closeSheet();tab='home';render();toast('Your plan is ready');}});});
+}
+
+
+// ---------- DEXA shape suggestions ----------
+// General training guidance from body-composition balance. Members approve changes before their plan updates.
+function dexaSuggestions(){const sc=(S.dexa||[]).slice().sort((a,b)=>a.date<b.date?-1:1);const d=sc[sc.length-1];if(!d)return [];const v=d.v,out=[];
+  const gap=(a,b)=>a&&b?Math.abs(a-b)/Math.max(a,b):0;
+  if(gap(v.la,v.ra)>0.05){const weak=v.la<v.ra?'left':'right';out.push({id:'arms',title:`Even up your arms`,why:`Your ${weak} arm has ${Math.round(gap(v.la,v.ra)*100)}% less lean mass than your other arm.`,add:['dumbbells','cable-cross'],note:'Single-arm dumbbell and cable work, starting with your '+weak+' side.'});}
+  if(gap(v.ll,v.rl)>0.05){const weak=v.ll<v.rl?'left':'right';out.push({id:'legs-lr',title:'Even up your legs',why:`Your ${weak} leg has ${Math.round(gap(v.ll,v.rl)*100)}% less lean mass than your other leg.`,add:['leg-ext','leg-curl'],note:'Single-leg extensions and curls, starting with your '+weak+' leg.'});}
+  if(v.la&&v.ra&&v.ll&&v.rl){const share=(v.ll+v.rl)/(v.la+v.ra+v.ll+v.rl);
+    if(share<0.7)out.push({id:'lower',title:'Build your lower body',why:'Your legs carry less of your muscle than typical for your upper body.',add:['leg-press','hack-squat'],note:'Adds leg press and hack squat to your sessions.'});
+    else if(share>0.8)out.push({id:'upper',title:'Build your upper body',why:'Your upper body carries less of your muscle than typical for your legs.',add:['chest-press','lat-pull'],note:'Adds chest press and lat pulldown to your sessions.'});}
+  const bfHigh=v.bf!=null&&v.bf>(S.sex==='f'?32:25), vatHigh=v.vat!=null&&v.vat>1000;
+  if(bfHigh||vatHigh)out.push({id:'cardio',title:'Add a cardio finisher',why:vatHigh?'Visceral (deep belly) fat is above the typical range.':'Body fat is above the typical range.',add:['rower'],note:'A 10-minute rower finisher at the end of each session.'});
+  return out.filter(x=>!(S.dexaDone||[]).includes(x.id));}
+function planAdds(){return S.planAdds||[];}
+function dexaSuggestCard(){const sg=dexaSuggestions();const added=planAdds();
+  if(!sg.length&&!added.length)return '';
+  return `<section class="card" style="border-color:${sg.length?'var(--good)':'var(--line)'}"><div class="row between"><h2>Suggested from your DEXA${ib('General training guidance from your scan, not medical advice. Approved exercises are added to your sessions. You can undo any time.')}</h2>${sg.length?'<span class="ai">Ready to apply</span>':''}</div>
+   ${sg.map(x=>`<div class="stack" style="gap:4px"><div class="row between"><b>${x.title}</b><button class="btn ghost small" data-dxa="${x.id}">Approve</button></div><span class="muted" style="font-size:13px">${x.why} ${x.note}</span></div>`).join('')}
+   ${sg.length>1?'<button class="btn block" data-act="dxall">Approve all</button>':''}
+   ${added.length?`<p class="note">Added to your plan: ${added.map(id=>M(id).name).join(', ')}. <button class="muted" style="text-decoration:underline;font-size:12px" data-act="dxreset">Undo</button></p>`:''}
+   </section>`;}
+function applyDexa(ids){const sg=dexaSuggestions().filter(x=>ids.includes(x.id));if(!sg.length)return;
+  S.planAdds=[...new Set(planAdds().concat(sg.flatMap(x=>x.add)))];S.dexaDone=(S.dexaDone||[]).concat(sg.map(x=>x.id));save();render();toast(sg.length>1?'All changes applied to your plan':'Applied to your plan');}
+
+
+// ---------- Rest timer and session clock ----------
+// Rest between sets by goal: strength 2.5 min, build muscle 75 s, fit and lean 45 s; big lower-body lifts get 30 s extra.
+const REST={strength:150,build:75,fit:45};
+const BIG=['leg-press','hack-squat','smith'];
+function restFor(id){const m=M(id);if(m.cardio)return 0;return (REST[S.goal||'build']||75)+(BIG.includes(id)?30:0);}
+let restT=null,restLeft=0;
+function fmtS(x){x=Math.max(0,Math.round(x));return Math.floor(x/60)+':'+String(x%60).padStart(2,'0');}
+function beep(){try{const c=new (window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator();const g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.value=.15;o.start();o.stop(c.currentTime+.35);}catch(e){}try{navigator.vibrate&&navigator.vibrate([200,100,200]);}catch(e){}}
+function stopRest(){clearInterval(restT);restT=null;const b=document.getElementById('restbar');if(b)b.remove();}
+function startRest(sec){stopRest();if(!sec)return;restLeft=sec;const bar=document.createElement('div');bar.className='restbar';bar.id='restbar';bar.setAttribute('role','timer');
+  bar.innerHTML=`<span style="font-size:11px;letter-spacing:.08em;text-transform:uppercase">Rest</span><b id="restleft">${fmtS(restLeft)}</b><button data-r="15">+15s</button><button data-r="skip">Skip</button>`;
+  bar.addEventListener('click',e=>{const r=e.target.dataset.r;if(r==='skip')stopRest();else if(r){restLeft+=+r;document.getElementById('restleft').textContent=fmtS(restLeft);}});
+  document.body.appendChild(bar);
+  restT=setInterval(()=>{restLeft--;const el=document.getElementById('restleft');if(el)el.textContent=fmtS(restLeft);if(restLeft<=0){stopRest();beep();toast('Rest done. Next set');}},1000);}
+let sessT=null;
+function sessionClock(){clearInterval(sessT);if(!S.sess)return;sessT=setInterval(()=>{const el=document.getElementById('sessclock');if(el)el.textContent=fmtS((Date.now()-S.sess)/1000);else clearInterval(sessT);},1000);}
 
 let progM='leg-press';
-function viewProgress(){
+function viewProgress(embedded){
   const seg='';
   const strength=MACHINES.filter(m=>!m.cardio&&S.logs.some(l=>l.m===m.id));
   if(!strength.some(m=>m.id===progM)&&strength[0])progM=strength[0].id;
@@ -622,7 +764,8 @@ function viewProgress(){
   const byWeek={};S.logs.filter(l=>!M(l.m).cardio).forEach(l=>{const k=weekKey(l.date);byWeek[k]=(byWeek[k]||0)+vol(l);});
   const vpts=Object.keys(byWeek).sort().map(k=>[k,byWeek[k]/1000]);
   const prs=strength.map(m=>({m,b:best(m.id)})).sort((a,b)=>b.b-a.b);
-  return `<section class="stack"><h1>Progress</h1></section>${seg}
+  const sessions=new Set(S.logs.filter(l=>l.date>=dayISO(29)).map(l=>l.date)).size;const recov=S.rec.filter(r=>r.date>=dayISO(29)).length;
+  return `<section class="stats"><div class="stat"><b>${sessions}</b><span>Sessions 30d</span></div><div class="stat"><b>${streak()}</b><span>Week streak</span></div><div class="stat"><b>${recov}</b><span>38° visits 30d</span></div></section>
   <section class="card"><h2>Estimated strength (kg, one-rep max)</h2>
     <div class="chips">${strength.map(m=>`<button class="chip" data-prog="${m.id}" aria-pressed="${m.id===progM}">${m.name}</button>`).join('')}</div>${lineChart(pts)}</section>
   <section class="card"><h2>Weekly volume (tonnes lifted)</h2>${lineChart(vpts)}</section>
@@ -632,8 +775,10 @@ function viewProgress(){
 
 function viewBath(){
   const last=S.rec.slice().sort((a,b)=>a.date<b.date?1:-1).slice(0,6);
-  return `<section class="stack"><p class="tag">38° The Bathhouse</p><h1>Recover</h1><p class="muted">Heat and cold after training. Each session in the 2 days after a workout speeds up your muscle recovery score.</p></section>
-  ${(()=>{const p=S.period||'week';const t=weekTotals(p);const g=goalTargets(p);return `<section class="card"><h2>Recovery goal · ${PERIODS[p].label.toLowerCase()}</h2>${periodSwitch()}${goalRow('Heat at 38°',t.heat,g.heat,' min',t.heatN+' sessions so far','var(--heat)')}${goalRow('Cold at 38°',t.cold,g.cold,' min',t.coldN+' plunges so far','var(--cold)')}<p class="note">Research on regular sauna and cold-water users found about 57 minutes of heat and 11 minutes of cold a week, spread over several sessions, improved metabolic health.</p></section>`})()}
+  return `<section class="stack"><p class="tag">38° The Bathhouse</p><h1>Recover${ib('Heat and cold after training. Each 38° session in the 2 days after a workout speeds up your muscle recovery score. Weekly targets come from research on regular sauna and cold-water users: about 57 min of heat and 11 min of cold a week.')}</h1></section>
+  ${(()=>{const p=S.period||'week';const t=weekTotals(p);const g=goalTargets(p);return `<section class="card"><h2>Recovery goal · ${PERIODS[p].label.toLowerCase()}</h2>${periodSwitch()}${goalRow('Heat at 38°',t.heat,g.heat,' min',t.heatN+' sessions so far','var(--heat)')}${goalRow('Cold at 38°',t.cold,g.cold,' min',t.coldN+' plunges so far','var(--cold)')}</section>`})()}
+  <section class="stack"><div class="row between"><h2>Muscle recovery</h2><span class="muted" style="font-size:12px">38° sessions speed this up</span></div>
+    <div class="rec-grid">${(()=>{const rec=recovery();return Object.keys(MUSCLES).slice(0,6).map(k=>`<div><span>${MUSCLES[k]} <span class="muted">${rec[k]}%</span></span>${recBar(rec[k])}</div>`).join('')})()}</div></section>
   <section class="card"><h2>Contrast protocol</h2><div class="stack">
     <div class="ritual"><span class="dot" style="background:var(--heat)"></span><span>Sauna 12–15 min</span><span class="heat">Heat</span></div>
     <div class="ritual"><span class="dot" style="background:var(--cold)"></span><span>Ice bath 2–3 min</span><span class="cold">Cold</span></div>
@@ -700,9 +845,11 @@ function viewBuy(){
   <a class="btn ghost block" href="https://www.beachousebondi.com/memberships-passes" target="_blank" rel="noopener">Apply for full access</a>`;
 }
 
-function viewMedical(){return `<section class="stack"><p class="tag">Your health</p><h1>Medical</h1><p class="muted">Blood tests and body scans in one place, private to you.</p></section>${tipsCard()}${viewDexa()}${viewHealth()}`;}
+let healthView='results';
+function viewMedical(){const seg=`<div class="seg" role="group" aria-label="Health view"><button data-hv="results" aria-pressed="${healthView==='results'}">Results</button><button data-hv="food" aria-pressed="${healthView==='food'}">Food</button></div>`;
+  return `<section class="stack"><h1>Health</h1><p class="muted">Results, scans and food, private to you.</p></section>${seg}${healthView==='food'?viewFood():tipsCard()+viewDexa()+dexaSuggestCard()+viewHealth()}`;}
 const VIEWS={home:viewHome,train:viewTrain,progress:viewProgress,bath:viewBath,medical:viewMedical,club:viewClub};
-function render(){
+function render(){setTimeout(sessionClock,0);
   $('#view').innerHTML=VIEWS[tab]();
   $('#tabs').innerHTML=TABS.map(([id,l])=>`<button data-tab="${id}" ${id===tab?'aria-current="page"':''}>${ICONS[id]}<span>${l}</span></button>`).join('');
   $('#avatarBtn').textContent=(S.name||'Me').slice(0,2).toUpperCase();
@@ -715,26 +862,26 @@ function machineSheet(id){
   const m=M(id);const t=target(id);const b=best(id);const hist=logsFor(id).map(x=>[x.date,Math.round(m.cardio?x.sets[0][0]:e1rm(x))]);
   const start=[...Array(t.sets)].map(()=>[t.w||'',t.r||'']);
   openSheet(`
-    <div class="row between"><div><p class="tag">${m.zone} · ${m.type}</p><h1 style="font-size:22px">${m.name}</h1></div>${b?`<span class="pill pr">Best ${b}${m.unit}</span>`:''}</div>
+    <div class="row between"><div><p class="tag">${m.zone} · ${m.type}</p><h1 style="font-size:22px">${m.name}${ib(m.cue)}</h1></div>${b?`<span class="pill pr">Best ${b}${m.unit}</span>`:''}</div>
     <div class="target"><span><span class="ai">Today's target</span><br><b>${esc(t.text)}</b></span></div>
     <p class="muted" style="font-size:13px">${esc(t.why)}</p>
     ${blocked(id)?`<p class="note heat">This machine loads your ${(LOADS[id]||[]).filter(a=>(S.injuries||[]).includes(a)).map(a=>INJURIES[a].toLowerCase()).join(' and ')}. Go light or pick another machine, and check with a coach or physio first.</p>`:''}
-    <p class="note">${m.cue}</p>
     <div class="sets" id="sets"></div>
-    <button class="btn ghost small" id="addSet" style="justify-self:start">+ Add set</button>
+    <div class="row between"><button class="btn ghost small" id="addSet">+ Add set</button>${restFor(id)?`<span class="muted" style="font-size:12px">Rest ${fmtS(restFor(id))} between sets</span>`:''}</div>
     <div class="stack"><h2>How did that feel?</h2><div class="fb" role="group" aria-label="Effort">${[['easy','Easy'],['right','About right'],['hard','Hard']].map(([k,l])=>`<button data-fbv="${k}" aria-pressed="${k==='right'}">${l}</button>`).join('')}</div></div>
     <button class="btn block" id="saveSets">Save session</button>
     ${hist.length>1?`<div class="stack"><h2>${m.cardio?'Distance':'Estimated strength'} trend</h2>${lineChart(hist)}</div>`:''}
   `,s=>{
-    let sets=start,fb='right';
-    const draw=()=>{s.querySelector('#sets').innerHTML=`<div class="set"><span></span><span class="tag" style="text-align:center">${m.cardio?'Distance ('+m.unit+')':'Weight (kg)'}</span><span class="tag" style="text-align:center">${m.cardio?'Rounds':'Reps'}</span><span></span></div>`+sets.map((x,i)=>`<div class="set"><span class="n">${i+1}</span><input id="w${i}" inputmode="decimal" aria-label="Set ${i+1} ${m.cardio?'distance':'weight'}" value="${x[0]}"><input id="r${i}" inputmode="numeric" aria-label="Set ${i+1} reps" value="${x[1]}"><button data-del="${i}" aria-label="Remove set ${i+1}">×</button></div>`).join('');};
+    let sets=start,fb='right',done=[];
+    const draw=()=>{s.querySelector('#sets').innerHTML=`<div class="set"><span></span><span class="tag" style="text-align:center">${m.cardio?'Distance ('+m.unit+')':'Weight (kg)'}</span><span class="tag" style="text-align:center">${m.cardio?'Rounds':'Reps'}</span><span class="tag" style="text-align:center">Done</span><span></span></div>`+sets.map((x,i)=>`<div class="set${done[i]?' done':''}"><span class="n">${i+1}</span><input id="w${i}" inputmode="decimal" aria-label="Set ${i+1} ${m.cardio?'distance':'weight'}" value="${x[0]}"><input id="r${i}" inputmode="numeric" aria-label="Set ${i+1} reps" value="${x[1]}"><button class="tick" data-tick="${i}" aria-pressed="${!!done[i]}" aria-label="Set ${i+1} done">✓</button><button data-del="${i}" aria-label="Remove set ${i+1}" style="color:var(--muted)">×</button></div>`).join('');};
     const read=()=>{sets=sets.map((x,i)=>[parseFloat(s.querySelector('#w'+i).value)||0,parseInt(s.querySelector('#r'+i).value)||0]);};
     draw();
     s.querySelector('#addSet').onclick=()=>{read();sets.push((sets[sets.length-1]||[t.w,t.r]).slice());draw();};
-    s.querySelector('#sets').addEventListener('click',e=>{const d=e.target.dataset.del;if(d!==undefined){read();sets.splice(+d,1);draw();}});
+    s.querySelector('#sets').addEventListener('click',e=>{const d=e.target.dataset.del;if(d!==undefined){read();sets.splice(+d,1);done.splice(+d,1);draw();return;}
+      const k=e.target.dataset.tick;if(k!==undefined){read();done[+k]=!done[+k];draw();if(done[+k]){if(!S.sess){S.sess=Date.now();save();}const last=done.filter(Boolean).length>=sets.length;if(last){stopRest();toast('All sets done. Save your session');}else startRest(restFor(id));}}});
     s.querySelectorAll('[data-fbv]').forEach(btn=>btn.onclick=()=>{fb=btn.dataset.fbv;s.querySelectorAll('[data-fbv]').forEach(x=>x.setAttribute('aria-pressed',x===btn));});
     s.querySelector('#saveSets').onclick=()=>{read();const valid=sets.filter(x=>x[0]>0&&x[1]>0);if(!valid.length){toast('Add a weight and reps first');return;}
-      const prev=best(id);S.logs.push({m:id,date:dayISO(0),sets:valid,fb});save();closeSheet();render();
+      const prev=best(id);S.logs.push({m:id,date:dayISO(0),sets:valid,fb});stopRest();save();closeSheet();render();
       const nb=Math.max(...valid.map(x=>x[0]));const nt=target(id);
       toast(nb>prev&&prev>0?`New best on ${m.name}: ${nb}${m.unit}`:`Saved. Next time: ${nt.text}`);};
   });
@@ -766,12 +913,14 @@ function profileSheet(){
    <span class="tag">Focus</span><div class="chips">${Object.entries(FOCUS).map(([k,f])=>`<button class="chip" data-pf="${k}" aria-pressed="${(S.focus||'balanced')===k}">${f.label}</button>`).join('')}</div>
    <span class="tag">Injuries to work around</span><div class="chips" style="flex-wrap:wrap">${Object.entries(INJURIES).map(([k,l])=>`<button class="chip" data-pi="${k}" aria-pressed="${(S.injuries||[]).includes(k)}">${l}</button>`).join('')}</div>
    <button class="btn block" id="psave">Save</button>
+   <button class="btn ghost block" id="pquick">Redo quick start</button>
    <button class="btn ghost block" id="pclear">Clear my history</button>
    <p class="note">Membership, bookings and door check-in appear here once the app is linked to Mindbody.</p>`,
    s=>{s.querySelectorAll('[data-pf]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.pf;s.querySelectorAll('[data-pf]').forEach(x=>x.setAttribute('aria-pressed',x===b));});
    s.querySelectorAll('[data-pi]').forEach(b=>b.onclick=()=>{const k=b.dataset.pi;const a=new Set(S.injuries||[]);a.has(k)?a.delete(k):a.add(k);S.injuries=[...a];b.setAttribute('aria-pressed',a.has(k));});
    s.querySelectorAll('[data-pg]').forEach(b=>b.onclick=()=>{S.goal=b.dataset.pg;s.querySelectorAll('[data-pg]').forEach(x=>x.setAttribute('aria-pressed',x===b));});s.querySelector('#psave').onclick=()=>{S.name=s.querySelector('#pname').value.trim()||S.name;save();closeSheet();render();toast('Saved');};
-       s.querySelector('#pclear').onclick=()=>{S={name:S.name,goal:S.goal,plan:S.plan,planDay:0,logs:[],rec:[],bw:[],example:false};save();closeSheet();render();toast('History cleared');};});
+       s.querySelector('#pquick').onclick=()=>{closeSheet();quickStart();};
+       s.querySelector('#pclear').onclick=()=>{S={name:S.name,goal:S.goal,plan:S.plan,planDay:0,logs:[],rec:[],bw:[],example:false,onboarded:false};save();closeSheet();render();toast('History cleared');};});
 }
 function bwSheet(){
   openSheet(`<h1 style="font-size:22px">Log body weight</h1><input id="bwv" inputmode="decimal" placeholder="kg" aria-label="Body weight in kg" style="background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:14px;color:var(--fg);font:inherit;font-size:20px;text-align:center"><button class="btn block" id="bws">Save</button>`,
@@ -781,7 +930,7 @@ function bwSheet(){
 // ---------- events ----------
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');if(t&&t.closest('form'))return;if(!t||t.closest('.sheet'))return;
-  if(t.dataset.tab){tab=t.dataset.tab;location.hash=tab;render();window.scrollTo(0,0);}
+  if(t.dataset.tab){tab=t.dataset.tab;location.hash=tab;render();window.scrollTo(0,0);if(tab==='train'&&!S.onboarded)quickStart();}
   else if(t.dataset.machine)machineSheet(t.dataset.machine);
   else if(t.dataset.zone){zone=t.dataset.zone;render();}
   else if(t.dataset.tv){trainView=t.dataset.tv;render();}
@@ -790,12 +939,25 @@ document.addEventListener('click',e=>{
   else if(t.dataset.prog){progM=t.dataset.prog;render();}
   else if(t.dataset.rit){{const R=RITUALS.find(r=>r.id===t.dataset.rit);S.rec.push({r:R.id,date:dayISO(0),mins:R.mins});save();render();const w=weekTotals(S.period||'week');const G=goalTargets(S.period||'week');toast(`Logged ${R.name} · ${R.kind==='cold'?w.cold+'/'+G.cold:w.heat+'/'+G.heat} min ${PERIODS[S.period||'week'].label.toLowerCase()}`);}}
   else if(t.dataset.act==='scan')scanSheet();
-  else if(t.dataset.act==='nextday'){S.planDay++;save();render();toast('Nice work. Next session is ready');}
+  else if(t.dataset.act==='startsess'){S.sess=Date.now();save();render();sessionClock();toast('Session started');}
+  else if(t.dataset.act==='nextday'){const mins=S.sess?Math.round((Date.now()-S.sess)/60000):0;S.sess=null;S.planDay++;stopRest();save();render();toast(mins?`Nice work: ${mins} min session. Next one is ready`:'Nice work. Next session is ready');}
   else if(t.dataset.act==='bw')bwSheet();
   else if(t.dataset.cv){clubView=t.dataset.cv;render();}
   else if(t.dataset.bd){busyDay=+t.dataset.bd;render();}
   else if(t.dataset.act==='suspend')suspendSheet();
   else if(t.dataset.act==='days')daysSheet();
+  else if(t.dataset.wear){S.wear=t.dataset.wear;save();render();toast(DEVICES[S.wear]+' connected (example data)');}
+  else if(t.dataset.act==='unwear'){S.wear=null;save();render();}
+  else if(t.dataset.act==='addwear')wearSheet();
+  else if(t.dataset.hv){healthView=t.dataset.hv;render();}
+
+  else if(t.dataset.act==='gohealth'){tab='medical';healthView='results';render();window.scrollTo(0,0);}
+  else if(t.dataset.act==='applyres'){const lt=lastTest();S.applied=Object.assign({},S.applied,{[lt.date]:true});save();render();toast('Training, recovery and food updated');}
+  else if(t.dataset.act==='unapply'){const lt=lastTest();S.applied=Object.assign({},S.applied);delete S.applied[lt.date];save();render();toast('Changes undone');}
+  else if(t.dataset.fd){const k=t.dataset.fd;S.food=S.food||{};const d=S.food[dayISO(0)]=Object.assign({p:0,v:0,w:0},S.food[dayISO(0)]);d[k]=Math.round((d[k]+(k==='w'?0.5:1))*10)/10;save();render();}
+  else if(t.dataset.dxa)applyDexa([t.dataset.dxa]);
+  else if(t.dataset.act==='dxall')applyDexa(dexaSuggestions().map(x=>x.id));
+  else if(t.dataset.act==='dxreset'){S.planAdds=[];S.dexaDone=[];save();render();toast('Plan changes undone');}
   else if(t.dataset.act==='coach')coachSheet();
   else if(t.dataset.pv){progView=t.dataset.pv;render();}
   else if(t.dataset.act==='orderblood')orderSheet();
@@ -806,6 +968,9 @@ document.addEventListener('click',e=>{
   else if(t.dataset.act==='copywifi'){navigator.clipboard.writeText(WIFI.pass).then(()=>toast('Password copied'),()=>toast(WIFI.pass));}
   else if(t.id==='avatarBtn'||t.dataset.act==='profile')profileSheet();
 });
+
+function infoPop(txt){const o=document.createElement('div');o.className='sheet';o.style.zIndex=40;o.innerHTML=`<div class="panel" role="dialog" aria-modal="true"><div class="grab"></div><p style="font-size:15px;line-height:1.55">${txt}</p><button class="btn block">Got it</button></div>`;o.addEventListener('click',e=>{if(e.target===o||e.target.closest('button'))o.remove();});document.body.appendChild(o);}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-info]');if(b){e.stopPropagation();e.preventDefault();infoPop(b.dataset.info);}},true);
 window.addEventListener('hashchange',()=>{const h=location.hash.replace('#','');if(VIEWS[h]&&h!==tab){tab=h;render();}});
 render();
 if(deep&&M(deep)){history.replaceState(null,'',location.pathname);setTimeout(()=>machineSheet(deep),950);}
