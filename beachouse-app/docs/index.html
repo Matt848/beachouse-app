@@ -66,7 +66,7 @@ p{margin:0}
 .chip{padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;white-space:nowrap}
 .chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:rgba(11,11,11,.96);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
-nav.tabs .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav.tabs .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr)}
 nav.tabs button{padding:10px 0 12px;display:grid;justify-items:center;gap:4px;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 nav.tabs button[aria-current="page"]{color:var(--fg)}
 nav.tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5}
@@ -95,6 +95,10 @@ nav.tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1
 .week i{width:100%;aspect-ratio:1;border-radius:8px;background:var(--surface-2);display:block}
 .week i.on{background:var(--fg)}
 .week i.rec{background:var(--heat)}
+.beta{font-size:12px;line-height:1.5;color:var(--muted);border:1px solid var(--line);border-radius:14px;padding:10px 12px}.beta b{color:var(--gold-2,var(--fg));font-weight:500;letter-spacing:.14em;text-transform:uppercase;font-size:10px;margin-right:6px}
+.seg3{grid-template-columns:repeat(3,1fr)!important;border-radius:20px}
+.hubgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hubgrid>div{display:grid;gap:2px;min-width:0}.hubgrid b{font-weight:400;font-size:15px}
+.heart{border:1px solid var(--line-2);border-radius:999px;padding:5px 10px;font-size:12px;color:var(--muted)}.heart.on{color:#d97a6c;border-color:#d97a6c}
 .note{font-size:12px;color:var(--muted);border-left:2px solid var(--line);padding-left:10px}
 @media (prefers-reduced-motion:reduce){.splash{transition:none}}
 </style>
@@ -146,7 +150,7 @@ ul.ticks li::before{content:"—  ";color:var(--line)}
 .set.done input{border-color:var(--good)}
 .tick{height:36px;border-radius:10px;border:1px solid var(--line);color:var(--muted);font-size:16px}
 .tick[aria-pressed="true"]{background:var(--good);border-color:var(--good);color:#0b0b0b}
-.ib{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;border:1px solid var(--line);color:var(--muted);font-size:11px;font-style:italic;font-family:Georgia,serif;margin-left:6px;vertical-align:middle;line-height:1;cursor:pointer}
+.ib{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;border:1px solid var(--line);color:var(--muted);font-size:11px;font-style:normal;font-weight:500;font-family:var(--body);margin-left:6px;vertical-align:middle;line-height:1;cursor:pointer}
 .badge{font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--fg);color:var(--bg);font-weight:600}
 </style>
 <style>
@@ -182,7 +186,7 @@ h3{font-family:var(--serif);font-size:22px;font-weight:500}
 .seg{border-color:var(--line-2)}
 .seg button{font-size:11px;letter-spacing:.14em;text-transform:uppercase;transition:background .2s,color .2s}
 nav.tabs{background:rgba(9,9,8,.72);-webkit-backdrop-filter:saturate(150%) blur(22px);backdrop-filter:saturate(150%) blur(22px);border-top-color:var(--line)}
-nav.tabs button{font-size:9.5px;letter-spacing:.16em;gap:6px;position:relative;padding-top:12px}
+nav.tabs button{font-size:8.5px;letter-spacing:.1em;gap:6px;position:relative;padding-top:12px}
 nav.tabs button[aria-current="page"]{color:var(--gold-2)}
 nav.tabs button[aria-current="page"]::after{content:"";position:absolute;top:0;left:38%;right:38%;height:1px;background:var(--gold)}
 nav.tabs svg{stroke-width:1.25}
@@ -270,6 +274,28 @@ h3{font-family:var(--display);font-weight:500;font-size:18px}
 .bodyrow>*{min-width:0;overflow-wrap:anywhere}
 .bodymini{display:grid;grid-template-columns:1fr 1fr;gap:2px}.bodymini svg{width:100%;height:auto}
 .nextw{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--line);padding-top:12px}
+.filled{border-color:var(--gold)!important;box-shadow:0 0 0 1px var(--gold) inset}
+.uprow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+input,select,textarea,button{font-family:var(--body)}
+.avt{display:inline-grid;place-items:center;border-radius:50%;flex:none;color:#2A2522}
+.avt svg{fill:none;stroke:#2A2522;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.avt b{font-weight:600}
+.crewgrid{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(7,1fr);gap:6px 4px;align-items:center}
+.cg-h{text-align:center;font-size:10px;color:var(--muted)}
+.cg-n{display:flex;gap:6px;align-items:center;font-size:12px;min-width:0;overflow:hidden;white-space:nowrap}
+.crewgrid i{display:block;aspect-ratio:1;border-radius:50%;background:var(--surface-2);max-width:22px;justify-self:center;width:100%}
+.crewgrid i.on{background:var(--good)}
+.crewgrid i.miss{background:transparent;border:1.5px solid rgba(201,113,74,.6)}
+.lb{display:grid;grid-template-columns:20px auto 1fr auto;gap:10px;align-items:center;padding:8px 10px;border-radius:14px}
+.lb.me{background:var(--surface-2);border:1px solid rgba(200,162,122,.5)}
+.lb-r{color:var(--muted);font-size:13px;text-align:center}
+.lb-p{font-size:18px;font-weight:500;color:var(--gold-2)}
+.swatch{width:30px;height:30px;border-radius:50%;border:2px solid transparent}
+.swatch[aria-pressed="true"]{border-color:var(--fg)}
+.iconpick{border-radius:50%;border:2px solid transparent;padding:1px}
+.iconpick[aria-pressed="true"]{border-color:var(--gold)}
+.iconpick .avt svg{stroke:var(--fg)}
+.codebox{font-size:30px;letter-spacing:.3em;text-align:center;padding:14px;border:1.5px dashed var(--line-2);border-radius:16px;color:var(--gold-2)}
 /* Routines builder */
 .rname{flex:1;min-width:0;background:none;border:0;border-bottom:1px solid transparent;color:var(--fg);font-family:var(--serif);font-size:25px;padding:0 0 2px}
 .rname:focus{outline:none;border-bottom-color:var(--gold)}
@@ -361,10 +387,11 @@ const ICONS={
  progress:'<svg viewBox="0 0 24 24"><path d="M3 20h18M5 16l4-5 4 3 6-8"/></svg>',
  bath:'<svg viewBox="0 0 24 24"><path d="M12 3c2 3 5 5.5 5 9a5 5 0 0 1-10 0c0-3.5 3-6 5-9z"/></svg>',
  medical:'<svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/><path d="M8 12h2l1-2 2 4 1-2h2"/></svg>',
+ crew:'<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 14.5c3 0 6 2 6 5.5"/></svg>',
  club:'<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg>',
  scan:'<svg viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/></svg>'
 };
-const TABS=[['home','Today'],['train','Train'],['bath','Recover'],['medical','Health'],['club','Club']];
+const TABS=[['home','Today'],['train','Train'],['bath','Recover'],['medical','Health'],['crew','Crew'],['club','Club']];
 
 // Starter machine list — Beachouse will name its own machines (e.g. "Leg Press 1") once Marc sends the list.
 const MACHINES=[
@@ -482,7 +509,9 @@ function weatherCard(){return `<section class="card" style="grid-template-column
 function ib(txt){return `<button class="ib" aria-label="More info" data-info="${esc(txt)}">i</button>`;}
 // ---------- state ----------
 const KEY='bhc-app-v3';
-function dayISO(off){const d=new Date();d.setDate(d.getDate()-off);return d.toISOString().slice(0,10);}
+// Local dates (not UTC), so Sydney mornings count as today.
+const localISO=(x=>`${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}-${String(x.getDate()).padStart(2,'0')}`);
+function dayISO(off){const d=new Date();d.setDate(d.getDate()-off);return localISO(d);}
 function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.logs)return s;}catch(e){}return location.search.includes('demo')?seed():{name:'',goal:'build',plan:'start',planDay:0,logs:[],rec:[],bw:[],example:false};}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function seed(){
@@ -501,10 +530,10 @@ function seed(){
   // Demo history for the progress charts: sleep, food days and weekly recovery visits.
   const sleep={},food={};for(let i=1;i<=70;i++){sleep[dayISO(i)]=[6,7,7,8,7,8,6,7,8,9][i%10];if(i%3)food[dayISO(i)]={p:5,v:6,f:2,w:3,done:i%4!==0};}
   for(let w=2;w<10;w++){rec.push({r:'sauna',date:dayISO(w*7),mins:15},{r:'plunge',date:dayISO(w*7),mins:3});if(w%2)rec.push({r:'bath38',date:dayISO(w*7+3),mins:20});if(w%3===0)rec.push({r:'massage',date:dayISO(w*7+2),mins:60});}
-  return {onboarded:true,wear:null,sleep,food,dexa:[{date:dayISO(110),v:{bf:22.4,lean:63.1,fat:18.9,vat:640,bone:0.8}},{date:dayISO(18),v:{bf:20.1,lean:64.6,fat:16.8,vat:560,bone:0.9,la:3.5,ra:3.8,ll:10.9,rl:11.6,tr:31.2}}],bloods:[{date:dayISO(120),v:{hb:148,ferritin:120,iron:18,b12:310,vitd:58,glucose:5.1,hba1c:5.3,chol:5.4,ldl:3.2,hdl:1.2,trig:1.4,alt:31,egfr:96,crp:1.2,tsh:1.8,testo:16}},{date:dayISO(20),v:{hb:151,ferritin:135,iron:20,b12:340,vitd:44,glucose:4.9,hba1c:5.2,chol:5.6,ldl:3.3,hdl:1.3,trig:1.1,alt:28,egfr:98,crp:0.9,tsh:1.7,testo:18}}],sex:'m',name:'Matt',goal:'build',plan:'start',planDay:0,logs,rec,example:true,bw:[[dayISO(35),88.2],[dayISO(28),87.6],[dayISO(21),87.1],[dayISO(14),86.4],[dayISO(7),86.0],[dayISO(0),85.5]]};
+  return {mb:{plan:'Unlimited Gym + 38°',price:'$89 a week',next:dayISO(-5),visits:11,status:'Active'},onboarded:true,wear:null,sleep,food,dexa:[{date:dayISO(110),v:{bf:22.4,lean:63.1,fat:18.9,vat:640,bone:0.8}},{date:dayISO(18),v:{bf:20.1,lean:64.6,fat:16.8,vat:560,bone:0.9,la:3.5,ra:3.8,ll:10.9,rl:11.6,tr:31.2}}],bloods:[{date:dayISO(120),v:{hb:148,ferritin:120,iron:18,b12:310,vitd:58,glucose:5.1,hba1c:5.3,chol:5.4,ldl:3.2,hdl:1.2,trig:1.4,alt:31,egfr:96,crp:1.2,tsh:1.8,testo:16}},{date:dayISO(20),v:{hb:151,ferritin:135,iron:20,b12:340,vitd:44,glucose:4.9,hba1c:5.2,chol:5.6,ldl:3.3,hdl:1.3,trig:1.1,alt:28,egfr:98,crp:0.9,tsh:1.7,testo:18}}],sex:'m',name:'Matt',goal:'build',plan:'start',planDay:0,logs,rec,example:true,bw:[[dayISO(35),88.2],[dayISO(28),87.6],[dayISO(21),87.1],[dayISO(14),86.4],[dayISO(7),86.0],[dayISO(0),85.5]]};
 }
 let S=load();
-let tab=(location.hash||'').replace('#','')||'home';const deep=(location.hash.match(/m=([a-z0-9-]+)/)||[])[1];if(deep)tab='home';
+let tab=(location.hash||'').replace('#','')||'home';if(!/^(home|train|bath|medical|crew|club|progress)$/.test(tab))tab=/pick=/.test(location.hash)?'train':'home';const deep=(location.hash.match(/m=([a-z0-9-]+)/)||[])[1];if(deep)tab='home';
 if(!TABS.some(t=>t[0]===tab))tab='home';
 
 // ---------- helpers ----------
@@ -516,11 +545,11 @@ function logsFor(m){return S.logs.filter(l=>l.m===m).sort((a,b)=>a.date<b.date?-
 function lastLog(m){const l=logsFor(m);return l[l.length-1];}
 function best(m){let b=0;S.logs.filter(l=>l.m===m).forEach(l=>l.sets.forEach(s=>{if(s[0]>b)b=s[0]}));return b;}
 function vol(l){return l.sets.reduce((a,s)=>a+s[0]*s[1],0);}
-function weekKey(iso){const d=new Date(iso+'T00:00');d.setDate(d.getDate()-((d.getDay()+6)%7));return d.toISOString().slice(0,10);}
+function weekKey(iso){const d=new Date(iso+'T00:00');d.setDate(d.getDate()-((d.getDay()+6)%7));return localISO(d);}
 function daysAgo(iso){return Math.round((new Date(dayISO(0))-new Date(iso))/864e5);}
 function toast(msg,cls){const t=document.createElement('div');t.className='toast'+(cls?' '+cls:'');t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2200);}
 function trainedDays(){return new Set(S.logs.map(l=>l.date));}
-function streak(){const d=trainedDays();let w=0;for(let i=0;i<12;i++){const st=new Date();st.setDate(st.getDate()-((st.getDay()+6)%7)-7*i);let any=false;for(let k=0;k<7;k++){const x=new Date(st);x.setDate(st.getDate()+k);if(d.has(x.toISOString().slice(0,10)))any=true;}if(any)w++;else if(i>0)break;}return w;}
+function streak(){const d=trainedDays();let w=0;for(let i=0;i<12;i++){const st=new Date();st.setDate(st.getDate()-((st.getDay()+6)%7)-7*i);let any=false;for(let k=0;k<7;k++){const x=new Date(st);x.setDate(st.getDate()+k);if(d.has(localISO(x)))any=true;}if(any)w++;else if(i>0)break;}return w;}
 const round=(v,step)=>Math.max(step,Math.round(v/step)*step);
 
 // ---------- Smart Coach engine (Fitbod-style) ----------
@@ -563,8 +592,8 @@ function smartSession(){
 // Training: WHO advises muscle-strengthening 2+ days a week; members pick their own days (2–6).
 const HEAT_GOAL=57,COLD_GOAL=11;
 const PERIODS={day:{label:'Today',scale:1/7},week:{label:'This week',scale:1},month:{label:'This month',scale:30/7}};
-function periodStart(p){const d=new Date();if(p==='day')return dayISO(0);if(p==='month'){d.setDate(1);return d.toISOString().slice(0,10);}return weekStart();}
-function weekStart(){const d=new Date();d.setDate(d.getDate()-((d.getDay()+6)%7));return d.toISOString().slice(0,10);}
+function periodStart(p){const d=new Date();if(p==='day')return dayISO(0);if(p==='month'){d.setDate(1);return localISO(d);}return weekStart();}
+function weekStart(){const d=new Date();d.setDate(d.getDate()-((d.getDay()+6)%7));return localISO(d);}
 function weekTotals(p){const ws=periodStart(p||'week');
   const workouts=new Set(S.logs.filter(l=>l.date>=ws).map(l=>l.date)).size;
   let heat=0,cold=0,heatN=0,coldN=0;
@@ -626,6 +655,14 @@ function lineChart(points){
 function sessionItems(){if(String(S.plan).startsWith('r:')){const r=routineById(S.plan.slice(2));if(r&&r.items.length)return {title:r.name,day:r.name,items:r.items.map(swapFor).filter(Boolean)};S.plan='start';}const plan=PLANS.find(p=>p.id===S.plan);const d=plan.days[S.planDay%plan.days.length];const items=[...new Set(d.items.concat(planAdds()).map(swapFor).filter(Boolean))].slice(0,8);return {title:plan.name,day:d.name,items};}
 function recBar(p){return `<div class="bar"><i class="${p<50?'low':p<85?'mid':''}" style="width:${p}%"></i></div>`;}
 
+function sessionCardHTML(){const ses=sessionItems();return `
+  <section class="card" id="sescard">
+    <div class="row between"><h2>Today's session${ib('Tap Start session, then open each machine. Tick each set as you finish it and the rest timer starts on its own: '+fmtS(REST[S.goal||'build'])+' for your goal ('+GOALS[S.goal||'build'].label.toLowerCase()+'), plus 30 seconds on big leg lifts.')}</h2><span class="muted" style="font-size:12px">${esc(ses.day)}</span></div>
+    <div class="list">${ses.items.map(id=>{const m=M(id);const t=target(id);return `<button class="item" data-machine="${id}"><span><b>${m.name}</b><br><span class="meta">${esc(t.text)}</span></span><span class="chev">›</span></button>`}).join('')}</div>
+    ${S.sess?`<div class="row between" style="background:var(--surface-2);border-radius:12px;padding:10px 14px"><span><span class="ai">Session running</span> <b id="sessclock" style="font-variant-numeric:tabular-nums">${fmtS((Date.now()-S.sess)/1000)}</b></span><button class="btn ghost small" data-act="nextday">Finish</button></div>
+    <button class="btn small" data-act="scan">Scan a machine</button>`:`<div class="row"><button class="btn small" style="flex:1" data-act="startsess">Start session</button><button class="btn ghost small" style="flex:1" data-act="scan">Scan a machine</button></div>`}
+  </section>
+`;}
 function viewHome(){
   const ses=sessionItems();
   return `
@@ -634,20 +671,10 @@ function viewHome(){
     <h1>${greet()}${S.name?',<br><em>'+esc(S.name)+'</em>':''}</h1>
     ${S.example?'<p class="note">Showing example history so you can see how it works. Clear it in your profile.</p>':''}
   </section>
+  ${betaNote()}
   ${busyNowCard()}
-  ${bodyTodayCard()}
-  ${checkinCard()}
-  ${pendingCard()}
-  ${insightsCard()}
-  ${feelCard()}
-  <section class="card" id="sescard">
-    <div class="row between"><h2>Today's session${ib('Tap Start session, then open each machine. Tick each set as you finish it and the rest timer starts on its own: '+fmtS(REST[S.goal||'build'])+' for your goal ('+GOALS[S.goal||'build'].label.toLowerCase()+'), plus 30 seconds on big leg lifts.')}</h2><span class="muted" style="font-size:12px">${esc(ses.day)}</span></div>
-    <div class="list">${ses.items.map(id=>{const m=M(id);const t=target(id);return `<button class="item" data-machine="${id}"><span><b>${m.name}</b><br><span class="meta">${esc(t.text)}</span></span><span class="chev">›</span></button>`}).join('')}</div>
-    ${S.sess?`<div class="row between" style="background:var(--surface-2);border-radius:12px;padding:10px 14px"><span><span class="ai">Session running</span> <b id="sessclock" style="font-variant-numeric:tabular-nums">${fmtS((Date.now()-S.sess)/1000)}</b></span><button class="btn ghost small" data-act="nextday">Finish</button></div>
-    <button class="btn small" data-act="scan">Scan a machine</button>`:`<div class="row"><button class="btn small" style="flex:1" data-act="startsess">Start session</button><button class="btn ghost small" style="flex:1" data-act="scan">Scan a machine</button></div>`}
-  </section>
-  ${goalsCard()}
-  ${S.wear?wearCard():''}
+  ${hubCard()}
+  <section class="row" style="gap:10px"><button class="btn ghost small" style="flex:1" data-act="card">Member card</button><button class="btn ghost small" style="flex:1" data-act="book">Book 38°</button><button class="btn ghost small" style="flex:1" data-act="support">Help</button></section>
   ${eventsCard()}
   <section class="stack">
     <div class="row between"><h2>@beachousebondi</h2><a class="muted" style="font-size:12px" href="https://www.instagram.com/beachousebondi/" target="_blank" rel="noopener">Follow ›</a></div>
@@ -657,9 +684,11 @@ function viewHome(){
   </section>`;
 }
 
-let zone='All',trainView='machines';
+let zone='All',trainView='today';
 function viewTrain(){
-  const seg=`<div class="seg" style="grid-template-columns:repeat(4,1fr)" role="group" aria-label="Train view"><button data-tv="machines" aria-pressed="${trainView==='machines'}">Machines</button><button data-tv="plans" aria-pressed="${trainView==='plans'}">Plans</button><button data-tv="routines" aria-pressed="${trainView==='routines'}">Routines</button><button data-tv="progress" aria-pressed="${trainView==='progress'}">Progress</button></div>`;
+  const seg=`<div class="seg seg3" role="group" aria-label="Train view"><button data-tv="today" aria-pressed="${trainView==='today'}">Today</button><button data-tv="picks" aria-pressed="${trainView==='picks'}">Picks</button><button data-tv="machines" aria-pressed="${trainView==='machines'}">Machines</button><button data-tv="plans" aria-pressed="${trainView==='plans'}">Plans</button><button data-tv="routines" aria-pressed="${trainView==='routines'}">Routines</button><button data-tv="progress" aria-pressed="${trainView==='progress'}">Progress</button></div>`;
+  if(trainView==='today')return `<section class="stack"><h1>Train</h1></section>${seg}${trainToday()}`;
+  if(trainView==='picks')return `<section class="stack"><h1>Members' <em>picks</em></h1></section>${seg}${viewPicks()}`;
   if(trainView==='progress')return `<section class="stack"><h1>Train</h1></section>${seg}${viewProgress(true)}`;
   if(trainView==='routines')return `<section class="stack"><h1>Your <em>routines</em></h1></section>${seg}${viewRoutines()}`;
   if(trainView==='plans')return `<section class="stack"><h1>Train</h1></section>${seg}
@@ -708,7 +737,7 @@ function rng(mk){if(mk.r)return mk.r;return (S.sex==='f'?mk.f:mk.m);}
 function mstatus(mk,v){const [lo,hi]=rng(mk);if(v<lo)return 'low';if(v>hi)return 'high';return 'ok';}
 function lastTest(){return (S.bloods||[]).slice().sort((a,b)=>a.date<b.date?1:-1)[0];}
 function prevValue(id,beforeDate){const t=(S.bloods||[]).filter(b=>b.date<beforeDate&&b.v[id]!=null).sort((a,b)=>a.date<b.date?1:-1)[0];return t?t.v[id]:null;}
-function nextDue(){const t=lastTest();if(!t)return null;const d=new Date(t.date+'T00:00');d.setMonth(d.getMonth()+3);return d.toISOString().slice(0,10);}
+function nextDue(){const t=lastTest();if(!t)return null;const d=new Date(t.date+'T00:00');d.setMonth(d.getMonth()+3);return localISO(d);}
 function rangeBar(mk,v){const [lo,hi]=rng(mk);const max=hi*1.5||1,min=lo>0?lo*0.5:0;const X=x=>Math.max(0,Math.min(100,(x-min)/(max-min)*100));
  return `<div style="position:relative;height:8px;border-radius:4px;background:var(--surface-2)"><div style="position:absolute;left:${X(lo)}%;width:${X(hi)-X(lo)}%;top:0;bottom:0;background:rgba(143,209,158,.25);border-radius:4px"></div><div style="position:absolute;left:calc(${X(v)}% - 5px);top:-2px;width:10px;height:12px;border-radius:3px;background:${mstatus(mk,v)==='ok'?'var(--good)':'var(--heat)'}"></div></div>`;}
 let progView='training';
@@ -746,12 +775,12 @@ function orderSheet(){
 }
 function addBloodSheet(){
   const inp='style="background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--fg);font:inherit;width:100%;min-width:0;text-align:center"';
-  openSheet(`<h1 style="font-size:22px">Add blood test results</h1><p class="muted" style="font-size:13px">Copy the numbers from your lab report. Leave any you didn't test blank.</p>
+  openSheet(`<h1 style="font-size:22px">Add blood test results</h1><p class="muted" style="font-size:13px">Upload your lab report and we\u2019ll fill in the numbers, or type them in. Leave any you didn't test blank.</p>${uploadRow('blood')}
    <label class="stack"><span class="tag">Test date</span><input id="btd" type="date" value="${dayISO(0)}" ${inp}></label>
    <div class="stack"><span class="tag">Ranges for</span><div class="chips">${[['m','Male'],['f','Female']].map(([k,l])=>`<button class="chip" data-sx="${k}" aria-pressed="${(S.sex||'m')===k}">${l}</button>`).join('')}</div></div>
    ${MARKERS.map(mk=>`<div class="set" style="grid-template-columns:1fr 110px"><label for="mk_${mk.id}" style="font-size:14px">${mk.name} <span class="muted" style="font-size:11px">${mk.unit}</span></label><input id="mk_${mk.id}" inputmode="decimal" ${inp}></div>`).join('')}
    <button class="btn block" id="bsave">Save results</button>`,
-  s=>{s.querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sex=b.dataset.sx;s.querySelectorAll('[data-sx]').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+  s=>{wireUpload(s,'blood','mk_');s.querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{S.sex=b.dataset.sx;s.querySelectorAll('[data-sx]').forEach(x=>x.setAttribute('aria-pressed',x===b));});
    s.querySelector('#bsave').onclick=()=>{const v={};MARKERS.forEach(mk=>{const x=parseFloat(s.querySelector('#mk_'+mk.id).value);if(!isNaN(x))v[mk.id]=x;});if(!Object.keys(v).length){toast('Add at least one result');return;}
     S.bloods=(S.bloods||[]).concat([{date:s.querySelector('#btd').value||dayISO(0),v}]);save();closeSheet();tab='medical';render();toast('Results saved. Next test in 3 months');};});
 }
@@ -802,7 +831,7 @@ function coachSheet(){
 // DEXA is the most accurate common way to measure body fat, muscle and bone. Partner clinic to be confirmed.
 const DEXA_FIELDS=[{id:'bf',name:'Body fat',unit:'%'},{id:'lean',name:'Lean mass',unit:'kg'},{id:'fat',name:'Fat mass',unit:'kg'},{id:'vat',name:'Visceral fat',unit:'g'},{id:'bone',name:'Bone density (T-score)',unit:''},{id:'la',name:'Left arm lean',unit:'kg'},{id:'ra',name:'Right arm lean',unit:'kg'},{id:'ll',name:'Left leg lean',unit:'kg'},{id:'rl',name:'Right leg lean',unit:'kg'},{id:'tr',name:'Trunk lean',unit:'kg'}];
 function viewDexa(){const sc=(S.dexa||[]).slice().sort((a,b)=>a.date<b.date?-1:1);const last=sc[sc.length-1],prev=sc[sc.length-2];
-  let due=null;if(last){const d=new Date(last.date+'T00:00');d.setMonth(d.getMonth()+3);due=d.toISOString().slice(0,10);}
+  let due=null;if(last){const d=new Date(last.date+'T00:00');d.setMonth(d.getMonth()+3);due=localISO(d);}
   return `<section class="card"><h2>Body composition (DEXA)${ib('DEXA is the most accurate everyday scan for body fat, muscle and bone. Scan every 3 months to see what your training is changing.')}</h2>
    <div class="row" style="flex-wrap:wrap">${SOON.dexabook?soon('<button class="btn small" data-act="dexainfo">Book a DEXA scan</button>'):'<button class="btn small" data-act="dexainfo">Book a DEXA scan</button>'}<button class="btn ghost small" data-act="adddexa">Add my scan</button></div>
    ${due?`<p class="muted" style="font-size:13px">Next scan due: <b style="color:var(--fg)">${fmtDate(due)}</b></p>`:''}
@@ -810,12 +839,12 @@ function viewDexa(){const sc=(S.dexa||[]).slice().sort((a,b)=>a.date<b.date?-1:1
    ${sc.length>1?`<h2 style="margin-top:6px">Body fat trend</h2>${lineChart(sc.filter(x=>x.v.bf!=null).map(x=>[x.date,x.v.bf]))}`:''}`:''}
   </section>`;}
 function addDexaSheet(){const inp='style="background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--fg);font:inherit;width:100%;min-width:0;text-align:center"';
-  openSheet(`<h1 style="font-size:22px">Add DEXA results</h1><p class="muted" style="font-size:13px">Copy the numbers from your scan report.</p>
+  openSheet(`<h1 style="font-size:22px">Add DEXA results</h1><p class="muted" style="font-size:13px">Upload your scan report and we\u2019ll fill in the numbers, or type them in.</p>${uploadRow('dexa')}
    <label class="stack"><span class="tag">Scan date</span><input id="dxd" type="date" value="${dayISO(0)}" ${inp}></label>
    ${DEXA_FIELDS.map(f=>`<div class="set" style="grid-template-columns:1fr 110px"><label for="dx_${f.id}" style="font-size:14px">${f.name} <span class="muted" style="font-size:11px">${f.unit}</span></label><input id="dx_${f.id}" inputmode="decimal" ${inp}></div>`).join('')}
    <button class="btn block" id="dxs">Save scan</button>`,
-  s=>s.querySelector('#dxs').onclick=()=>{const v={};DEXA_FIELDS.forEach(f=>{const x=parseFloat(s.querySelector('#dx_'+f.id).value);if(!isNaN(x))v[f.id]=x;});if(!Object.keys(v).length){toast('Add at least one result');return;}
-    S.dexa=(S.dexa||[]).concat([{date:s.querySelector('#dxd').value||dayISO(0),v}]);S.dexaDone=[];save();closeSheet();tab='medical';render();toast(dexaSuggestions().length?'Scan saved. We have suggestions for your plan':'Scan saved. Next one in 3 months');});}
+  s=>{wireUpload(s,'dexa','dx_');s.querySelector('#dxs').onclick=()=>{const v={};DEXA_FIELDS.forEach(f=>{const x=parseFloat(s.querySelector('#dx_'+f.id).value);if(!isNaN(x))v[f.id]=x;});if(!Object.keys(v).length){toast('Add at least one result');return;}
+    S.dexa=(S.dexa||[]).concat([{date:s.querySelector('#dxd').value||dayISO(0),v}]);S.dexaDone=[];save();closeSheet();tab='medical';render();toast(dexaSuggestions().length?'Scan saved. We have suggestions for your plan':'Scan saved. Next one in 3 months');};});}
 
 
 // ---------- Training suggestions from results ----------
@@ -862,34 +891,7 @@ function pendingCard(){const t=lastTest();const tips=resultTips();const sg=dexaS
 // Preview shows example data once a device is "connected".
 const DEVICES={whoop:'WHOOP',garmin:'Garmin',apple:'Apple Watch',oura:'Oura'};
 const WEAR_DEMO={recovery:68,hrv:58,rhr:52,sleep:7.4,strain:12.6};
-function readiness(){if(!S.wear)return null;const r=WEAR_DEMO.recovery;return r;}
-
-function wearSheet(){
-  const STEPS={whoop:['Tap Continue and sign in to your WHOOP account.','Approve Beachouse to read your recovery, sleep, strain and workouts.','Done. Your recovery shows on Home and shapes today’s plan.'],
-   garmin:['Make sure Garmin Connect is syncing to Apple Health (Garmin Connect > Settings > Health app).','Tap Continue and allow Beachouse to read heart rate, HRV, sleep and workouts in Apple Health.','Done. Your Garmin data flows in through Apple Health.'],
-   apple:['Tap Continue.','Allow Beachouse to read heart rate, HRV, sleep and workouts in Apple Health.','Done. Your Apple Watch data shows on Home.'],
-   oura:['Make sure the Oura app is syncing to Apple Health (Oura > Settings > Apple Health).','Tap Continue and allow Beachouse to read sleep, HRV and resting heart rate.','Done. Your Oura data flows in through Apple Health.']};
-  let dev='whoop';
-  openSheet(`<h1 style="font-size:22px">Add a wearable</h1><p class="muted" style="font-size:13px">Your recovery and sleep shape your daily training and 38° goals.</p>
-   <label class="stack" for="wdev"><span class="tag">Choose your device</span></label>
-   <select id="wdev" style="background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;color:var(--fg);font:inherit">${Object.entries(DEVICES).map(([k,l])=>`<option value="${k}">${l}</option>`).join('')}</select>
-   <ol id="wsteps" class="stack" style="margin:0;padding-left:20px;gap:8px"></ol>
-   <button class="btn block" id="wgo">Continue</button>`,
-  s=>{const draw=()=>{s.querySelector('#wsteps').innerHTML=STEPS[dev].map(x=>`<li>${x}</li>`).join('');};draw();
-   s.querySelector('#wdev').onchange=e=>{dev=e.target.value;draw();};
-   s.querySelector('#wgo').onclick=()=>{S.wear=dev;save();closeSheet();render();toast(DEVICES[dev]+' connected (example data in preview)');};});
-}
-
-function wearCard(){
-  if(!S.wear)return (SOON.wear?soon:(x=>x))(`<button class="item" style="border:1px solid var(--line);border-radius:14px;width:100%" data-act="addwear"><span><b>+ Add a wearable</b><br><span class="meta">WHOOP, Garmin, Apple Watch or Oura</span></span><span class="chev">›</span></button>`);
-  const d=WEAR_DEMO;const col=d.recovery>=67?'var(--good)':d.recovery>=34?'var(--heat)':'#d97a6c';
-  const adv=d.recovery>=67?'Green light: go for your planned session.':d.recovery>=34?'Moderate recovery: keep today steady and add a 38° heat round.':'Low recovery: take a lighter session and prioritise sauna and cold.';
-  return `<section class="card"><div class="row between"><h2>${DEVICES[S.wear]} · today</h2><button class="muted" style="font-size:12px" data-act="unwear">Disconnect</button></div>
-   <div class="row" style="gap:16px;align-items:center">
-    <div style="width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(${col} ${d.recovery*3.6}deg,var(--surface-2) 0);flex:none"><div style="width:62px;height:62px;border-radius:50%;background:var(--surface);display:grid;place-items:center"><b style="font-size:20px;font-weight:500">${d.recovery}%</b></div></div>
-    <div class="stack" style="gap:2px;font-size:13px;min-width:0"><span><span class="muted">Recovery</span></span><span>HRV <b>${d.hrv} ms</b> · Resting HR <b>${d.rhr}</b></span><span>Sleep <b>${d.sleep} h</b> · Strain <b>${d.strain}</b></span></div></div>
-   <p class="note">${adv}</p></section>`;}
-
+function readiness(){const d=wearToday();return d&&d.recovery!=null?d.recovery:null;}
 
 // ---------- Quick start (first time on Train) ----------
 function quickStart(){
@@ -989,6 +991,7 @@ function viewProgress(embedded){
 function viewBath(){
   const last=S.rec.slice().sort((a,b)=>a.date<b.date?1:-1).slice(0,6);
   return `<section class="stack"><p class="tag">38° The Bathhouse</p><h1>Recover${ib('Heat and cold after training. Each 38° session in the 2 days after a workout speeds up your muscle recovery score. Weekly targets come from research on regular sauna and cold-water users: about 57 min of heat and 11 min of cold a week.')}</h1></section>
+  ${feelCard()}${S.wear?wearCard():''}
   ${(()=>{const p=S.period||'week';const t=weekTotals(p);const g=goalTargets(p);return `<section class="card"><h2>Recovery goal · ${PERIODS[p].label.toLowerCase()}</h2>${periodSwitch()}${goalRow('Heat at 38°',t.heat,g.heat,' min',t.heatN+' sessions so far. Weekly target from research on regular sauna users (about 57 min a week). After training, every minute of heat speeds muscle recovery by about 0.5%, up to 8% a session.','var(--heat)')}${goalRow('Cold at 38°',t.cold,g.cold,' min',t.coldN+' plunges so far. Weekly target about 11 min (Søberg 2021). After training, every minute of cold speeds recovery by about 0.8%, up to 10%. If you\'re building muscle, avoid ice baths straight after weights.','var(--cold)')}</section>`})()}
   <section class="card"><div class="row between"><h2>Muscle recovery${ib(RECOVERY_INFO)}</h2><span class="muted" style="font-size:12px">38° speeds this up</span></div>${bodyMap(recovery())}<button class="btn ghost small" data-act="science">The science behind it</button></section>
   ${protocolCard()}
@@ -1008,6 +1011,7 @@ function busyChart(day,h=90){const pts=busyCurve(day);const now=new Date();const
 let busyDay=new Date().getDay();
 function viewClub(){
   const seg=`<div class="seg" style="grid-template-columns:repeat(3,1fr)" role="group" aria-label="Club"><button data-cv="join" aria-pressed="${clubView==='join'}">Join</button><button data-cv="info" aria-pressed="${clubView==='info'}">Info</button><button data-cv="coaches" aria-pressed="${clubView==='coaches'}">Coaches</button></div>`;
+  if(clubView==='crews')return `<section class="stack"><h1>Crews</h1><p class="muted">Train together. Visit every day as a crew and win a group session at 38\u00b0.</p></section>${seg}${crewCard()}${leaderboardCard()}${credit()}`;
   if(clubView==='coaches')return `<section class="stack"><h1>Coaches</h1><p class="muted">Message a coach to book personal training.</p></section>${seg}
    <div class="list">${COACHES.map(c=>{const ph=COACH_PHOTOS[c.name.split(' ')[0].toLowerCase()];return `<div class="item"><span class="row" style="gap:12px">${ph?`<img class="face" src="${ph}" alt="">`:`<span class="face" aria-hidden="true">${c.name.split(' ').map(x=>x[0]).join('')}</span>`}<span><b>${c.name}</b><br><span class="meta">${c.focus}</span></span></span><span class="row">${c.ig?`<a class="igbtn" href="https://www.instagram.com/${c.ig}/" target="_blank" rel="noopener" aria-label="${c.name} on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9"/></svg></a>`:''}${c.ph?`<a class="btn small" href="sms:${c.ph}?&body=${encodeURIComponent('Hi, I\u2019m a Beachouse member and would like to book PT')}">Message</a>`:''}</span></div>`}).join('')}</div>
    <p class="note">In-app chat with coaches is coming. For now, Message opens a text to the coach.</p>${credit()}`;
@@ -1058,7 +1062,7 @@ function viewBuy(){
 
 let healthView='results';
 function viewMedical(){const seg=`<div class="seg" role="group" aria-label="Health view"><button data-hv="results" aria-pressed="${healthView==='results'}">Results</button><button data-hv="food" aria-pressed="${healthView==='food'}">Food</button></div>`;
-  return `<section class="stack"><h1>Health</h1><p class="muted">Results, scans and food, private to you.</p></section>${seg}${healthView==='food'?viewFood():connectedCard()+(S.wear?wearCard():'')+conditionsCard()+tipsCard()+viewDexa()+dexaSuggestCard()+viewHealth()}`;}
+  return `<section class="stack"><h1>Health</h1><p class="muted">Results, scans and food, private to you.</p></section>${seg}${healthView==='food'?viewFood():pendingCard()+connectedCard()+conditionsCard()+tipsCard()+viewDexa()+dexaSuggestCard()+viewHealth()}`;}
 
 // ---------- ideas borrowed from leading club and training apps ----------
 function greet(){const h=new Date().getHours();return h<12?'Good morning':h<18?'Good afternoon':'Good evening';}
@@ -1321,7 +1325,7 @@ const RECOVERY_INFO='How this is worked out. Each muscle has its own recovery ti
 function ritual(r){return RITUALS.find(x=>x.id===r.r)||{};}
 function recMins(r){return r.mins||ritual(r).mins||0;}
 function boostOf(r){const k=ritual(r).kind,m=recMins(r);return k==='heat'?Math.min(HEAT_CAP,m*HEAT_PER_MIN):k==='cold'?Math.min(COLD_CAP,m*COLD_PER_MIN):k==='massage'?MASSAGE_BOOST:0;}
-function sleepOn(date){const v=(S.sleep||{})[date];if(v!=null)return v;if(S.wear&&date===dayISO(0))return WEAR_DEMO.sleep;return null;}
+function sleepOn(date){const v=(S.sleep||{})[date];if(v!=null)return v;const w=(S.wearData||{})[date];if(w&&w.sleep!=null)return w.sleep;return null;}
 function sleepFactor(h){return h==null?1:h<6?1.12:h<7?1.05:h>=8?.97:1;}
 function plannedSets(){return GOALS[S.goal||'build'].sets;}
 function sessionLoad(l){const extra=l.sets.length-plannedSets();return Math.max(.88,Math.min(1.3,1+.06*extra))*(l.fb==='hard'?1.25:1);}
@@ -1464,10 +1468,10 @@ function connectedCard(){const n=(S.bloods||[]).length,d=(S.dexa||[]).length,sg=
     ${row('Blood tests',n?n+' test'+(n>1?'s':'')+' on file \u00b7 adjusts training, recovery and food':'Adjusts training, recovery and food',n,n?'Linked':'Not yet')}
     ${row('DEXA body composition',d?d+' scan'+(d>1?'s':'')+' on file \u00b7 evens out your training':'Evens out muscle by body part',d,d?'Linked':'Not yet')}
     ${row('Conditions',condActive().length?condActive().map(k=>CONDITIONS[k].name).join(', '):'Adjusts exercise and recovery',condActive().length,condActive().length?'Applied':'Optional')}
-    ${(SOON.wear?soon:(x=>x))(`<button class="item" style="width:100%" data-act="addwear"><span><b>Wearable</b><br><span class="meta">Sleep and readiness fill in automatically</span></span><span class="muted">+ Connect</span></button>`)}
+    ${(SOON.wear?soon:(x=>x))(`<button class="item" style="width:100%" data-act="addwear"><span><b>Wearable</b><br><span class="meta">${wearToday()?'Today\u2019s numbers added':'Type in recovery, HRV and sleep \u00b7 auto-sync coming soon'}</span></span><span class="${wearToday()?'pill pr':'muted'}">${wearToday()?'Added':'+ Add'}</span></button>`)}
    </div>
    <span class="tag" style="color:var(--muted);margin-top:4px">Tests and services</span>
-   ${SOON.services?'<p class="muted" style="font-size:13px">We\u2019re lining up trusted local partners with member rates. These open soon.</p>':''}
+   ${SOON.services?'<p class="muted" style="font-size:13px">Add results you already have, or upload the report. Booking with our partners is coming soon.</p>':''}
    <div class="list${SOON.services?' soonlist':''}">${SERVICES.map(sv=>{const t=lastT(sv.id);return `<button class="item" data-svc="${sv.id}"><span><b>${sv.name}</b><br><span class="meta">${t?testLine(sv.id,t)+' \u00b7 '+fmtDate(t.date)+trend(sv.id):esc(sv.links)}</span></span><span class="chev">\u203a</span></button>`}).join('')}</div>
    ${sg.length&&!SOON.services?`<div class="card" style="border-color:rgba(200,162,122,.5)"><div class="row between"><h2>Suggested from your tests</h2><span class="ai">Ready to apply</span></div>${sg.map(x=>`<div class="stack" style="gap:4px"><div class="row between"><b>${esc(x.title)}</b><button class="btn ghost small" data-tsok="${x.id}">Approve</button></div><span class="muted" style="font-size:13px">${esc(x.why)} ${esc(x.note)}</span></div>`).join('')}${sg.length>1?'<button class="btn block" data-act="tsall">Approve all</button>':''}</div>`:''}
   </section>`;}
@@ -1575,27 +1579,27 @@ function testSuggestions(){const out=[];const done=S.testDone||{};
 function servicesCard(){const sg=testSuggestions();
   return `<section class="stack"><div class="row between"><h2>More tests and services${ib('Book through our local partners and add your results here. Each result can suggest changes to your training, recovery or food, and nothing changes until you approve it.')}</h2></div>
    ${sg.length&&!SOON.services?`<section class="card" style="border-color:rgba(200,179,138,.5)"><div class="row between"><h2>Suggested from your tests</h2><span class="ai">Ready to apply</span></div>${sg.map(x=>`<div class="stack" style="gap:4px"><div class="row between"><b>${esc(x.title)}</b><button class="btn ghost small" data-tsok="${x.id}">Approve</button></div><span class="muted" style="font-size:13px">${esc(x.why)} ${esc(x.note)}</span></div>`).join('')}${sg.length>1?'<button class="btn block" data-act="tsall">Approve all</button>':''}</section>`:''}
-   ${SOON.services?'<p class="muted" style="font-size:13px">We\u2019re lining up trusted local partners with member rates. These open soon.</p>':''}<div class="list${SOON.services?' soonlist':''}">${SERVICES.map(sv=>{const t=lastT(sv.id);return `<button class="item" data-svc="${sv.id}"><span><b>${sv.name}</b><br><span class="meta">${t?testLine(sv.id,t)+' · '+fmtDate(t.date)+trend(sv.id):esc(sv.links)}</span></span><span class="chev">›</span></button>`}).join('')}</div></section>`;}
+   ${SOON.services?'<p class="muted" style="font-size:13px">Add results you already have, or upload the report. Booking with our partners is coming soon.</p>':''}<div class="list${SOON.services?' soonlist':''}">${SERVICES.map(sv=>{const t=lastT(sv.id);return `<button class="item" data-svc="${sv.id}"><span><b>${sv.name}</b><br><span class="meta">${t?testLine(sv.id,t)+' · '+fmtDate(t.date)+trend(sv.id):esc(sv.links)}</span></span><span class="chev">›</span></button>`}).join('')}</div></section>`;}
 function serviceSheet(id){const sv=SERVICES.find(x=>x.id===id);const hist=((S.tests||{})[id]||[]).slice().sort((a,b)=>a.date<b.date?1:-1);
   const inp='style="background:var(--bg);border:1px solid var(--line-2);border-radius:12px;padding:12px;color:var(--fg);font:inherit;width:100%;min-width:0"';
   openSheet(`<p class="tag">Health services</p><h1 style="font-size:30px">${sv.name}</h1><p style="font-size:14px">${sv.what}</p>
    <p class="note">In the app: ${sv.links}</p>
-   <button class="btn ghost block" id="svbook">Book with our partner</button>
-   <div class="card" style="gap:10px"><h2>Add a result</h2><input id="svd" type="date" ${inp} value="${dayISO(0)}">
+   ${soon('<button class="btn ghost block">Book with our partner</button>','Partner booking coming soon')}
+   <div class="card" style="gap:10px"><h2>Add a result</h2>${id!=='physio'?uploadRow(id):''}<input id="svd" type="date" ${inp} value="${dayISO(0)}">
     ${sv.fields.map(([k,l,u,opts,typ])=>typ==='text'?`<label class="stack" style="gap:4px"><span class="tag" style="color:var(--muted)">${l}</span><textarea id="sv_${k}" rows="3" placeholder="e.g. Avoid overhead pressing for 4 weeks. Strengthen glutes and rotator cuff." ${inp}></textarea></label>`:opts?`<label class="stack" style="gap:4px"><span class="tag" style="color:var(--muted)">${l}</span><select id="sv_${k}" ${inp}>${opts.map(o=>`<option value="${o}">${(k==='area'?AREA_L:STATUS_L)[o]}</option>`).join('')}</select></label>`:`<label class="stack" style="gap:4px"><span class="tag" style="color:var(--muted)">${l}${u?' ('+u+')':''}</span><input id="sv_${k}" inputmode="decimal" ${inp}></label>`).join('')}
     <button class="btn block" id="svsave">Save result</button></div>
    ${hist.length?`<div class="stack"><h2>Your results</h2><div class="list">${hist.map(t=>`<div class="item"><span>${testLine(id,t)}</span><span class="meta">${fmtDate(t.date)}</span></div>`).join('')}</div></div>`:''}`,
-  s=>{s.querySelector('#svbook').onclick=()=>toast('Partner booking is coming soon. We’ll let you know when it’s live');
+  s=>{wireUpload(s,id,'sv_');
     s.querySelector('#svsave').onclick=()=>{const r={date:s.querySelector('#svd').value||dayISO(0)};for(const [k,,,opts,typ] of sv.fields){const v=s.querySelector('#sv_'+k).value.trim();if(typ==='text'){r[k]=v;continue;}if(!v){toast('Fill in every field');return;}r[k]=opts?v:parseFloat(v);if(!opts&&isNaN(r[k])){toast('Numbers only, please');return;}}
       S.tests=S.tests||{};(S.tests[id]=S.tests[id]||[]).push(r);save();closeSheet();render();toast(testSuggestions().length?'Saved. Check your suggestions to apply it':'Saved');};});}
 function applyTests(ids){const sg=testSuggestions().filter(x=>ids.includes(x.id));if(!sg.length)return;S.testDone=S.testDone||{};sg.forEach(x=>{x.apply();S.testDone[x.id]=true;});save();render();toast(sg.length>1?'All applied':'Applied');}
 
 // ---------- Coming soon: features waiting on partners or setup are shown greyed out ----------
-const SOON={coach:true,wear:true,services:true,orderblood:true,dexabook:true};
+const SOON={coach:true,wear:false,services:false,orderblood:true,dexabook:true};
 function soon(html,label){return `<div class="soon" aria-disabled="true" data-soon="${label||'Coming soon'}">${html}</div>`;}
 // ================= Member card: added once, staff reset only =================
 const STAFF_PIN='2026'; // change before launch; front-desk staff use it to reset a member's barcode
-function cardSheet(){const id=S.barcode||'';
+function cardSheet(){const id=S.barcode||'';if(id&&recordVisit()){setTimeout(()=>toast('Visit recorded for today'),300);setTimeout(render,0);}
   const inp='style="background:var(--bg);border:1px solid var(--line-2);border-radius:14px;padding:14px;color:var(--fg);font:inherit;font-size:18px;letter-spacing:.06em;text-align:center;width:100%"';
   openSheet(id?`<div class="mcard"><div class="wordmark" style="color:#15120c">BΞACHOUSΞ<small style="color:#6f6656">HEALTH CLUB</small></div>
      <div class="mbar">${code128svg(id)}</div><div class="row between"><span><span class="tag" style="color:#6f6656">Member</span><br><b>${esc(S.name||'Member')}</b></span><span style="text-align:right"><span class="tag" style="color:#6f6656">ID</span><br><b style="font-variant-numeric:tabular-nums">${esc(id)}</b></span></div></div>
@@ -1623,7 +1627,7 @@ function bodyTodayCard(){const rec=recovery(),det=recoveryDetail();const ks=Obje
 // ================= How do you feel (wearable fills it in when connected) =================
 function feelCard(){const m=(S.mood||{})[dayISO(0)];
   return `<section class="card"><div class="row between"><h2>How do you feel today?</h2></div>
-   ${soon(`<div class="row between" style="border:1px dashed var(--line-2);border-radius:12px;padding:10px 12px;font-size:13px"><span>Connect a wearable to fill this in automatically</span><span>WHOOP · Garmin · Oura</span></div>`)}
+   ${wearToday()?wearCard().replace('<section class="card">','<div class="stack" style="gap:10px">').replace(/<\/section>$/,'</div>'):`<button class="item" style="width:100%;border:1px dashed var(--line-2);border-radius:12px" data-act="addwear"><span><b>+ Add today\u2019s wearable numbers</b><br><span class="meta">WHOOP, Garmin, Apple Watch or Oura \u00b7 auto-sync coming soon</span></span><span class="chev">\u203a</span></button>`}
    ${sleepChips()}<span class="tag" style="color:var(--muted)">Energy</span>
    <div class="chips" role="group" aria-label="How you feel">${Object.entries(MOODS).map(([k,v])=>`<button class="chip" data-mood="${k}" aria-pressed="${m===k}">${v.l}</button>`).join('')}</div>
    ${m?`<p style="font-size:14px">${esc(MOODS[m].tip)}</p>${MOODS[m].act?`<button class="btn ghost small" data-act="${MOODS[m].act}">${MOODS[m].btn}</button>`:''}`:''}</section>`;}
@@ -1667,8 +1671,177 @@ function parsePhysio(txt){const avoid=new Set(),add=new Set();String(txt||'').sp
   [...avoid].forEach(x=>add.delete(x));return {avoid:[...avoid],add:[...add]};}
 
 function credit(){return `<p class="credit">App developed by <a href="mailto:matthewarmstrong100@gmail.com?subject=Beachouse%20Health%20Club%20app">M.A</a></p>`;}
-const VIEWS={home:viewHome,train:viewTrain,progress:viewProgress,bath:viewBath,medical:viewMedical,club:viewClub};
+// ================= Report reader: upload a PDF or photo, the key numbers fill in for the member to check =================
+// Everything is read on the member's phone. PDFs use pdf.js; photos use Tesseract OCR. Nothing is uploaded to a server.
+function loadScript(src){return new Promise((res,rej)=>{if(document.querySelector(`script[src="${src}"]`)){res();return;}const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
+async function readReport(file,onStatus){
+  if(/pdf$/i.test(file.type)||/\.pdf$/i.test(file.name)){onStatus('Reading your PDF…');
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    const doc=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;const lines=[];
+    for(let i=1;i<=Math.min(doc.numPages,12);i++){const tc=await (await doc.getPage(i)).getTextContent();const rows={};
+      tc.items.forEach(it=>{const y=Math.round(it.transform[5]/3);(rows[y]=rows[y]||[]).push(it);});
+      Object.keys(rows).sort((a,b)=>b-a).forEach(y=>lines.push(rows[y].sort((a,b)=>a.transform[4]-b.transform[4]).map(x=>x.str).join(' ')));}
+    const txt=lines.join('\n');if(txt.replace(/\s/g,'').length>40)return txt;
+    onStatus('This PDF is a scan, reading it as a photo…');const pg=await doc.getPage(1);const vp=pg.getViewport({scale:2});const c=document.createElement('canvas');c.width=vp.width;c.height=vp.height;await pg.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;file=await new Promise(r=>c.toBlob(r,'image/png'));}
+  onStatus('Reading your photo… this can take 20 seconds');
+  await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js');
+  const r=await Tesseract.recognize(file,'eng');return r.data.text||'';}
+const num=s=>{const m=String(s).replace(/,/g,'').match(/[<>]?\s*(\d+(?:\.\d+)?)/);return m?parseFloat(m[1]):NaN;};
+// Each field: matcher, sane range, optional unit fix (line text passed in).
+const READ_FIELDS={
+ blood:[['ldl',/\bLDL\b/i,0,15],['hdl',/\bHDL\b/i,0,6],['chol',/total cholesterol|^\s*cholesterol\b/i,1,15,(v,l)=>v>30||/mg\/dl/i.test(l)?v/38.67:v],['trig',/triglyceride/i,0,20,(v,l)=>v>30||/mg\/dl/i.test(l)?v/88.57:v],
+   ['hba1c',/hba1c|\ba1c\b|glycated/i,3,15,(v,l)=>v>20||/mmol\/mol/i.test(l)?v*0.0915+2.15:v],['glucose',/glucose/i,2,30,(v,l)=>v>35||/mg\/dl/i.test(l)?v/18:v],
+   ['hb',/ha?emoglobin\b|\bhb\b|\bhgb\b/i,50,250,(v)=>v<30?v*10:v],['ferritin',/ferritin/i,1,3000],['iron',/\biron\b|serum iron/i,1,80],['b12',/\bb12\b|cobalamin/i,50,3000],
+   ['vitd',/vitamin d|25.?oh|hydroxy/i,5,400,(v,l)=>/ng\/ml/i.test(l)?v*2.5:v],['crp',/\bcrp\b|c.reactive/i,0,300],['alt',/\balt\b|alanine/i,1,1000],['egfr',/egfr/i,5,200],['tsh',/\btsh\b|thyroid stimulating/i,0.01,100],['testo',/testosterone/i,0.1,60]],
+ dexa:[['bf',/(total )?body fat\s*%|fat\s*%|% ?fat|body fat percent/i,3,70],['vat',/visceral|\bvat\b/i,0,5000],['lean',/(total )?lean mass|lean tissue/i,20,120,(v)=>v>200?v/1000:v],['fat',/(total )?fat mass/i,2,120,(v)=>v>200?v/1000:v],['bone',/t-?score/i,-6,6]],
+ vo2:[['v',/vo2\s*(max|peak)?/i,10,95]],rmr:[['v',/\brmr\b|resting metabolic|resting energy|\bree\b/i,700,5000]],
+ cgm:[['tir',/time in range|\btir\b/i,0,100],['avg',/average glucose|mean glucose|avg glucose|average/i,2,25,(v,l)=>v>35||/mg\/dl/i.test(l)?v/18:v]],
+ diet:[['protein',/protein/i,30,400],['kcal',/calorie|kcal|energy/i,800,6000]]};
+function parseReport(txt,kind){const lines=txt.split(/\n/);const out={};
+  for(const [id,re,lo,hi,fix] of READ_FIELDS[kind]){if(out[id]!=null)continue;
+    for(const line of lines){const m=line.match(re);if(!m)continue;if(id==='chol'&&/ldl|hdl|non|ratio/i.test(line))continue;if(id==='glucose'&&/average|mean|hba1c/i.test(line))continue;if(id==='iron'&&/studies|binding|saturation/i.test(line))continue;
+      const after=line.slice(m.index+m[0].length).replace(/25\s*-?\s*\(?OH\)?|25-hydroxy|\(\s*\d+\s*-\s*\d+\s*\)/ig,' ');const nums=(after.match(/-?\d+(?:[.,]\d+)?/g)||[]).map(x=>parseFloat(x.replace(',','.')));
+      for(let v of nums){if(fix)v=fix(v,line);if(v>=lo&&v<=hi){out[id]=Math.round(v*100)/100;break;}}if(out[id]!=null)break;}}
+  return out;}
+// Adds an upload button to a sheet; fills inputs named prefix+id and highlights them.
+function uploadRow(kind){return `<div class="uprow"><label class="btn ghost small" style="cursor:pointer">Upload report (PDF or photo)<input type="file" accept="application/pdf,image/*" data-upkind="${kind}" hidden></label><span class="muted" style="font-size:12px" id="upstat">Read on your phone, never uploaded.</span></div>`;}
+function wireUpload(s,kind,prefix){const f=s.querySelector(`[data-upkind="${kind}"]`);if(!f)return;const st=s.querySelector('#upstat');
+  f.onchange=async()=>{const file=f.files[0];if(!file)return;try{const txt=await readReport(file,m=>st.textContent=m);const found=parseReport(txt,kind);let n=0;
+      for(const [id,v] of Object.entries(found)){const el=s.querySelector('#'+prefix+id);if(el){el.value=v;el.classList.add('filled');n++;}}
+      const dm=txt.match(/(\d{1,2})[\/.\-](\d{1,2})[\/.\-](20\d{2})/);const dEl=s.querySelector('input[type=date]');if(dm&&dEl){const iso=`${dm[3]}-${dm[2].padStart(2,'0')}-${dm[1].padStart(2,'0')}`;if(!isNaN(new Date(iso)))dEl.value=iso;}
+      st.textContent=n?`Found ${n} result${n>1?'s':''}. Check them against your report, then save.`:'Couldn’t find the numbers. Type them in instead.';
+      if(n){const first=s.querySelector('.filled');if(first)first.scrollIntoView({behavior:'smooth',block:'center'});}}
+    catch(e){st.textContent='Couldn’t read that file. Try a clearer photo, or type the numbers in.';}};}
+
+// ================= Wearable: type today's numbers in (automatic sync comes with the phone app) =================
+function wearToday(){return (S.wearData||{})[dayISO(0)]||null;}
+function wearSheet(){const t=wearToday()||{};const inp='style="background:var(--bg);border:1px solid var(--line-2);border-radius:12px;padding:12px;color:var(--fg);font:inherit;width:100%;min-width:0;text-align:center"';
+  openSheet(`<p class="tag">Wearable</p><h1 style="font-size:28px">Today's numbers</h1><p class="muted" style="font-size:13px">Copy these from your WHOOP, Garmin, Apple Watch or Oura app. Automatic sync is coming with the phone app.</p>
+   <select id="wdev" class="sel">${Object.entries(DEVICES).map(([k,l])=>`<option value="${k}"${S.wear===k?' selected':''}>${l}</option>`).join('')}</select>
+   ${[['recovery','Recovery or readiness','%'],['hrv','HRV','ms'],['rhr','Resting heart rate','bpm'],['sleep','Sleep','hours']].map(([k,l,u])=>`<div class="set" style="grid-template-columns:1fr 110px"><label for="w_${k}" style="font-size:14px">${l} <span class="muted" style="font-size:11px">${u}</span></label><input id="w_${k}" inputmode="decimal" value="${t[k]??''}" ${inp}></div>`).join('')}
+   <p class="muted" style="font-size:12px">Garmin: use Body Battery for recovery. Apple Watch: leave recovery blank.</p>
+   <button class="btn block" id="wsave">Save</button>`,
+  s=>s.querySelector('#wsave').onclick=()=>{const d={};['recovery','hrv','rhr','sleep'].forEach(k=>{const v=parseFloat(s.querySelector('#w_'+k).value);if(!isNaN(v))d[k]=v;});if(!Object.keys(d).length){toast('Add at least one number');return;}
+    S.wear=s.querySelector('#wdev').value;S.wearData=S.wearData||{};S.wearData[dayISO(0)]=d;if(d.sleep!=null){S.sleep=S.sleep||{};S.sleep[dayISO(0)]=Math.round(d.sleep);}save();closeSheet();render();toast('Saved. Today’s plan uses your numbers');});}
+function wearCard(){const d=wearToday();if(!d||d.recovery==null&&d.hrv==null)return '';const r=d.recovery;const col=r==null?'var(--muted)':r>=67?'var(--good)':r>=34?'var(--heat)':'#d97a6c';
+  const adv=r==null?'Add a recovery or readiness score for advice.':r>=67?'Green light: go for your planned session.':r>=34?'Moderate recovery: keep today steady and add a 38° heat round.':'Low recovery: take a lighter session and prioritise sauna and cold.';
+  return `<section class="card"><div class="row between"><h2>${DEVICES[S.wear]||'Wearable'} · today</h2><button class="muted" style="font-size:12px" data-act="addwear">Edit</button></div>
+   <div class="row" style="gap:16px;align-items:center"><div style="width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(${col} ${(r||0)*3.6}deg,var(--surface-2) 0);flex:none"><div style="width:62px;height:62px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-size:18px">${r!=null?r+'%':'–'}</div></div>
+    <div class="stack" style="gap:2px;font-size:13px;min-width:0"><span class="muted">Recovery</span><span>HRV <b>${d.hrv??'–'} ms</b> · Resting HR <b>${d.rhr??'–'}</b></span><span>Sleep <b>${d.sleep??'–'} h</b></span></div></div>
+   <p class="note">${adv}</p></section>`;}
+
+// ================= Crews: small groups (up to 6), avatars, daily visits and a leaderboard =================
+// A visit is recorded when a member checks in at the front desk. Until Mindbody is connected, showing your member card
+// (or logging a session or a 38° visit) counts as today's visit. Shared crews across phones need the members database (coming with logins).
+const CREW_MAX=6;
+const AVATAR_COLS=['#C8A27A','#B4623F','#2A7FB0','#8fa889','#9b8fd6','#E3D4C0'];
+const AVATAR_ICONS={wave:'M3 14c3-3 5-3 8 0s5 3 8 0',sun:'M12 5v2M12 17v2M5 12h2M17 12h2M7 7l1.4 1.4M15.6 15.6 17 17M7 17l1.4-1.4M15.6 8.4 17 7M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6',bolt:'M13 3 6 13h5l-1 8 7-10h-5z',mountain:'M3 19l6-10 4 6 2-3 6 7z',flame:'M12 3c2 3 5 5.5 5 9a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3-1-3 0-6 1-8z',dumbbell:'M3 12h2M19 12h2M5 9v6M19 9v6M8 7v10M16 7v10M8 12h8'};
+function avatarSvg(a,size){a=a||{c:'#C8A27A',i:'wave',t:''};size=size||44;
+  return `<span class="avt" style="width:${size}px;height:${size}px;background:${a.c}">${a.t?`<b style="font-size:${Math.round(size*.38)}px">${esc(a.t)}</b>`:`<svg viewBox="0 0 24 24" style="width:${Math.round(size*.55)}px;height:${Math.round(size*.55)}px"><path d="${AVATAR_ICONS[a.i]||AVATAR_ICONS.wave}"/></svg>`}</span>`;}
+function visitDays(){const d=new Set((S.visits||[]));S.logs.forEach(l=>d.add(l.date));S.rec.forEach(r=>d.add(r.date));return d;}
+function recordVisit(){S.visits=S.visits||[];const t=dayISO(0);if(!S.visits.includes(t)){S.visits.push(t);save();return true;}return false;}
+function weekDates(){const ws=new Date(weekStart()+'T00:00');return [...Array(7)].map((_,i)=>{const d=new Date(ws);d.setDate(d.getDate()+i);return isoLocal(d);});}
+// Demo crews so the leaderboard can be seen before the members database exists.
+function demoCrews(){const W=weekDates(),t=dayISO(0);const mk=(name,av,ms)=>({name,av,demo:true,members:ms.map(([n,a,pat])=>({n,av:a,days:W.filter((d,i)=>d<=t&&pat[i]==='1')}))});
+  return [mk('Bronte Bandits',{c:'#2A7FB0',i:'wave'},[['Sam',{c:'#2A7FB0',t:'S'},'1111111'],['Ella',{c:'#9b8fd6',t:'E'},'1111111'],['Jack',{c:'#B4623F',t:'J'},'1101111'],['Mia',{c:'#8fa889',t:'M'},'1111111']]),
+   mk('6am Club',{c:'#B4623F',i:'sun'},[['Tom',{c:'#B4623F',t:'T'},'1111111'],['Ava',{c:'#C8A27A',t:'A'},'1111011'],['Noah',{c:'#2A7FB0',t:'N'},'1110111']]),
+   mk('Iron Arches',{c:'#8fa889',i:'dumbbell'},[['Liv',{c:'#8fa889',t:'L'},'1011010'],['Max',{c:'#C8A27A',t:'M'},'1101101'],['Zoe',{c:'#9b8fd6',t:'Z'},'0111011'],['Ben',{c:'#B4623F',t:'B'},'1010101'],['Isla',{c:'#2A7FB0',t:'I'},'1100110']])];}
+function myCrew(){const c=S.crew;if(!c)return null;const W=weekDates(),t=dayISO(0),vd=visitDays();
+  const me={n:S.name||'You',av:S.avatar||{c:'#C8A27A',t:(S.name||'Y')[0]},days:W.filter(d=>d<=t&&vd.has(d)),me:true};
+  return {...c,members:[me,...(c.others||[]).map(o=>({...o,days:(S.example?W.filter((d,i)=>d<=t&&o.pat[i]==='1'):[])}))]};}
+function crewScore(c){const W=weekDates(),t=dayISO(0);const past=W.filter(d=>d<=t);const total=c.members.reduce((a,m)=>a+m.days.length,0);
+  const full=past.filter(d=>c.members.every(m=>m.days.includes(d))).length;return {total,full,days:past.length,pct:Math.round(total/(c.members.length*past.length||1)*100),perfect:full===past.length&&past.length>0};}
+function crewCard(){const c=myCrew();
+  if(!c)return `<section class="card"><div class="row between"><h2>Your crew${ib('Team up with up to 6 friends. If every member of your crew visits every day of the week, the whole crew earns a group 38\u00b0 Bathhouse session. Visits are recorded when you check in at the front desk.')}</h2></div>
+   <p style="font-size:14px">Train with friends. Visit every day as a crew and you all win a group session at 38\u00b0 The Bathhouse.</p>
+   <div class="row"><button class="btn small" style="flex:1" data-act="crewnew">Create a crew</button><button class="btn ghost small" style="flex:1" data-act="crewjoin">Join with a code</button></div></section>`;
+  const sc=crewScore(c);const W=weekDates(),t=dayISO(0);
+  return `<section class="card"><div class="row between"><span class="row" style="gap:12px">${avatarSvg(c.av,44)}<span><b style="font-size:17px">${esc(c.name)}</b><br><span class="muted" style="font-size:12px">${c.members.length} of ${CREW_MAX} \u00b7 code ${c.code}</span></span></span><button class="muted" style="font-size:12px" data-act="crewmanage">Manage</button></div>
+   <div class="crewgrid"><span></span>${W.map(d=>`<span class="cg-h">${new Date(d+'T00:00').toLocaleDateString('en-AU',{weekday:'narrow'})}</span>`).join('')}
+   ${c.members.map(m=>`<span class="cg-n">${avatarSvg(m.av,24)}<span>${esc(m.me?'You':m.n)}</span></span>${W.map(d=>`<i class="${m.days.includes(d)?'on':d<=t?'miss':''}"></i>`).join('')}`).join('')}</div>
+   <p style="font-size:13px">${sc.perfect?`<b style="color:var(--good)">Perfect so far.</b> Every member has visited every day. Keep it going to Sunday for your group 38\u00b0 session.`:`${sc.full} of ${sc.days} days with everyone in. Every member needs to visit every day to win a group 38\u00b0 session.`}</p>
+   ${recordedToday()?'':`<button class="btn gold small" data-act="card">I\u2019m at the gym \u00b7 show my card</button>`}</section>`;}
+function recordedToday(){return visitDays().has(dayISO(0));}
+function leaderboardCard(){const mine=myCrew();const list=[...demoCrews(),...(mine?[mine]:[])].map(c=>({c,s:crewScore(c)})).sort((a,b)=>b.s.pct-a.s.pct||b.s.total-a.s.total);
+  return `<section class="card"><div class="row between"><h2>Crew leaderboard${ib('Ranked by the share of possible visits this week (members \u00d7 days so far). Resets every Monday.')}</h2><span class="muted" style="font-size:12px">This week</span></div>
+   <div class="stack" style="gap:10px">${list.map((x,i)=>`<div class="lb${x.c===mine?' me':''}"><span class="lb-r">${i+1}</span>${avatarSvg(x.c.av,34)}<span style="min-width:0"><b>${esc(x.c.name)}</b><br><span class="muted" style="font-size:12px">${x.c.members.length} members \u00b7 ${x.s.total} visits</span></span><span class="lb-p">${x.s.pct}%</span></div>`).join('')}</div>
+   ${S.example?'<p class="note">Example crews shown so you can see how it works.</p>':''}</section>`;}
+function avatarPicker(cur,onPick){let a=Object.assign({c:'#C8A27A',i:'wave',t:''},cur||{});
+  const draw=box=>{box.innerHTML=`<div class="row" style="gap:14px;align-items:center">${avatarSvg(a,64)}<input id="avt" maxlength="2" placeholder="Initials (optional)" value="${esc(a.t||'')}" class="sel" style="flex:1"></div>
+    <div class="row" style="gap:8px;flex-wrap:wrap">${AVATAR_COLS.map(c=>`<button class="swatch" data-ac="${c}" style="background:${c}" aria-pressed="${a.c===c}" aria-label="Colour"></button>`).join('')}</div>
+    <div class="row" style="gap:8px;flex-wrap:wrap">${Object.keys(AVATAR_ICONS).map(k=>`<button class="iconpick" data-ai="${k}" aria-pressed="${a.i===k&&!a.t}">${avatarSvg({c:'#2a2926',i:k},36)}</button>`).join('')}</div>`;
+    box.querySelector('#avt').oninput=e=>{a.t=e.target.value.toUpperCase();box.querySelector('.avt').outerHTML=avatarSvg(a,64);onPick(a);};};
+  return {draw,bind:box=>{box.addEventListener('click',e=>{const c=e.target.closest('[data-ac]'),i=e.target.closest('[data-ai]');if(c)a.c=c.dataset.ac;if(i){a.i=i.dataset.ai;a.t='';}if(c||i){draw(box);onPick(a);}});draw(box);onPick(a);}};}
+function crewSheet(mode){const code=Math.random().toString(36).slice(2,8).toUpperCase();let av={c:'#C8A27A',i:'wave',t:''},me=S.avatar||{c:'#B4623F',i:'sun',t:(S.name||'')[0]||''};
+  if(mode==='join'){openSheet(`<p class="tag">Crews</p><h1 style="font-size:28px">Join a <em>crew</em></h1><p class="muted" style="font-size:13px">Ask a friend for their 6-letter crew code.</p><input id="cj" maxlength="6" class="sel" placeholder="Crew code" style="text-transform:uppercase;letter-spacing:.2em;text-align:center;font-size:18px">
+     <span class="tag" style="color:var(--muted)">Your avatar</span><div id="myav" class="stack" style="gap:10px"></div><button class="btn block" id="cjgo">Join crew</button><p class="note">Crews across phones switch on with member logins. Until then this sets up your crew on this phone.</p>`,
+    s=>{const p=avatarPicker(me,x=>me=x);p.bind(s.querySelector('#myav'));s.querySelector('#cjgo').onclick=()=>{const v=s.querySelector('#cj').value.trim().toUpperCase();if(v.length!==6){toast('Enter the 6-letter code');return;}S.avatar=me;S.crew={name:'Crew '+v,code:v,av:{c:'#2A7FB0',i:'wave'},others:[]};save();closeSheet();render();toast('You\u2019re in. Visit every day as a crew');};});return;}
+  if(mode==='manage'){const c=S.crew;openSheet(`<p class="tag">Crews</p><h1 style="font-size:28px">${esc(c.name)}</h1><p style="font-size:14px">Share this code with up to ${CREW_MAX-1} friends:</p><div class="codebox">${c.code}</div><button class="btn ghost block" id="cshare">Share invite</button><span class="tag" style="color:var(--muted)">Crew avatar</span><div id="cav" class="stack" style="gap:10px"></div><button class="btn block" id="csv">Save</button><button class="muted" style="font-size:12px;text-decoration:underline" id="cleave">Leave crew</button>`,
+    s=>{let a=c.av;avatarPicker(c.av,x=>a=x).bind(s.querySelector('#cav'));s.querySelector('#csv').onclick=()=>{c.av=a;save();closeSheet();render();};
+      s.querySelector('#cshare').onclick=()=>{const txt=`Join my crew "${c.name}" in the Beachouse Health Club app. Code: ${c.code}`;if(navigator.share)navigator.share({text:txt}).catch(()=>{});else navigator.clipboard.writeText(txt).then(()=>toast('Invite copied'));};
+      s.querySelector('#cleave').onclick=()=>{if(confirm('Leave '+c.name+'?')){S.crew=null;save();closeSheet();render();}};});return;}
+  openSheet(`<p class="tag">Crews</p><h1 style="font-size:28px">Create a <em>crew</em></h1><input id="cn" maxlength="22" class="sel" placeholder="Crew name, e.g. 6am Club"><span class="tag" style="color:var(--muted)">Crew avatar</span><div id="cav" class="stack" style="gap:10px"></div><span class="tag" style="color:var(--muted)">Your avatar</span><div id="myav" class="stack" style="gap:10px"></div><button class="btn block" id="cgo">Create crew</button>`,
+   s=>{avatarPicker(av,x=>av=x).bind(s.querySelector('#cav'));avatarPicker(me,x=>me=x).bind(s.querySelector('#myav'));
+     s.querySelector('#cgo').onclick=()=>{const n=s.querySelector('#cn').value.trim();if(!n){toast('Name your crew');return;}S.avatar=me;
+       S.crew={name:n,code,av,others:S.example?[{n:'Ella',av:{c:'#9b8fd6',t:'E'},pat:'1111111'},{n:'Jack',av:{c:'#2A7FB0',t:'J'},pat:'1111011'}]:[]};save();closeSheet();render();crewSheet('manage');};});}
+
+const VIEWS={crew:viewCrew,home:viewHome,train:viewTrain,progress:viewProgress,bath:viewBath,medical:viewMedical,club:viewClub};
 let lastTab=null;
+
+// ================= Beta notice =================
+const BETA_TEXT='This is a free app in beta. We’re shaping it around what members need, so expect big updates as we go, and your data may be lost along the way.';
+function betaNote(){return `<p class="beta"><b>Beta</b> ${BETA_TEXT}</p>`;}
+
+// ================= Home hub: membership via Mindbody (coming with member accounts) =================
+function hubCard(){const mb=S.mb;
+  if(mb)return `<section class="card"><div class="row between"><h2>Your membership${ib('Pulled from your Beachouse Mindbody account. Change or pause your membership from the links below.')}</h2><span class="pill ${mb.status==='Active'?'pr':''}">${esc(mb.status)}</span></div>
+   <div class="hubgrid"><div><span class="tag">Plan</span><b>${esc(mb.plan)}</b></div><div><span class="tag">You pay</span><b>${esc(mb.price)}</b></div><div><span class="tag">Next payment</span><b>${fmtDate(mb.next)}</b></div><div><span class="tag">Visits this month</span><b>${mb.visits}</b></div></div>
+   ${S.example?'<p class="note">Example membership. Real details appear once Mindbody sign-in is live.</p>':''}
+   <div class="row"><a class="btn ghost small" style="flex:1" href="${SITE}/memberships-passes" target="_blank" rel="noopener">Change plan</a><button class="btn ghost small" style="flex:1" data-act="support">Pause or cancel</button></div></section>`;
+  return `<section class="card"><h2>Your membership</h2><p class="muted" style="font-size:13px">Sign in with your Mindbody login to see your plan, what you pay and your visits. The same login will keep your workouts, progress and settings on every device.</p>
+   ${soon('<button class="btn block" tabindex="-1">Sign in with Mindbody</button>')}</section>`;}
+
+// ================= Members' picks: favourite workouts, shared by link =================
+const PICKS=[
+ {id:'p1',name:'Glute Builder',by:'Gabby, coach',items:['hip-thrust','rdl','kickback','abductor','back-ext'],likes:48},
+ {id:'p2',name:'Upper Body Pump',by:'Sam K.',items:['chest-press','lat-pull','shoulder-press','seated-row','lateral','rear-delt'],likes:31},
+ {id:'p3',name:'Leg Day Classic',by:'Jules, coach',items:['leg-press','hack-squat','leg-ext','leg-curl','calf'],likes:27},
+ {id:'p4',name:'30-Minute Engine',by:'Mia R.',items:['rower','ski','bike','ab-crunch'],likes:19},
+ {id:'p5',name:'Core & Back',by:'Tom W.',items:['back-ext','cable-crunch','ab-crunch','seated-row'],likes:12}
+];
+function pickMins(items){return routineMeta({items}).mins;}
+function allPicks(){return [...(S.myPicks||[]),...PICKS].map(p=>({...p,liked:!!(S.likedPicks||{})[p.id],likes:p.likes+((S.likedPicks||{})[p.id]?1:0)})).sort((a,b)=>b.likes-a.likes);}
+function viewPicks(){const ps=allPicks();const rs=routines();
+  return `<section class="card"><h2>Share your favourite${ib('Pick one of your routines and share it. Anyone with the link can save it to their own routines.')}</h2>
+   ${rs.length?`<div class="list">${rs.map(r=>`<div class="item"><span><b>${esc(r.name)}</b><br><span class="meta">${r.items.length} exercises</span></span><span class="row" style="gap:6px"><button class="btn ghost small" data-pickpost="${r.id}"${r.items.length?'':' disabled'}>${(S.myPicks||[]).some(p=>p.rid===r.id)?'Picked':'Make my pick'}</button><button class="btn small" data-pickshare="${r.id}"${r.items.length?'':' disabled'}>Share</button></span></div>`).join('')}</div>`:`<p class="muted" style="font-size:13px">Build a routine first, then share it here.</p><button class="btn ghost small" data-tv="routines">Go to routines</button>`}
+  </section>
+  <section class="stack"><h2>Members' picks</h2><div class="list">${ps.map(p=>`<div class="item" style="align-items:flex-start"><span style="min-width:0"><b>${esc(p.name)}</b><br><span class="meta">by ${esc(p.by)} · ${p.items.length} exercises · about ${pickMins(p.items)} min</span><br><span class="meta">${p.items.map(i=>M(i)?.name).filter(Boolean).join(', ')}</span></span>
+    <span class="stack" style="gap:6px;align-items:flex-end;flex:none"><button class="heart${p.liked?' on':''}" data-pickliked="${p.id}" aria-pressed="${p.liked}" aria-label="Favourite ${esc(p.name)}">♥ ${p.likes}</button><button class="btn ghost small" data-picksave="${p.id}">Save</button></span></div>`).join('')}</div>
+   <p class="note">${S.myPicks&&S.myPicks.length?'Your pick shows on this phone. ':''}Picks from the whole club appear here once member accounts are live. For now, Share sends a link anyone can open.</p></section>`;}
+const b64e=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const b64d=s=>decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/'))));
+function shareRoutine(r){const url=location.origin+location.pathname+'#pick='+b64e(JSON.stringify({n:r.name,b:S.name||'A member',i:r.items}));
+  const text=`My Beachouse workout: ${r.name}`;
+  if(navigator.share)navigator.share({title:r.name,text,url}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(url).then(()=>toast('Link copied'),()=>prompt('Copy this link',url));else prompt('Copy this link',url);}
+function savePick(p){const id='r'+Date.now().toString(36);routines().push({id,name:p.name.slice(0,28),items:p.items.filter(i=>M(i))});save();toast('Saved to your routines');}
+function importPickFromHash(){const m=location.hash.match(/pick=([A-Za-z0-9_-]+)/);if(!m)return;history.replaceState(null,'',location.pathname+'#train');
+  let p;try{p=JSON.parse(b64d(m[1]));}catch(e){return;}if(!p||!Array.isArray(p.i))return;const items=p.i.filter(i=>M(i));if(!items.length)return;
+  setTimeout(()=>openSheet(`<p class="tag">Shared workout</p><h1 style="font-size:30px">${esc(String(p.n||'Workout').slice(0,28))}</h1><p class="muted" style="font-size:13px">From ${esc(String(p.b||'a member').slice(0,40))} · about ${pickMins(items)} min</p>
+    <div class="list">${items.map(i=>`<div class="item"><span>${M(i).name}</span><span class="meta">${esc(target(i).text)}</span></div>`).join('')}</div><button class="btn block" id="pimp">Save to my routines</button>`,
+    s=>s.querySelector('#pimp').onclick=()=>{savePick({name:String(p.n||'Shared workout'),items});closeSheet();tab='train';trainView='routines';render();}),900);}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-pickshare],[data-pickpost],[data-pickliked],[data-picksave]');if(!t)return;
+  if(t.dataset.pickshare){const r=routineById(t.dataset.pickshare);if(r)shareRoutine(r);}
+  else if(t.dataset.pickpost){const r=routineById(t.dataset.pickpost);if(!r)return;S.myPicks=(S.myPicks||[]).filter(p=>p.rid!==r.id);S.myPicks.unshift({id:'m'+r.id,rid:r.id,name:r.name,by:(S.name||'You')+' (you)',items:r.items.slice(),likes:0});save();render();toast('Shared as your pick');}
+  else if(t.dataset.pickliked){S.likedPicks=S.likedPicks||{};S.likedPicks[t.dataset.pickliked]=!S.likedPicks[t.dataset.pickliked];save();render();}
+  else if(t.dataset.picksave){const p=allPicks().find(x=>x.id===t.dataset.picksave);if(p)savePick(p);}});
+
+// ================= Train > Today: everything about today's training in one place =================
+function trainToday(){return `${bodyTodayCard()}${sessionCardHTML()}${checkinCard()}${insightsCard()}${goalsCard()}`;}
+
+// ================= Crew tab =================
+function viewCrew(){return `<section class="stack"><h1>Crew</h1><p class="muted">Train together. Visit every day as a crew and win a group session at 38°.</p></section>${crewCard()}${leaderboardCard()}${credit()}`;}
+
 function render(){setTimeout(sessionClock,0);
   const v=$('#view');v.innerHTML=VIEWS[tab]();if(tab!==lastTab){v.classList.remove('enter');void v.offsetWidth;v.classList.add('enter');lastTab=tab;}
   $('#tabs').innerHTML=TABS.map(([id,l])=>`<button data-tab="${id}" ${id===tab?'aria-current="page"':''}>${ICONS[id]}<span>${l}</span></button>`).join('');
@@ -1728,7 +1901,7 @@ function scanSheet(){
    s=>{startCam(s);s.addEventListener('click',e=>{const b=e.target.closest('[data-pick]');if(b){stopCam();machineSheet(b.dataset.pick);}});});
 }
 function profileSheet(){
-  openSheet(`<h1 style="font-size:22px">Profile</h1><p class="muted" style="font-size:13px">Your focus and any injuries shape your sessions and recovery goals.</p>
+  openSheet(`<h1 style="font-size:22px">Profile</h1><p class="muted" style="font-size:13px">Your focus and any injuries shape your sessions and recovery goals.</p>${betaNote()}
    <label class="stack" for="pname"><span class="tag">Name</span></label><input id="pname" value="${esc(S.name)}" style="background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;color:var(--fg);font:inherit">
    <span class="tag">Goal</span><div class="chips">${Object.entries(GOALS).map(([k,g])=>`<button class="chip" data-pg="${k}" aria-pressed="${S.goal===k}">${g.label}</button>`).join('')}</div>
    <span class="tag">Focus</span><div class="chips">${Object.entries(FOCUS).map(([k,f])=>`<button class="chip" data-pf="${k}" aria-pressed="${(S.focus||'balanced')===k}">${f.label}</button>`).join('')}</div>
@@ -1763,6 +1936,9 @@ document.addEventListener('click',e=>{
   else if(t.dataset.act==='therapist')therapistSheet();
   else if(t.dataset.act==='toses'){const c=document.getElementById('sescard');if(c)c.scrollIntoView({behavior:'smooth',block:'start'});}
   else if(t.dataset.act==='checkin')checkinSheet();
+  else if(t.dataset.act==='crewnew')crewSheet('new');
+  else if(t.dataset.act==='crewjoin')crewSheet('join');
+  else if(t.dataset.act==='crewmanage')crewSheet('manage');
   else if(t.dataset.svc)serviceSheet(t.dataset.svc);
   else if(t.dataset.tsok)applyTests([t.dataset.tsok]);
   else if(t.dataset.act==='tsall')applyTests(testSuggestions().map(x=>x.id));
@@ -1823,6 +1999,7 @@ function infoPop(txt){const o=document.createElement('div');o.className='sheet';
 document.addEventListener('click',e=>{const b=e.target.closest('[data-info]');if(b){e.stopPropagation();e.preventDefault();infoPop(b.dataset.info);}},true);
 window.addEventListener('hashchange',()=>{const h=location.hash.replace('#','');if(VIEWS[h]&&h!==tab){tab=h;render();}});
 render();
+importPickFromHash();
 if(deep&&M(deep)){history.replaceState(null,'',location.pathname);setTimeout(()=>machineSheet(deep),950);}
 loadEvents();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
