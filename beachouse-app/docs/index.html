@@ -106,7 +106,7 @@ nav.tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1
 <div class="app">
   <header class="top">
     <div class="wordmark" aria-label="Beachouse Health Club">BΞACHOUSΞ<small>HEALTH CLUB</small></div>
-    <button class="avatar" id="avatarBtn" aria-label="Your profile">MA</button>
+    <span class="row" style="gap:8px"><button class="cardbtn" data-act="card" aria-label="Member card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6v12M7 6v12M9.5 6v12M13 6v12M15 6v12M18 6v12M20 6v12"/></svg></button><button class="avatar" id="avatarBtn" aria-label="Your profile">MA</button></span>
   </header>
   <main id="view" aria-live="polite"></main>
   <nav class="tabs" aria-label="Main">
@@ -272,6 +272,53 @@ main{padding-bottom:150px}
 .teamf textarea{background:var(--bg);border:1px solid var(--line-2);border-radius:14px;padding:12px;color:var(--fg);font:inherit;resize:vertical}
 .chatin{display:flex;gap:8px;position:sticky;bottom:calc(-24px - env(safe-area-inset-bottom,0px));background:#121211;padding:10px 0 4px}
 .chatin input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line-2);border-radius:999px;padding:12px 16px;color:var(--fg);font:inherit}
+.livepill{display:inline-flex;align-items:center;gap:8px;padding:7px 12px 7px 10px;border-radius:999px;border:1px solid var(--line-2);font-size:12px;font-weight:500;letter-spacing:.02em}
+.livepill .dot{width:9px;height:9px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.45}}
+.cardbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--fg)}
+.cardbtn svg{width:16px;height:16px;stroke:currentColor;stroke-width:1.4;fill:none}
+.mcard{background:linear-gradient(160deg,#f6f1e7,#e6dcc8);color:#15120c;border-radius:22px;padding:22px;display:grid;gap:18px;box-shadow:0 20px 40px -20px rgba(0,0,0,.8)}
+.mbar{background:#fff;border-radius:12px;padding:14px 10px}
+.slots{display:flex;flex-wrap:wrap;gap:8px}
+.slot{min-width:72px;padding:10px 12px;border-radius:12px;border:1px solid var(--line-2);font-size:14px;font-variant-numeric:tabular-nums;display:grid;justify-items:center;gap:2px}
+.slot small{font-size:10px;color:var(--heat)}
+.slot[aria-pressed="true"]{background:var(--fg);color:#0c0b09;border-color:var(--fg)}
+.daychip{display:grid;justify-items:center;gap:2px;padding:8px 12px;min-width:52px}
+.daychip span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.7}
+.daychip b{font-family:var(--serif);font-size:20px;font-weight:500}
+.sheet .panel>*,#bk>*{min-width:0}
+#bk{display:grid;gap:16px;min-width:0}
+.sheet .panel{overflow-x:hidden}
+.daychip.none{opacity:.4}
+.daychip{position:relative}
+.avd{position:absolute;bottom:5px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--good)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#bk input{width:100%;min-width:0;background:var(--bg);border:1px solid var(--line-2);border-radius:12px;padding:12px;color:var(--fg);font:inherit}
+@media (prefers-reduced-motion:reduce){.livepill .dot{animation:none}}
+.ins{display:grid;grid-template-columns:12px 1fr;gap:10px;align-items:start;font-size:14px}
+.ins .dot{margin-top:6px}
+.card.done{justify-items:center;text-align:center;border-color:rgba(167,191,160,.5);background:linear-gradient(180deg,rgba(167,191,160,.1),rgba(167,191,160,0)),var(--surface)}
+.tick-big{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--good);color:#0c0b09;font-size:22px;font-weight:600}
+.fdb{min-height:32px!important;padding:0 12px!important}
+.sel{width:100%;background:var(--bg);border:1px solid var(--line-2);border-radius:12px;padding:12px;color:var(--fg);font:inherit}
+.bodymap svg{max-width:160px}
+.sci details{border-bottom:1px solid var(--line);padding:14px 0}
+.sci summary{cursor:pointer;font-family:var(--serif);font-size:21px;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.sci summary::after{content:"+";color:var(--gold);font-family:var(--body);font-size:18px}
+.sci details[open] summary::after{content:"\2212"}
+.sci summary::-webkit-details-marker{display:none}
+.sci p{font-size:14px;margin-top:10px;line-height:1.55}
+.proto{display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 0 0}
+.proto div{display:grid;justify-items:center;gap:2px}
+.proto b{font-family:var(--serif);font-size:54px;font-weight:400;line-height:1}
+.proto span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.proto i{color:var(--muted);font-style:normal;font-size:18px;margin-top:-14px}
+.proto-x{text-align:center;font-size:15px}
+.proto-x b{font-family:var(--serif);font-size:22px;color:var(--gold-2)}
+.wbars{display:flex;align-items:flex-end;gap:4px;height:80px}
+.wb{flex:1;height:100%;display:flex;flex-direction:column-reverse;gap:1px}
+.wb i{display:block;border-radius:3px;min-height:0}
+.wb:last-child i{box-shadow:0 0 0 1px var(--fg) inset}
 .igh{display:flex;align-items:center;justify-content:space-between}
 .igbtn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--fg);flex:none}
 .igbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5}
@@ -339,7 +386,8 @@ const RITUALS=[
  {id:'sauna',name:'Sauna',temp:'80–90°C',mins:15,kind:'heat'},
  {id:'steam',name:'Steam room',temp:'45°C',mins:12,kind:'heat'},
  {id:'plunge',name:'Cold plunge / ice bath',temp:'3–6°C',mins:3,kind:'cold'},
- {id:'bath38',name:'38° mineral bath',temp:'38°C',mins:20,kind:'heat'}
+ {id:'bath38',name:'38° mineral bath',temp:'38°C',mins:20,kind:'heat'},
+ {id:'massage',name:'Massage',temp:'Any style',mins:60,kind:'massage'}
 ];
 
 // Live prices and Mindbody checkout links from beachousebondi.com/memberships-passes (14 Nov 2026).
@@ -421,7 +469,10 @@ function seed(){
   logs.push({m:'chest-press',date:dayISO(1),sets:[[60,10],[60,10],[60,9]],fb:'easy'});
   logs.push({m:'shoulder-press',date:dayISO(1),sets:[[42.5,8],[42.5,7],[42.5,6]],fb:'hard'});
   const rec=[{r:'sauna',date:dayISO(0)},{r:'plunge',date:dayISO(0)},{r:'sauna',date:dayISO(2)},{r:'plunge',date:dayISO(2)},{r:'bath38',date:dayISO(5)},{r:'sauna',date:dayISO(9)},{r:'plunge',date:dayISO(9)}];
-  return {onboarded:true,wear:null,dexa:[{date:dayISO(110),v:{bf:22.4,lean:63.1,fat:18.9,vat:640,bone:0.8}},{date:dayISO(18),v:{bf:20.1,lean:64.6,fat:16.8,vat:560,bone:0.9,la:3.5,ra:3.8,ll:10.9,rl:11.6,tr:31.2}}],bloods:[{date:dayISO(120),v:{hb:148,ferritin:120,iron:18,b12:310,vitd:58,glucose:5.1,hba1c:5.3,chol:5.4,ldl:3.2,hdl:1.2,trig:1.4,alt:31,egfr:96,crp:1.2,tsh:1.8,testo:16}},{date:dayISO(20),v:{hb:151,ferritin:135,iron:20,b12:340,vitd:44,glucose:4.9,hba1c:5.2,chol:5.6,ldl:3.3,hdl:1.3,trig:1.1,alt:28,egfr:98,crp:0.9,tsh:1.7,testo:18}}],sex:'m',name:'Matt',goal:'build',plan:'start',planDay:0,logs,rec,example:true,bw:[[dayISO(35),88.2],[dayISO(28),87.6],[dayISO(21),87.1],[dayISO(14),86.4],[dayISO(7),86.0],[dayISO(0),85.5]]};
+  // Demo history for the progress charts: sleep, food days and weekly recovery visits.
+  const sleep={},food={};for(let i=1;i<=70;i++){sleep[dayISO(i)]=[6,7,7,8,7,8,6,7,8,9][i%10];if(i%3)food[dayISO(i)]={p:5,v:6,f:2,w:3,done:i%4!==0};}
+  for(let w=2;w<10;w++){rec.push({r:'sauna',date:dayISO(w*7),mins:15},{r:'plunge',date:dayISO(w*7),mins:3});if(w%2)rec.push({r:'bath38',date:dayISO(w*7+3),mins:20});if(w%3===0)rec.push({r:'massage',date:dayISO(w*7+2),mins:60});}
+  return {onboarded:true,wear:null,sleep,food,dexa:[{date:dayISO(110),v:{bf:22.4,lean:63.1,fat:18.9,vat:640,bone:0.8}},{date:dayISO(18),v:{bf:20.1,lean:64.6,fat:16.8,vat:560,bone:0.9,la:3.5,ra:3.8,ll:10.9,rl:11.6,tr:31.2}}],bloods:[{date:dayISO(120),v:{hb:148,ferritin:120,iron:18,b12:310,vitd:58,glucose:5.1,hba1c:5.3,chol:5.4,ldl:3.2,hdl:1.2,trig:1.4,alt:31,egfr:96,crp:1.2,tsh:1.8,testo:16}},{date:dayISO(20),v:{hb:151,ferritin:135,iron:20,b12:340,vitd:44,glucose:4.9,hba1c:5.2,chol:5.6,ldl:3.3,hdl:1.3,trig:1.1,alt:28,egfr:98,crp:0.9,tsh:1.7,testo:18}}],sex:'m',name:'Matt',goal:'build',plan:'start',planDay:0,logs,rec,example:true,bw:[[dayISO(35),88.2],[dayISO(28),87.6],[dayISO(21),87.1],[dayISO(14),86.4],[dayISO(7),86.0],[dayISO(0),85.5]]};
 }
 let S=load();
 let tab=(location.hash||'').replace('#','')||'home';const deep=(location.hash.match(/m=([a-z0-9-]+)/)||[])[1];if(deep)tab='home';
@@ -447,17 +498,6 @@ const round=(v,step)=>Math.max(step,Math.round(v/step)*step);
 // Estimated strength: Epley e1RM from the best set of a session.
 function e1rm(l){return Math.max(...l.sets.map(s=>s[0]*(1+s[1]/30)));}
 // Muscle recovery 0–100%: each trained muscle recovers over ~72h, slower after big sessions or "hard" feedback.
-function recovery(){
-  const out={};Object.keys(MUSCLES).forEach(k=>out[k]=100);
-  S.logs.forEach(l=>{const m=M(l.m);if(!m)return;const hrs=daysAgo(l.date)*24+12;
-    // Heat or cold at 38° within 2 days after training speeds the muscle recovery score up to 25%.
-    const boost=Math.min(.25,.1*S.rec.filter(r=>r.date>=l.date&&daysAgo(l.date)-daysAgo(r.date)<=2).length);
-    const mult=(l.fb==='hard'?1.25:1)*(l.sets.length>=4?1.15:1)*(1-boost)*(m.cardio?.4:1);
-    // Main muscles take the full recovery window; helper muscles take about half.
-    const hit=(k,share)=>{if(out[k]==null)return;const need=(RECOVERY_H[k]||48)*mult*share;out[k]=Math.min(out[k],Math.min(100,Math.round(hrs/need*100)));};
-    m.muscles.forEach(k=>hit(k,1));(m.sec||[]).forEach(k=>hit(k,.5));});
-  return out;
-}
 // Next-session target for a machine: weight × reps × sets with progressive overload.
 function target(id){
   const m=M(id);const g=GOALS[S.goal||'build'];const hist=logsFor(id);
@@ -474,6 +514,8 @@ function target(id){
   else if(last.fb==='easy'||hitTop){w=Math.max(w,topW+m.step);why='You beat your target last time, so the weight goes up';}
   else why=heavy?'Heavier day: fewer reps, more weight':'Lighter day: more reps to build volume';
   if(m.assist){w=Math.max(m.step,topW-(last.fb==='easy'||hitTop?m.step:0));why=last.fb==='easy'||hitTop?'Less assistance this time':'Same assistance, aim for more reps';}
+  if(typeof condFlag==='function'&&condFlag('hold')){w=Math.min(w,topW);why='Holding your weight steady for your health condition';}
+  const fat=Math.min(...m.muscles.map(k=>(recovery()[k]??100)));if(!m.cardio&&fat<60){w*=0.9;why=`${m.muscles.map(k=>MUSCLES[k]).join(' and ')} only ${fat}% recovered, so 10% lighter today`;}
   w=Math.min(w,topW+m.step);w=round(w,m.step);
   return {text:`${g.sets} × ${reps} @ ${w} ${m.unit}`,why,w,r:reps,sets:g.sets};
 }
@@ -497,16 +539,17 @@ function weekStart(){const d=new Date();d.setDate(d.getDate()-((d.getDay()+6)%7)
 function weekTotals(p){const ws=periodStart(p||'week');
   const workouts=new Set(S.logs.filter(l=>l.date>=ws).map(l=>l.date)).size;
   let heat=0,cold=0,heatN=0,coldN=0;
-  S.rec.filter(r=>r.date>=ws).forEach(r=>{const R=RITUALS.find(x=>x.id===r.r);const m=r.mins||R.mins;if(R.kind==='cold'){cold+=m;coldN++;}else{heat+=m;heatN++;}});
-  return {workouts,heat,cold,heatN,coldN};}
-function goalRow(label,val,goal,unit,note,col){const p=Math.min(100,Math.round(val/goal*100));col=col||'var(--good)';
+  let massN=0;S.rec.filter(r=>r.date>=ws).forEach(r=>{const R=RITUALS.find(x=>x.id===r.r);if(!R)return;const m=r.mins||R.mins;if(R.kind==='cold'){cold+=m;coldN++;}else if(R.kind==='heat'){heat+=m;heatN++;}else massN++;});
+  return {workouts,heat,cold,heatN,coldN,massN};}
+function goalRow(label,val,goal,unit,note,col){if(!goal)return `<div class="row between"><span>${label}</span><span class="muted" style="font-size:13px">Paused for your health condition</span></div>`;const p=Math.min(100,Math.round(val/goal*100));col=col||'var(--good)';
   return `<div class="stack" style="gap:6px"><div class="row between"><span>${label}${note?ib(note):''}</span><span class="muted" style="font-variant-numeric:tabular-nums">${val}/${goal}${unit}${p>=100?' · done':''}</span></div><div class="bar" style="height:8px"><i style="width:${p}%;background:${col};opacity:${p>=100?1:.85}"></i></div></div>`;}
 
 // ---------- Training + recovery balance ----------
 const FOCUS={balanced:{label:'Balanced',w:1,h:1,c:1},perform:{label:'Train harder',w:1,h:1.2,c:1.2},recover:{label:'Recovery first',w:0.67,h:1.4,c:1.25},glutes:{label:'Grow glutes',w:1,h:1,c:1}};
 const INJURIES={shoulder:'Shoulder',elbow:'Elbow or wrist',back:'Lower back',hip:'Hip',knee:'Knee'};
 const LOADS={'leg-press':['knee','hip'],'hack-squat':['knee','hip','back'],'leg-ext':['knee'],'leg-curl':[],'chest-press':['shoulder','elbow'],'shoulder-press':['shoulder','elbow'],'cable-cross':['shoulder'],'lat-pull':['elbow'],'seated-row':['back','elbow'],'assist-pull':['shoulder','elbow'],'smith':['knee','hip','back','shoulder'],'dumbbells':['elbow','shoulder'],'rower':['back'],'ski':['shoulder','back'],'bike':['knee'],'hip-thrust':['hip'],'rdl':['back','hip'],'kickback':['hip'],'abductor':['hip'],'back-ext':['back'],'ab-crunch':['back'],'cable-crunch':['back'],'calf':[],'lateral':['shoulder'],'rear-delt':['shoulder']};
-function blocked(id){const inj=S.injuries||[];return (LOADS[id]||[]).some(a=>inj.includes(a));}
+function effInjuries(){return [...new Set((S.injuries||[]).concat(condActive().map(k=>CONDITIONS[k].injury).filter(Boolean)))];}
+function blocked(id){const inj=effInjuries();return (LOADS[id]||[]).some(a=>inj.includes(a))||condActive().some(k=>(CONDITIONS[k].swap||[]).includes(id));}
 function swapFor(id){const m=M(id);if(!blocked(id))return id;
   const alt=MACHINES.find(x=>x.id!==id&&!blocked(x.id)&&x.zone===m.zone)||MACHINES.find(x=>!blocked(x.id)&&x.cardio===!!m.cardio&&x.muscles.some(k=>m.muscles.includes(k)))||(['bike','rower','ski'].map(M).find(x=>!blocked(x.id)));
   return alt?alt.id:null;}
@@ -515,7 +558,7 @@ function loadRatio(){const ws=weekStart();const wk=S.logs.filter(l=>l.date>=ws&&
   const past=S.logs.filter(l=>l.date<ws&&l.date>=dayISO(35)&&!M(l.m).cardio).reduce((a,l)=>a+vol(l),0)/4;return past?wk/past:0;}
 
 function goalTargets(p){const sc=PERIODS[p].scale;const days=S.days||3;const f=FOCUS[S.focus||'balanced'];const rd=readiness();const hard=(loadRatio()>1.25?1.15:1)*(hasTip('recover')?1.2:1)*(rd!=null&&rd<34?1.2:1);
-  return {workouts:p==='day'?1:Math.max(1,Math.round(days*sc*f.w)),heat:Math.round(HEAT_GOAL*sc*f.h*hard),cold:Math.max(2,Math.round(COLD_GOAL*sc*f.c*hard))};}
+  return {workouts:p==='day'?1:Math.max(1,Math.round(days*sc*f.w)),heat:condFlag('noHeat')?0:Math.round(HEAT_GOAL*sc*f.h*hard),cold:condFlag('noCold')?0:Math.max(2,Math.round(COLD_GOAL*sc*f.c*hard))};}
 function coachNote(){const r=loadRatio();const f=S.focus||'balanced';const inj=(S.injuries||[]).map(k=>INJURIES[k].toLowerCase());
   const bits=[];if(r>1.25)bits.push(`You've trained ${Math.round((r-1)*100)}% harder than your usual week, so your recovery goal is higher.`);
   if(f==='recover')bits.push('Recovery first: fewer sessions, more time in heat and cold.');
@@ -564,6 +607,7 @@ function viewHome(){
   </section>
   ${busyNowCard()}
   ${pendingCard()}
+  ${insightsCard()}
   ${moodCard()}
   <section class="card">
     <div class="row between"><h2>Today's session${ib('Tap Start session, then open each machine. Tick each set as you finish it and the rest timer starts on its own: '+fmtS(REST[S.goal||'build'])+' for your goal ('+GOALS[S.goal||'build'].label.toLowerCase()+'), plus 30 seconds on big leg lifts.')}</h2><span class="muted" style="font-size:12px">${esc(ses.day)}</span></div>
@@ -777,20 +821,8 @@ function resultFood(){const t=lastTest();if(!t)return [];const st=id=>{const mk=
   if(['ldl','chol','trig'].some(k=>st(k)==='high')||st('hdl')==='low')out.push('heart');if(['glucose','hba1c'].some(k=>st(k)==='high'))out.push('sugar');if(st('crp')==='high')out.push('calm');return out;}
 function appliedFood(){const t=lastTest();return t&&(S.applied||{})[t.date]?resultFood():[];}
 function bodyKg(){const b=(S.bw||[]).slice(-1)[0];return b?b[1]:75;}
-function foodTargets(){const kg=bodyKg();const g={strength:1.6,build:1.8,fit:1.4}[S.goal||'build'];const protein=Math.round(kg*g/5)*5;
-  return {protein,palms:Math.round(protein/25),veg:5,water:Math.round((kg*0.033+(sessionDoneToday()?0.5:0))*10)/10};}
 function sessionDoneToday(){return S.logs.some(l=>l.date===dayISO(0));}
 function foodToday(){const d=(S.food||{})[dayISO(0)]||{p:0,v:0,w:0};return d;}
-function viewFood(){const ft=foodTargets();const d=foodToday();const focus=appliedFood();
-  const row=(k,label,val,goal,unit,col)=>`<div class="stack" style="gap:6px"><div class="row between"><span>${label}</span><span class="row" style="gap:8px"><span class="muted" style="font-variant-numeric:tabular-nums">${val}/${goal}${unit}</span><button class="btn ghost small" style="min-height:32px;padding:0 12px" data-fd="${k}">+</button></span></div><div class="bar" style="height:8px"><i style="width:${Math.min(100,Math.round(val/goal*100))}%;background:${col}"></i></div></div>`;
-  return `<section class="card"><div class="row between"><h2>Today's food guide${ib('A guide, not a diet. Protein is about '+({strength:1.6,build:1.8,fit:1.4}[S.goal||'build'])+' g per kg of body weight for your goal. A palm-sized serve is about 25 g of protein. For allergies, conditions or supplements, see your doctor or a dietitian.')}</h2><span class="muted" style="font-size:12px">${GOALS[S.goal||'build'].label}</span></div>
-   <p class="muted" style="font-size:13px">About <b style="color:var(--fg)">${ft.protein} g protein</b> a day. Tap + as you go.</p>
-   ${row('p','Protein (palm-sized serves)',d.p,ft.palms,'','var(--good)')}
-   ${row('v','Veg and fruit (handfuls)',d.v,ft.veg,'','var(--good)')}
-   ${row('w','Water',d.w,ft.water,' L','var(--cold)')}</section>
-  <section class="card"><h2>Your plate</h2><div class="stack" style="font-size:14px"><span>½ veg and salad</span><span>¼ protein: meat, fish, eggs, tofu or legumes</span><span>¼ smart carbs: rice, potato, oats, wholegrain bread</span><span class="muted" style="font-size:13px">${sessionDoneToday()?'Training day: add a carb serve and protein within a couple of hours of your session.':'Rest day: keep protein up, carbs a little lower.'}</span></div></section>
-  ${focus.length?`<section class="card" style="border-color:var(--good)"><div class="row between"><h2>Focus foods from your results</h2><span class="ai">Applied</span></div>${focus.map(k=>`<div class="stack" style="gap:2px"><b>${FOOD_FOCUS[k].t}</b><span class="muted" style="font-size:13px">${FOOD_FOCUS[k].f}</span></div>`).join('')}</section>`:''}
-  `;}
 function pendingCard(){const t=lastTest();const tips=resultTips();const sg=dexaSuggestions();
   const bloodPending=t&&tips.length&&!(S.applied||{})[t.date];if(!bloodPending&&!sg.length)return '';
   return `<button class="item" style="border:1px solid var(--good);border-radius:14px" data-act="gohealth"><span><span class="ai">New suggestions</span><br><b>${bloodPending?'Your blood results':'Your DEXA scan'} can update your plan</b></span><span class="chev">›</span></button>`;}
@@ -891,7 +923,7 @@ function applyDexa(ids){const sg=dexaSuggestions().filter(x=>ids.includes(x.id))
 // Rest between sets by goal: strength 2.5 min, build muscle 75 s, fit and lean 45 s; big lower-body lifts get 30 s extra.
 const REST={strength:150,build:75,fit:45};
 const BIG=['leg-press','hack-squat','smith'];
-function restFor(id){const m=M(id);if(m.cardio)return 0;return (REST[S.goal||'build']||75)+(BIG.includes(id)?30:0);}
+function restFor(id){const m=M(id);if(m.cardio)return 0;return (REST[S.goal||'build']||75)+(BIG.includes(id)?30:0)+Math.max(0,...condActive().map(k=>CONDITIONS[k].rest||0));}
 let restT=null,restLeft=0;
 function fmtS(x){x=Math.max(0,Math.round(x));return Math.floor(x/60)+':'+String(x%60).padStart(2,'0');}
 function beep(){try{const c=new (window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator();const g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.value=.15;o.start();o.stop(c.currentTime+.35);}catch(e){}try{navigator.vibrate&&navigator.vibrate([200,100,200]);}catch(e){}}
@@ -916,6 +948,7 @@ function viewProgress(embedded){
   const sessions=new Set(S.logs.filter(l=>l.date>=dayISO(29)).map(l=>l.date)).size;const recov=S.rec.filter(r=>r.date>=dayISO(29)).length;
   return `<section class="stats"><div class="stat"><b>${sessions}</b><span>Sessions 30d</span></div><div class="stat"><b>${streak()}</b><span>Week streak</span></div><div class="stat"><b>${recov}</b><span>38° visits 30d</span></div></section>
   ${medalsCard()}
+  ${progressExtra()}
   <section class="card"><h2>Estimated strength (kg, one-rep max)</h2>
     <div class="chips">${strength.map(m=>`<button class="chip" data-prog="${m.id}" aria-pressed="${m.id===progM}">${m.name}</button>`).join('')}</div>${lineChart(pts)}</section>
   <section class="card"><h2>Weekly volume (tonnes lifted)</h2>${lineChart(vpts)}</section>
@@ -926,16 +959,14 @@ function viewProgress(embedded){
 function viewBath(){
   const last=S.rec.slice().sort((a,b)=>a.date<b.date?1:-1).slice(0,6);
   return `<section class="stack"><p class="tag">38° The Bathhouse</p><h1>Recover${ib('Heat and cold after training. Each 38° session in the 2 days after a workout speeds up your muscle recovery score. Weekly targets come from research on regular sauna and cold-water users: about 57 min of heat and 11 min of cold a week.')}</h1></section>
-  ${(()=>{const p=S.period||'week';const t=weekTotals(p);const g=goalTargets(p);return `<section class="card"><h2>Recovery goal · ${PERIODS[p].label.toLowerCase()}</h2>${periodSwitch()}${goalRow('Heat at 38°',t.heat,g.heat,' min',t.heatN+' sessions so far','var(--heat)')}${goalRow('Cold at 38°',t.cold,g.cold,' min',t.coldN+' plunges so far','var(--cold)')}</section>`})()}
-  <section class="card"><div class="row between"><h2>Muscle recovery${ib('Each muscle has its own recovery time: about 36 hours for biceps, calves and abs, 48 for chest and shoulders, and 60 to 72 for glutes, legs and back. Helper muscles count for half. Hard sessions take longer, and heat or cold at 38° within 2 days speeds it up.')}</h2><span class="muted" style="font-size:12px">38° speeds this up</span></div>${bodyMap(recovery())}</section>
-  <section class="card"><h2>Contrast protocol</h2><div class="stack">
-    <div class="ritual"><span class="dot" style="background:var(--heat)"></span><span>Sauna 12–15 min</span><span class="heat">Heat</span></div>
-    <div class="ritual"><span class="dot" style="background:var(--cold)"></span><span>Ice bath 2–3 min</span><span class="cold">Cold</span></div>
-    <div class="ritual"><span class="dot" style="background:var(--heat)"></span><span>Rest 5 min, then repeat ×3</span><span class="muted">Rest</span></div></div>
-    <p class="note">Finish on cold to wake up, or on heat to wind down before bed.</p><button class="btn gold block" data-act="guide">Start guided protocol</button></section>
+  ${(()=>{const p=S.period||'week';const t=weekTotals(p);const g=goalTargets(p);return `<section class="card"><h2>Recovery goal · ${PERIODS[p].label.toLowerCase()}</h2>${periodSwitch()}${goalRow('Heat at 38°',t.heat,g.heat,' min',t.heatN+' sessions so far. Weekly target from research on regular sauna users (about 57 min a week). After training, every minute of heat speeds muscle recovery by about 0.5%, up to 8% a session.','var(--heat)')}${goalRow('Cold at 38°',t.cold,g.cold,' min',t.coldN+' plunges so far. Weekly target about 11 min (Søberg 2021). After training, every minute of cold speeds recovery by about 0.8%, up to 10%. If you\'re building muscle, avoid ice baths straight after weights.','var(--cold)')}</section>`})()}
+  <section class="card"><div class="row between"><h2>Muscle recovery${ib(RECOVERY_INFO)}</h2><span class="muted" style="font-size:12px">38° speeds this up</span></div>${bodyMap(recovery())}<button class="btn ghost small" data-act="science">The science behind it</button></section>
+  ${protocolCard()}
+  ${massageCard()}
+  ${recoverProgress()}
   <section class="stack"><h2>Log a session</h2><div class="list">${RITUALS.map(r=>`<button class="item" data-rit="${r.id}"><span><b>${r.name}</b><br><span class="meta">${r.temp} · ${r.mins} min</span></span><span class="${r.kind}">+ Log</span></button>`).join('')}</div></section>
   <section class="stack"><h2>Recent</h2><div class="list">${last.length?last.map(x=>{const r=RITUALS.find(r=>r.id===x.r);return `<div class="item"><span>${r.name}</span><span class="meta">${fmtDate(x.date)}</span></div>`}).join(''):'<div class="item muted">Nothing logged yet.</div>'}</div></section>
-  <a class="btn block" href="https://38thebathhouse.com/" target="_blank" rel="noopener">Book at 38° The Bathhouse</a>`;
+  <button class="btn gold block" data-act="book">Book at 38° The Bathhouse</button>`;
 }
 
 
@@ -944,12 +975,6 @@ function busyChart(day,h=90){const pts=busyCurve(day);const now=new Date();const
  return `<div style="display:flex;align-items:flex-end;gap:3px;height:${h}px" role="img" aria-label="Predicted busy times">${pts.map(([hr,v])=>{const L=busyLevel(v);const cur=today&&hr===nowH;return `<div title="${hLabel(hr)}: ${L.l}" style="flex:1;height:${Math.round(8+v*(h-8))}px;border-radius:4px;background:${L.c};opacity:${cur?1:.55};${cur?'box-shadow:0 0 0 1.5px var(--fg)':''}"></div>`}).join('')}</div>
  <div class="row between muted" style="font-size:10px"><span>${hLabel(pts[0][0])}</span><span>${hLabel(pts[Math.floor(pts.length/2)][0])}</span><span>${hLabel(pts[pts.length-1][0])}</span></div>
  <div class="legend" style="justify-content:flex-start"><span><i style="background:var(--good)"></i>Quiet</span><span><i style="background:var(--gold)"></i>Not so busy</span><span><i style="background:#d6735f"></i>Busy</span></div>`;}
-function busyNowCard(){const now=new Date();const d=now.getDay();const [o,c]=OPEN[d];const h=now.getHours()+now.getMinutes()/60;const open=h>=o&&h<c;
- const v=open?(busyCurve(d).find(x=>x[0]===now.getHours())||[0,0])[1]:0;const L=busyLevel(v);
- return `<section class="card"><div class="row between"><h2>Busy times${ib('Predicted from typical gym traffic for each hour. It will switch to live check-in numbers once Mindbody is connected.')}</h2><span class="pill">Predicted</span></div>
-  <div class="row" style="gap:10px"><span class="dot" style="width:12px;height:12px;background:${open?L.c:'var(--muted)'}"></span><b style="font-family:var(--serif);font-size:24px;font-weight:500">${open?L.l+' right now':'Closed now'}</b></div>
-  <p class="muted" style="font-size:13px">${open?'Open until '+hLabel(c)+'. ':'Opens '+hLabel(OPEN[(open||h<o)?d:(d+1)%7][0])+(h<o?' today':' tomorrow')+'. '}Quietest today: ${quietest(d)}.</p>
-  ${busyChart(d,64)}</section>`;}
 let busyDay=new Date().getDay();
 function viewClub(){
   const seg=`<div class="seg" style="grid-template-columns:repeat(3,1fr)" role="group" aria-label="Club"><button data-cv="join" aria-pressed="${clubView==='join'}">Join</button><button data-cv="info" aria-pressed="${clubView==='info'}">Info</button><button data-cv="coaches" aria-pressed="${clubView==='coaches'}">Coaches</button></div>`;
@@ -1003,53 +1028,22 @@ function viewBuy(){
 
 let healthView='results';
 function viewMedical(){const seg=`<div class="seg" role="group" aria-label="Health view"><button data-hv="results" aria-pressed="${healthView==='results'}">Results</button><button data-hv="food" aria-pressed="${healthView==='food'}">Food</button></div>`;
-  return `<section class="stack"><h1>Health</h1><p class="muted">Results, scans and food, private to you.</p></section>${seg}${healthView==='food'?viewFood():tipsCard()+viewDexa()+dexaSuggestCard()+viewHealth()}`;}
+  return `<section class="stack"><h1>Health</h1><p class="muted">Results, scans and food, private to you.</p></section>${seg}${healthView==='food'?viewFood():connectedCard()+(S.wear?wearCard():'')+conditionsCard()+servicesCard()+tipsCard()+viewDexa()+dexaSuggestCard()+viewHealth()}`;}
 
 // ---------- ideas borrowed from leading club and training apps ----------
 function greet(){const h=new Date().getHours();return h<12?'Good morning':h<18?'Good afternoon':'Good evening';}
 
 // Body map (Fitbod-style): front and back figures, each muscle shaded by how recovered it is.
 function recCol(p){return p>=85?'var(--good)':p>=50?'var(--heat)':'#d6735f';}
-function bodyMap(rec){
-  const c=k=>`fill="${recCol(rec[k])}" fill-opacity=".8"`;const b='fill="#2b2a27"';
-  const fig=(parts,label)=>`<svg viewBox="0 0 100 205" role="img" aria-label="${label} muscle recovery">
-    <circle cx="50" cy="16" r="10" ${b}/><rect x="45" y="25" width="10" height="7" rx="2" ${b}/>
-    <rect x="30" y="34" width="40" height="72" rx="13" ${b}/>
-    <ellipse cx="19" cy="91" rx="5" ry="13" ${b}/><ellipse cx="81" cy="91" rx="5" ry="13" ${b}/>
-    <rect x="32" y="100" width="36" height="16" rx="7" ${b}/>
-    <ellipse cx="40" cy="178" rx="6" ry="16" ${b}/><ellipse cx="60" cy="178" rx="6" ry="16" ${b}/>
-    ${parts}<text x="50" y="203" text-anchor="middle">${label.toUpperCase()}</text></svg>`;
-  const front=`<ellipse cx="23" cy="45" rx="5.5" ry="8" ${c('sidedelts')}/><ellipse cx="77" cy="45" rx="5.5" ry="8" ${c('sidedelts')}/>
-    <ellipse cx="30.5" cy="41" rx="6" ry="7" ${c('frontdelts')}/><ellipse cx="69.5" cy="41" rx="6" ry="7" ${c('frontdelts')}/>
-    <rect x="35" y="40" width="14.5" height="20" rx="7" ${c('chest')}/><rect x="50.5" y="40" width="14.5" height="20" rx="7" ${c('chest')}/>
-    <rect x="39" y="64" width="22" height="35" rx="7" ${c('abs')}/>
-    <ellipse cx="21" cy="66" rx="5.5" ry="12" ${c('biceps')}/><ellipse cx="79" cy="66" rx="5.5" ry="12" ${c('biceps')}/>
-    <ellipse cx="40" cy="138" rx="9" ry="23" ${c('quads')}/><ellipse cx="60" cy="138" rx="9" ry="23" ${c('quads')}/>
-    <ellipse cx="40" cy="178" rx="5" ry="13" ${c('calves')}/><ellipse cx="60" cy="178" rx="5" ry="13" ${c('calves')}/>`;
-  const back=`<rect x="36" y="35" width="28" height="22" rx="8" ${c('upperback')}/>
-    <rect x="31" y="52" width="15" height="34" rx="7" ${c('lats')}/><rect x="54" y="52" width="15" height="34" rx="7" ${c('lats')}/>
-    <rect x="41" y="86" width="18" height="14" rx="6" ${c('lowerback')}/>
-    <ellipse cx="29.5" cy="41" rx="6.5" ry="7" ${c('reardelts')}/><ellipse cx="70.5" cy="41" rx="6.5" ry="7" ${c('reardelts')}/>
-    <ellipse cx="22" cy="46" rx="5" ry="7" ${c('sidedelts')}/><ellipse cx="78" cy="46" rx="5" ry="7" ${c('sidedelts')}/>
-    <ellipse cx="21" cy="66" rx="5.5" ry="12" ${c('triceps')}/><ellipse cx="79" cy="66" rx="5.5" ry="12" ${c('triceps')}/>
-    <ellipse cx="41" cy="111" rx="10" ry="10" ${c('glutes')}/><ellipse cx="59" cy="111" rx="10" ry="10" ${c('glutes')}/>
-    <ellipse cx="40" cy="141" rx="8" ry="19" ${c('hamstrings')}/><ellipse cx="60" cy="141" rx="8" ry="19" ${c('hamstrings')}/>
-    <ellipse cx="40" cy="177" rx="6" ry="15" ${c('calves')}/><ellipse cx="60" cy="177" rx="6" ry="15" ${c('calves')}/>`;
-  const low=Object.keys(MUSCLES).filter(k=>rec[k]<85).sort((a,b)=>rec[a]-rec[b]);
-  return `<div class="bodymap">${fig(front,'Front')}${fig(back,'Back')}</div>
-  <div class="legend"><span><i style="background:var(--good)"></i>Fresh</span><span><i style="background:var(--heat)"></i>Recovering</span><span><i style="background:#d6735f"></i>Rest</span></div>
-  <p class="muted" style="font-size:13px;text-align:center">${low.length?'Still recovering: '+low.map(k=>`${MUSCLES[k]} ${rec[k]}%`).join(' · '):'Every muscle group is fresh and ready to train.'}</p>`;
-}
-
 // Daily check-in (Equinox "Make Me" style): how you feel shapes today's advice.
 const MOODS={
   great:{l:'Ready to go',tip:'Go after it today. Your targets are set to push, and if a set feels easy the weight goes up next time.'},
   tired:{l:'Tired',tip:'Train, but lighter: one set fewer on each machine and keep last time\'s weights. A 20 min 38° mineral bath afterwards helps you sleep.'},
-  sore:{l:'Sore',tip:'Check the body map on Recover and train the fresh muscles only. Finish with the guided contrast protocol at 38°.',act:'guide',btn:'Start guided contrast'},
+  sore:{l:'Sore',tip:'Check the body map on Recover and train the fresh muscles only. Finish with the contrast protocol at 38°.',act:'gorec',btn:'See the contrast protocol'},
   stressed:{l:'Stressed',tip:'Keep it steady: a moderate session, then the steam room with slow breathing, 4 seconds in and 6 out.'}
 };
 function moodCard(){const m=(S.mood||{})[dayISO(0)];
-  return `<section class="card"><h2>How do you feel today?</h2><div class="chips" role="group" aria-label="How you feel">${Object.entries(MOODS).map(([k,v])=>`<button class="chip" data-mood="${k}" aria-pressed="${m===k}">${v.l}</button>`).join('')}</div>${m?`<p style="font-size:14px">${esc(MOODS[m].tip)}</p>${MOODS[m].act?`<button class="btn ghost small" data-act="${MOODS[m].act}">${MOODS[m].btn}</button>`:''}`:''}</section>`;}
+  return `<section class="card"><h2>How do you feel today?</h2>${sleepChips()}<span class="tag" style="color:var(--muted)">Energy</span><div class="chips" role="group" aria-label="How you feel">${Object.entries(MOODS).map(([k,v])=>`<button class="chip" data-mood="${k}" aria-pressed="${m===k}">${v.l}</button>`).join('')}</div>${m?`<p style="font-size:14px">${esc(MOODS[m].tip)}</p>${MOODS[m].act?`<button class="btn ghost small" data-act="${MOODS[m].act}">${MOODS[m].btn}</button>`:''}`:''}</section>`;}
 
 // Milestones (Third Space / Strava style badges).
 function milestones(){const n=new Set(S.logs.map(l=>l.date)).size;const kind=k=>S.rec.filter(r=>(RITUALS.find(x=>x.id===r.r)||{}).kind===k).length;const st=streak();
@@ -1104,8 +1098,8 @@ async function loadEvents(){if(!/^https?:/.test(location.protocol))return;try{co
 function upcomingEvents(){const t=dayISO(0);return (LIVE_EVENTS||EVENTS_SNAPSHOT).filter(e=>!e.date||e.date>=t).slice(0,5);}
 function eventsCard(){const ev=upcomingEvents();
   return `<section class="stack"><div class="row between"><h2>What's on at 38°</h2><a class="muted" style="font-size:12px" href="${TRYBE}/offerings/categories/6928f73553c3da9ff80797b4/events" target="_blank" rel="noopener">See all ›</a></div>
-  <div class="list">${ev.map(e=>{const d=e.date?new Date(e.date+'T00:00'):null;return `<a class="item" style="text-decoration:none;color:inherit" href="${esc(e.url)}" target="_blank" rel="noopener"><div class="event"><span class="date">${d?d.toLocaleDateString('en-AU',{month:'short'})+'<b>'+d.getDate()+'</b>':'<b>·</b>'}</span><span><b>${esc(e.title)}${e.host?' with '+esc(e.host):''}</b><br><span class="meta">${d?d.toLocaleDateString('en-AU',{weekday:'short'})+' · ':''}${esc(e.time||'')}${e.mins?' · '+e.mins+' min':''}${e.price?' · from '+esc(e.price):''}</span></span></div><span class="chev">›</span></a>`}).join('')}
-  <a class="item" style="text-decoration:none;color:inherit" href="${TRYBE}/items/68e701ed9f35d8c6c1045f3f/1-x-silent-session-mon-sun-630am-900am" target="_blank" rel="noopener"><div class="event"><span class="date">Daily<b>·</b></span><span><b>Silent Session</b><br><span class="meta">Every morning · 6:30am – 9am · bathhouse in silence</span></span></div><span class="chev">›</span></a></div></section>`;}
+  <div class="list">${ev.map(e=>{const d=e.date?new Date(e.date+'T00:00'):null;return `${/sound/i.test(e.title)&&e.date?`<button class="item" data-bookev="sound|${e.date}">`:`<a class="item" style="text-decoration:none;color:inherit" href="${esc(e.url)}" target="_blank" rel="noopener">`}<div class="event"><span class="date">${d?d.toLocaleDateString('en-AU',{month:'short'})+'<b>'+d.getDate()+'</b>':'<b>·</b>'}</span><span><b>${esc(e.title)}${e.host?' with '+esc(e.host):''}</b><br><span class="meta">${d?d.toLocaleDateString('en-AU',{weekday:'short'})+' · ':''}${esc(e.time||'')}${e.mins?' · '+e.mins+' min':''}${e.price?' · from '+esc(e.price):''}</span></span></div><span class="chev">›</span>${/sound/i.test(e.title)&&e.date?'</button>':'</a>'}`}).join('')}
+  <button class="item" data-bookev="silent|"><div class="event"><span class="date">Daily<b>·</b></span><span><b>Silent Session</b><br><span class="meta">Every morning · 6:30am – 9am · bathhouse in silence</span></span></div><span class="chev">›</span></button></div></section>`;}
 
 // ---------- Custom routines: build your own workouts, drag to reorder ----------
 function routines(){return S.routines||(S.routines=[]);}
@@ -1126,7 +1120,7 @@ function routinePicker(rid){const r=routineById(rid);if(!r)return;let z='All';
   openSheet(`<p class="tag">Add exercises</p><h1 style="font-size:30px">${esc(r.name)}</h1><div class="chips" id="pz"></div><div class="list" id="pl"></div><button class="btn block" id="pdone">Done</button>`,s=>{draw(s);
     s.addEventListener('click',e=>{const zb=e.target.closest('[data-pz]');if(zb){z=zb.dataset.pz;draw(s);return;}const p=e.target.closest('[data-pick]');if(p){r.items.push(p.dataset.pick);save();draw(s);render();toast('Added '+M(p.dataset.pick).name);}});
     s.querySelector('#pdone').onclick=()=>{closeSheet();render();};});}
-document.addEventListener('change',e=>{const n=e.target.closest('[data-rname]');if(n){const r=routineById(n.dataset.rname);if(r){r.name=n.value.trim()||r.name;save();}}});
+document.addEventListener('change',e=>{if(e.target.id==='condsel'&&e.target.value){S.condPending=[...new Set((S.condPending||[]).concat(e.target.value))];save();render();return;}const n=e.target.closest('[data-rname]');if(n){const r=routineById(n.dataset.rname);if(r){r.name=n.value.trim()||r.name;save();}}});
 // Drag to reorder (pointer events, so it works with touch on iPhone as well as a mouse).
 document.addEventListener('pointerdown',e=>{const h=e.target.closest('[data-drag]');if(!h)return;e.preventDefault();const row=h.closest('.ritem'),list=row.parentElement;row.classList.add('dragging');try{h.setPointerCapture(e.pointerId);}catch(_){}
   const move=ev=>{const over=document.elementFromPoint(ev.clientX,ev.clientY);const tg=over&&over.closest('.ritem');if(tg&&tg!==row&&tg.parentElement===list){const b=tg.getBoundingClientRect();list.insertBefore(row,ev.clientY<b.top+b.height/2?tg:tg.nextSibling);}};
@@ -1194,6 +1188,382 @@ function supportSheet(){
 (function(){const f=document.createElement('button');f.className='fab';f.dataset.act='support';f.setAttribute('aria-label','Contact Beachouse support');
   f.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>';document.body.appendChild(f);})();
 
+// ---------- Live busy status (re-reads the clock every minute) ----------
+function busyState(){const now=new Date();const d=now.getDay();const [o,c]=OPEN[d];const h=now.getHours()+now.getMinutes()/60;const open=h>=o&&h<c;
+  const v=open?(busyCurve(d).find(x=>x[0]===now.getHours())||[0,0])[1]:0;
+  // When closed, show the next opening day's prediction.
+  const nd=open||h<o?d:(d+1)%7;const label=nd===d?'Today':'Tomorrow';
+  return {open,L:busyLevel(v),d,nd,label,o,c,h};}
+function busyPill(){const b=busyState();return `<button class="livepill" data-act="busyinfo" aria-label="Gym status"><span class="dot" style="background:${b.open?b.L.c:'var(--muted)'}"></span><span id="livetxt">${b.open?b.L.l+' now':'Closed now'}</span></button>`;}
+function busyNowCard(){const b=busyState();
+  return `<section class="card" id="busycard"><div class="row between"><h2>Busy times${ib('Predicted from typical gym traffic for each hour. It will switch to live check-in numbers once Mindbody is connected.')}</h2>${busyPill()}</div>
+  <p class="muted" style="font-size:13px">${b.open?'Open until '+hLabel(b.c)+'. Quietest today: '+quietest(b.d)+'.':'Opens '+hLabel(OPEN[b.nd][0])+' '+b.label.toLowerCase()+'. Quietest '+b.label.toLowerCase()+': '+quietest(b.nd)+'.'}</p>
+  ${b.open?'':`<p class="tag" style="margin-top:2px">${b.label} · ${new Date(Date.now()+(b.nd===b.d?0:864e5)).toLocaleDateString('en-AU',{weekday:'long'})}</p>`}
+  ${busyChart(b.nd,64)}</section>`;}
+setInterval(()=>{const c=document.getElementById('busycard');if(c&&!document.querySelector('.sheet')){const t=document.createElement('div');t.innerHTML=busyNowCard();c.replaceWith(t.firstElementChild);}},60000);
+
+// ---------- Member card: barcode to scan in at the front desk ----------
+// Code 128 (set B). Bar/space widths for each symbol value 0-106.
+const C128='212222 222122 222221 121223 121322 131222 122213 122312 132212 221213 221312 231212 112232 122132 122231 113222 123122 123221 223211 221132 221231 213212 223112 312131 311222 321122 321221 312212 322112 322211 212123 212321 232121 111323 131123 131321 112313 132113 132311 211313 231113 231311 112133 112331 132131 113123 113321 133121 313121 211331 231131 213113 213311 213131 311123 311321 331121 312113 312311 332111 314111 221411 431111 111224 111422 121124 121421 141122 141221 112214 112412 122114 122411 142112 142211 241211 221114 413111 241112 134111 111242 121142 121241 114212 124112 124211 411212 421112 421211 212141 214121 412121 111143 111341 131141 114113 114311 411113 411311 113141 114131 311141 411131 211412 211214 211232 2331112'.split(' ');
+function code128svg(txt){const vals=[104];for(const ch of txt){const c=ch.charCodeAt(0)-32;if(c<0||c>94)continue;vals.push(c);}
+  let sum=104;for(let i=1;i<vals.length;i++)sum+=vals[i]*i;vals.push(sum%103);vals.push(106);
+  let x=10,bars='';for(const v of vals){const w=C128[v];for(let i=0;i<w.length;i++){const n=+w[i];if(i%2===0)bars+=`<rect x="${x}" y="0" width="${n}" height="60"/>`;x+=n;}}
+  return `<svg viewBox="0 0 ${x+10} 60" preserveAspectRatio="none" role="img" aria-label="Barcode ${esc(txt)}" style="width:100%;height:110px;display:block"><g fill="#000">${bars}</g></svg>`;}
+function cardSheet(){const id=S.barcode||'';
+  openSheet(id?`<div class="mcard"><div class="wordmark" style="color:#15120c">BΞACHOUSΞ<small style="color:#6f6656">HEALTH CLUB</small></div>
+     <div class="mbar">${code128svg(id)}</div><div class="row between"><span><span class="tag" style="color:#6f6656">Member</span><br><b>${esc(S.name||'Member')}</b></span><span style="text-align:right"><span class="tag" style="color:#6f6656">ID</span><br><b style="font-variant-numeric:tabular-nums">${esc(id)}</b></span></div></div>
+    <p class="muted" style="font-size:13px;text-align:center">Hold this up to the scanner at the front desk. Turn your screen brightness up if it doesn't read first time.</p>
+    <button class="btn ghost small" id="cedit">Change barcode number</button>`
+   :`<p class="tag">Member card</p><h1 style="font-size:30px">Add your <em>barcode</em></h1><p class="muted" style="font-size:14px">Enter the barcode number on your Beachouse key tag or in your Mindbody profile. You only need to do this once.</p>
+    <input id="cid" inputmode="text" autocomplete="off" placeholder="e.g. 100123456" style="background:var(--bg);border:1px solid var(--line-2);border-radius:14px;padding:14px;color:var(--fg);font:inherit;font-size:18px;letter-spacing:.06em;text-align:center">
+    <button class="btn block" id="csave">Save my card</button><p class="note">Not sure of your number? Ask at the front desk or use the support chat.</p>`,
+   s=>{const e=s.querySelector('#cedit');if(e)e.onclick=()=>{S.barcode='';save();cardSheet();};
+     const b=s.querySelector('#csave');if(b)b.onclick=()=>{const v=s.querySelector('#cid').value.trim().replace(/[^\x20-\x7e]/g,'');if(v.length<3){toast('Add your barcode number');return;}S.barcode=v;save();cardSheet();};});}
+
+// ---------- Book 38° The Bathhouse sessions in the app (Trybe) ----------
+// Availability comes straight from Trybe's public shop API. Checkout goes through the same booking service as 38thebathhouse.com.
+const TRYBE_SITE='a0021e9a-f3ac-4631-b968-55c5bb189491';
+const TRYBE_API='https://api.try.be/shop/item-availability/';
+const BOOK_SVC='https://quickbook-api.ops-507.workers.dev/book';
+const MASSAGES=[
+ {id:'68e6ddccd1ca87014c097bb3',k:'fr30',name:'Focus & Release',mins:30,price:90,about:'Targeted work on one or two areas.'},
+ {id:'68e6df07df632fe6d7002220',k:'rr60',name:'Relax & Restore',mins:60,price:150,about:'Flowing full-body massage.'},
+ {id:'68e6df8a8f410bff3b0f7868',k:'dt60',name:'Deep Tension',mins:60,price:160,about:'Firm pressure for tight, sore muscles.'},
+ {id:'69040ae0d0d90291f10a38ca',k:'rr90',name:'Relax & Restore',mins:90,price:210,about:'Longer full-body session.'},
+ {id:'69264dfef410e23c3105b214',k:'dt90',name:'Deep Tension',mins:90,price:250,about:'Longer deep-tissue session.'}
+];
+const BOOKABLE=[
+ {id:'68e701ed9f35d8c6c1045f3f',k:'silent',name:'Silent Session',type:'session',price:39,days:[0,1,2,3,4,5,6],about:'Phone-free and silent. 6:30am to 9am.'},
+ {id:'68e703249d2a98909c071393',k:'midweek',name:'Mid-Week Bathhouse',type:'session',price:51,days:[1,2,3,4],about:'Mon to Thu from 9am. Conversation welcome.'},
+ {id:'68e706251c1bfa7eff046ea7',k:'weekend',name:'Week-End Social',type:'session',price:61,days:[5,6,0],about:'Fri to Sun from 9am.'},
+ {id:'6ad9683b1f3d4e08a70b9fb9',k:'sound',name:'Sound Session',type:'session',price:51,days:[0,1,2,3,4,5,6],about:'90 min with sound bowls, full bathhouse access.'},
+ ...MASSAGES.map(x=>({id:x.id,k:x.k,name:x.name+' '+x.mins,type:'appointment',group:'massage',price:x.price,days:[0,1,2,3,4,5,6],about:x.about}))
+];
+function sydOffset(d){try{const p=new Intl.DateTimeFormat('en-US',{timeZone:'Australia/Sydney',timeZoneName:'shortOffset'}).formatToParts(new Date(d+'T02:00:00Z')).find(x=>x.type==='timeZoneName').value;const m=p.match(/GMT([+-])(\d+)(?::(\d+))?/);return m?m[1]+String(m[2]).padStart(2,'0')+':'+(m[3]||'00'):'+11:00';}catch(e){return '+11:00';}}
+const isoLocal=dt=>`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
+async function slotsFor(item,date,qty){if(item.type==='appointment')return apptSlots(item,date,qty);const off=sydOffset(date);const q=`?date_time_from=${encodeURIComponent(date+'T00:00:00'+off)}&date_time_to=${encodeURIComponent(date+'T23:59:59'+off)}&quantity=${qty}`;
+  const r=await fetch(TRYBE_API+'sessions/'+TRYBE_SITE+'/'+item.id+q,{headers:{accept:'application/json'}});if(!r.ok)throw new Error(r.status);const j=await r.json();const soon=Date.now()+15*60000;
+  return (j.data||[]).filter(s=>s.start_time&&new Date(s.start_time).getTime()>=soon&&s.is_valid!==false&&s.is_bookable!==false&&(s.remaining_capacity==null||s.remaining_capacity>=qty)).map(s=>({it:item,sid:s.id,start:s.start_time,dur:s.duration,left:s.remaining_capacity,price:s.price!=null?s.price/100:item.price}));}
+async function apptSlots(item,date,qty){const off=sydOffset(date);const q=`?date_time_from=${encodeURIComponent(date+'T00:00:00'+off)}&date_time_to=${encodeURIComponent(date+'T23:59:59'+off)}&quantity=${qty}`;
+  const r=await fetch(TRYBE_API+'appointment-slots/'+TRYBE_SITE+'/'+item.id+q,{headers:{accept:'application/json'}});if(!r.ok)throw new Error(r.status);const j=await r.json();const soon=Date.now()+15*60000;
+  return (j.data||[]).filter(s=>s.start_time&&new Date(s.start_time).getTime()>=soon&&s.is_valid!==false&&(s.quantity_available==null||s.quantity_available>=qty)).map(s=>({it:item,sid:item.id+s.start_time,start:s.start_time,dur:s.duration,prac:s.practitioner_ids||[],left:null,price:s.price!=null?s.price/100:item.price}));}
+const t12=iso=>{const h=+iso.slice(11,13),m=iso.slice(14,16);return (h%12||12)+(m!=='00'?':'+m:'')+(h<12?'am':'pm');};
+function bookSheet(pre){const grp=pre&&pre.group||'bath';const st={k:pre&&pre.k||null,date:pre&&pre.date||isoLocal(new Date(Date.now()+(new Date().getHours()>=19?864e5:0))),qty:1,slot:null,slots:null,err:false};
+  const days=[...Array(14)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()+i);return d;});
+  openSheet(`<div><p class="tag">38° The Bathhouse</p><h1 style="font-size:32px">Book a <em>${grp==='massage'?'massage':'session'}</em></h1></div><div id="bk"></div>`,s=>{
+    const box=s.querySelector('#bk');
+    const items=()=>BOOKABLE.filter(it=>(it.group||'bath')===grp&&(!st.k||it.k===st.k));
+    const loadAvail=async(pick)=>{const f=isoLocal(days[0]),t=isoLocal(days[13]);try{const lists=await Promise.all(items().map(it=>fetch(TRYBE_API+`offering-dates?offering_id=${it.id}&offering_type=${it.type}&date_from=${f}&date_to=${t}&quantity=${st.qty}`,{headers:{accept:'application/json'}}).then(r=>r.json()).then(j=>(j.data||[]).filter(d=>d.has_availability).map(d=>d.date)).catch(()=>[])));st.avail=new Set(lists.flat());
+      if(pick&&!st.avail.has(st.date)){const first=days.map(isoLocal).find(d=>st.avail.has(d));if(first){st.date=first;load();return;}}draw();}catch(e){}};
+    const load=async()=>{st.slots=null;st.err=false;st.slot=null;draw();const dow=new Date(st.date+'T00:00').getDay();
+      try{const lists=await Promise.all(items().filter(it=>it.days.includes(dow)).map(it=>slotsFor(it,st.date,st.qty).catch(()=>[])));st.slots=lists.flat().sort((a,b)=>a.start<b.start?-1:1);}catch(e){st.err=true;st.slots=[];}draw();};
+    const draw=()=>{
+      box.innerHTML=`<div class="chips" role="group" aria-label="Experience"><button class="chip" data-bk="" aria-pressed="${!st.k}">All</button>${BOOKABLE.filter(it=>(it.group||'bath')===grp).map(it=>`<button class="chip" data-bk="${it.k}" aria-pressed="${st.k===it.k}">${it.name}</button>`).join('')}</div>
+      <div class="chips" role="group" aria-label="Day">${days.map(d=>{const iso=isoLocal(d);return `<button class="chip daychip${st.avail&&!st.avail.has(iso)?' none':''}" data-bd2="${iso}" aria-pressed="${iso===st.date}"><span>${d.toLocaleDateString('en-AU',{weekday:'short'})}</span><b>${d.getDate()}</b>${st.avail&&st.avail.has(iso)?'<i class="avd"></i>':''}</button>`}).join('')}</div>
+      <div class="row between"><span class="muted" style="font-size:13px">Guests</span><span class="row" style="gap:6px"><button class="btn ghost small" data-q="-1" aria-label="Fewer guests">−</button><b style="min-width:20px;text-align:center">${st.qty}</b><button class="btn ghost small" data-q="1" aria-label="More guests">+</button></span></div>
+      <div class="stack">${st.slots==null?'<p class="muted">Checking live availability…</p>':st.slots.length?Object.values(st.slots.reduce((g,x)=>{(g[x.it.k]=g[x.it.k]||{it:x.it,l:[]}).l.push(x);return g;},{})).map(g=>`<div class="stack" style="gap:8px"><div class="row between"><b>${g.it.name}</b><span class="muted" style="font-size:12px">from A$${g.l[0].price}</span></div><p class="muted" style="font-size:12px;margin-top:-4px">${g.it.about}</p><div class="slots">${g.l.map(x=>`<button class="slot" data-sl="${x.sid}" aria-pressed="${st.slot&&st.slot.sid===x.sid}">${t12(x.start)}${x.left!=null&&x.left<=4?`<small>${x.left} left</small>`:''}</button>`).join('')}</div></div>`).join(''):`<p class="muted">${st.err?'Couldn’t load availability. Check your connection and try again.':'Nothing free this day. Try another day.'}</p>`}</div>
+      ${st.slot?`<div class="card" style="gap:10px"><b>${st.slot.it.name} · ${new Date(st.date+'T00:00').toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'})} · ${t12(st.slot.start)}</b>
+        <span class="muted" style="font-size:13px">${st.qty} ${st.qty>1?'guests':'guest'} · A$${st.slot.price*st.qty} · ${st.slot.dur} min</span>
+        <div class="grid2"><input id="bf" placeholder="First name" autocomplete="given-name" value="${esc((S.me||{}).first||(S.name||''))}"><input id="bl" placeholder="Last name" autocomplete="family-name" value="${esc((S.me||{}).last||'')}"></div>
+        <input id="be" type="email" placeholder="Email" autocomplete="email" value="${esc((S.me||{}).email||'')}"><input id="bp" type="tel" placeholder="Mobile" autocomplete="tel" value="${esc((S.me||{}).phone||'')}">
+        ${grp==='massage'?'':'<p class="muted" style="font-size:12px">Performance members: log in at checkout to use your included session.</p>'}
+        <p class="heat" id="berr" style="font-size:13px"></p>
+        <button class="btn gold block" id="bgo">Continue to secure checkout</button></div>`:''}`;};
+    box.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+      if(b.dataset.bk!==undefined){st.k=b.dataset.bk||null;load();loadAvail(false);}
+      else if(b.dataset.bd2){st.date=b.dataset.bd2;load();}
+      else if(b.dataset.q){st.qty=Math.max(1,Math.min(6,st.qty+(+b.dataset.q)));load();}
+      else if(b.dataset.sl){st.slot=st.slots.find(x=>x.sid===b.dataset.sl);draw();setTimeout(()=>box.querySelector('#bgo')?.scrollIntoView({behavior:'smooth',block:'center'}),50);}
+      else if(b.id==='bgo')go(b);});
+    const go=async b=>{const v=id=>box.querySelector('#'+id).value.trim();const me={first:v('bf'),last:v('bl'),email:v('be'),phone:v('bp')};const err=box.querySelector('#berr');
+      if(!me.first||!me.last){err.textContent='Add your first and last name.';return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(me.email)){err.textContent='Add your email.';return;}if(me.phone.replace(/\D/g,'').length<8){err.textContent='Add your mobile number.';return;}
+      S.me=me;save();b.disabled=true;b.textContent='Holding your spot…';
+      const guests=[...Array(st.qty)].map((_,i)=>i===0?{first_name:me.first,last_name:me.last,email:me.email,phone:me.phone}:{first_name:'Guest',last_name:String(i+1),email:''});
+      try{const r=await fetch(BOOK_SVC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({offering_id:st.slot.it.id,offering_type:st.slot.it.type,time:st.slot.start,duration:st.slot.dur,practitioner_ids:st.slot.prac||[],guests,extras:[]},st.slot.it.type==='session'?{session_id:st.slot.sid}:{}))});
+        const j=await r.json().catch(()=>({}));if(r.ok&&j.checkout_url){window.open(j.checkout_url,'_blank')||(location.href=j.checkout_url);b.textContent='Checkout opened';return;}
+        err.textContent=j.error||'Something went wrong. Please try again.';b.disabled=false;b.textContent='Continue to secure checkout';}
+      catch(x){// Booking service not reachable from this app yet: finish on 38°'s own booking page instead.
+        window.open(TRYBE+'/items/'+st.slot.it.id,'_blank');b.disabled=false;b.textContent='Continue to secure checkout';toast('Finish your booking on the 38° page');}};
+    load();loadAvail(grp==='massage');});}
+
+const BODY={"front":[["chest",["51.8 41.6 51.0 55.1 58.0 58.0 67.8 55.5 70.6 47.3 62.0 41.6","29.8 46.5 31.4 55.5 40.8 58.0 48.2 55.1 47.8 42.0 37.6 42.0"]],["abs",["68.6 63.3 67.3 57.1 58.8 59.6 60.0 64.1 60.4 83.3 65.7 78.8 66.5 69.8","33.9 78.4 33.1 71.8 31.0 63.3 32.2 57.1 40.8 59.2 39.2 63.3 39.2 83.7"]],["abs",["56.3 59.2 58.0 64.1 58.4 78.0 58.4 92.7 56.3 98.4 55.1 104.1 51.4 107.8 51.0 84.5 50.6 67.3 51.0 57.1","43.7 58.8 48.6 57.1 49.0 67.3 48.6 84.5 48.2 107.3 44.5 103.7 40.8 91.4 40.8 78.4 41.2 64.5"]],["biceps",["16.7 68.2 18.0 71.4 22.9 66.1 29.0 53.9 27.8 49.4 20.4 55.9","71.4 49.4 70.2 54.7 76.3 66.1 81.6 71.8 82.9 69.0 78.8 55.5"]],["triceps",["69.4 55.5 69.4 61.6 75.9 72.7 77.6 70.2 75.5 67.3","22.4 69.4 29.8 55.5 29.8 60.8 22.9 73.1"]],["",["55.5 23.7 50.6 33.5 50.6 39.2 61.6 40.0 70.6 44.9 69.4 36.7 63.3 35.1 58.4 30.6","29.0 44.9 30.2 37.1 36.3 35.1 41.2 30.2 44.5 24.5 49.0 33.9 48.6 39.2 38.0 39.6"]],["d_front",["78.4 53.1 79.6 47.8 79.2 41.2 75.9 38.0 71.0 36.3 72.2 42.9 71.4 47.3","28.2 47.3 21.2 53.1 20.0 47.8 20.4 40.8 24.5 37.1 28.6 37.1 26.9 43.3"]],["",["42.4 2.9 40.0 11.8 42.0 19.6 46.1 23.3 49.8 25.3 54.7 22.4 57.6 19.2 59.2 10.2 57.1 2.4 49.8 0.0"]],["",["52.7 110.2 54.3 124.9 60.0 110.2 62.0 100.0 64.9 94.3 60.0 92.7 56.7 104.5","47.8 110.6 44.9 125.3 42.0 115.9 40.4 113.1 39.6 107.3 38.0 102.4 34.7 93.9 39.6 92.2 41.6 99.2 43.7 105.3"]],["quads",["34.7 98.8 37.1 108.2 37.1 127.8 34.3 137.1 31.0 132.7 29.4 120.0 28.2 111.4 29.4 100.8 32.2 94.7","63.3 105.7 64.5 100.0 66.9 94.7 70.2 101.2 71.0 111.8 68.2 133.1 65.3 137.6 62.4 128.6 62.0 111.4","38.8 129.4 38.4 112.2 41.2 118.4 44.5 129.4 42.9 135.1 40.0 146.1 36.3 146.5 35.5 140.0","59.6 145.7 55.5 129.0 60.8 113.9 61.2 130.2 64.1 139.6 62.9 146.5","32.7 138.4 26.5 145.7 25.7 136.7 25.7 127.3 26.9 114.3 29.4 133.5","71.8 113.1 73.9 124.1 73.9 140.4 72.7 145.7 66.5 138.4 70.2 133.5"]],["",["33.9 140.0 34.7 143.3 35.5 147.3 36.3 151.0 35.1 156.7 29.8 156.7 27.3 152.7 27.3 147.3 30.2 144.1","65.7 140.0 72.2 147.8 72.2 152.2 69.8 157.1 64.9 156.7 62.9 151.0"]],["calves",["71.4 160.4 73.5 153.5 76.7 161.2 79.6 167.8 78.4 187.8 79.6 195.5 74.7 195.5","24.9 194.7 27.8 164.9 28.2 160.4 26.1 154.3 24.9 157.6 22.4 161.6 20.8 167.8 22.0 188.2 20.8 195.5","72.7 195.1 69.8 159.2 65.3 158.4 64.1 162.4 64.1 165.3 65.7 177.1","35.5 158.4 35.9 162.4 35.9 166.9 35.1 172.2 35.1 176.7 32.2 182.0 30.6 187.3 26.9 194.7 27.3 187.8 28.2 180.4 28.6 175.5 29.0 169.8 29.8 164.1 30.2 158.8"]],["",["6.1 88.6 10.2 75.1 14.7 70.2 16.3 74.3 19.2 73.5 4.5 97.6 0.0 100.0","84.5 69.8 83.3 73.5 80.0 73.1 95.1 98.4 100.0 100.4 93.5 89.4 89.8 76.3","77.6 72.2 77.6 77.6 80.4 84.1 85.3 89.8 92.2 101.2 94.7 99.6","6.9 101.2 13.5 90.6 18.8 84.1 21.6 77.1 21.2 71.8 4.9 98.8"]]],"back":[["",["50.6 0.0 46.0 0.9 40.9 5.5 40.4 12.8 45.1 20.0 55.7 20.0 59.1 13.6 59.6 4.7 55.7 1.3"]],["upperback",["44.7 21.7 47.7 21.7 47.2 38.3 47.7 64.7 38.3 53.2 35.3 40.9 31.1 36.6 39.1 33.2 43.8 27.2","52.3 21.7 55.7 21.7 56.6 27.2 60.9 32.8 68.9 36.6 64.7 40.4 61.7 53.2 52.3 64.7 53.2 38.3"]],["d_back",["29.4 37.0 23.0 39.1 17.4 44.3 18.3 53.6 24.3 49.4 27.2 46.4","71.1 37.0 78.3 39.6 82.6 44.7 81.7 53.6 74.9 48.9 72.3 45.1"]],["lats",["31.1 38.7 28.1 48.9 28.5 55.3 34.0 75.3 47.2 71.1 47.2 66.4 36.6 54.0 33.6 41.3","68.9 38.7 71.9 49.4 71.5 56.2 66.0 75.3 52.8 71.1 52.8 66.4 63.4 54.5 66.4 41.7"]],["triceps",["26.8 49.8 17.9 55.7 14.5 72.3 16.6 81.7 21.7 63.8 26.8 55.7","73.6 50.2 82.1 55.7 86.0 73.2 83.4 82.1 77.9 63.0 73.2 55.7","26.8 58.3 26.8 68.5 23.0 75.3 19.1 77.4 22.6 65.5","72.8 58.3 77.0 64.7 80.4 77.4 76.6 75.3 72.8 68.9"]],["lowerback",["47.7 72.8 34.5 77.0 35.3 83.4 49.4 102.1 46.8 83.0","52.3 72.8 65.5 77.0 64.7 83.4 50.6 102.1 53.2 83.8"]],["",["86.4 75.7 91.1 83.4 93.2 94.0 100.0 106.4 96.2 104.3 88.1 89.4 84.3 83.8","13.6 75.7 8.9 83.8 6.8 93.6 0.0 106.4 3.8 104.3 12.3 88.5 15.7 83.0","81.3 79.6 77.4 77.9 79.1 84.7 91.1 103.8 93.2 108.9 94.5 104.7","18.7 79.6 22.1 77.9 20.9 84.3 9.4 103.0 6.8 108.5 5.1 104.7"]],["glutes",["44.7 99.6 30.2 108.5 29.8 118.7 31.5 126.0 47.2 121.3 49.4 114.9","55.3 99.1 51.1 114.5 52.3 120.9 68.1 126.0 69.8 119.1 69.4 108.5"]],["glutes",["48.1 123.0 44.7 123.0 41.3 125.5 45.1 144.3 48.5 135.7 48.9 129.4","51.9 122.6 55.7 123.4 59.1 126.0 54.9 144.3 51.9 136.2 51.1 129.4"]],["hamstrings",["28.9 122.1 31.1 129.4 36.6 126.0 35.3 135.3 34.5 150.2 29.4 158.3 28.9 146.8 27.7 141.3 27.2 131.5","71.5 121.7 69.4 128.9 63.8 126.0 65.5 136.6 66.4 150.2 71.1 158.3 71.5 147.7 72.8 142.1 73.6 131.9","38.7 125.5 44.3 146.0 40.4 166.8 36.2 152.8 37.0 135.3","61.7 125.5 63.4 136.2 64.3 153.2 60.0 166.8 56.2 146.4"]],["",["34.5 153.2 31.1 159.1 33.6 166.4 37.4 162.6","66.4 153.6 63.0 163.0 66.8 166.4 69.4 159.1"]],["calves",["29.4 160.4 28.5 167.2 24.7 179.6 23.8 192.8 25.5 197.0 28.5 193.2 29.8 180.0 31.9 171.1 31.9 166.8","37.4 165.1 35.3 167.7 33.2 171.9 31.1 180.4 30.2 191.9 34.0 200.0 38.7 190.6 39.1 168.9","63.0 165.1 61.3 168.5 61.7 190.6 66.4 199.6 70.6 191.9 68.9 179.6 66.8 170.2","70.6 160.4 72.3 168.5 75.7 179.1 76.6 192.8 74.5 196.6 72.3 193.6 70.6 179.6 68.1 168.1"]],["calves",["28.5 195.7 30.2 195.7 33.6 201.7 30.6 220.0 28.5 213.6 26.8 198.3"]],["calves",["69.8 195.7 71.9 195.7 73.6 198.3 71.9 213.2 70.2 219.6 67.2 202.1"]]]};
+
+// ================= Linked recovery model =================
+// How each input changes recovery (shown to members behind the i buttons):
+//  - Base time per muscle: RECOVERY_H (Brigatto 2019, Moran-Navarro 2017).
+//  - Volume: each set above your goal's planned sets adds 8% (max +40%); a "hard" rating adds 25%.
+//  - Sleep: under 6 h adds 12%, 6-7 h adds 5%, 8 h+ takes 3% off (sleep loss slows muscle repair: Dattilo 2011, Fullagar 2015).
+//  - 38° heat: 0.5% faster per minute, up to 8% a session. Cold: 0.8% per minute, up to 10%. Massage: 10% a session
+//    (Dupuy 2018 meta-analysis: massage was the most effective method for soreness and fatigue). Total boost capped at 20%.
+//    Effects are modest on purpose: a 2026 trial (Bayne, J Thermal Biol) found heat and cold did not beat rest for strength recovery.
+const HEAT_PER_MIN=.005,HEAT_CAP=.08,COLD_PER_MIN=.008,COLD_CAP=.1,MASSAGE_BOOST=.1,BOOST_CAP=.2;
+const RECOVERY_INFO='How this is worked out. Each muscle has its own recovery time: biceps, calves and abs about 36 h, triceps 42 h, chest and shoulders 48 h, glutes 60 h, legs and back 72 h. Helper muscles count for half. Every set over your plan adds 6%, a hard session adds 25%, and short sleep adds up to 12%. After training, 38° heat speeds recovery by 0.5% per minute (up to 8%), cold by 0.8% per minute (up to 10%) and massage by 10%, up to 20% in total. We keep these effects small on purpose: in trials, heat and cold mostly help soreness, not strength. These are estimates from published research, not medical advice.';
+function ritual(r){return RITUALS.find(x=>x.id===r.r)||{};}
+function recMins(r){return r.mins||ritual(r).mins||0;}
+function boostOf(r){const k=ritual(r).kind,m=recMins(r);return k==='heat'?Math.min(HEAT_CAP,m*HEAT_PER_MIN):k==='cold'?Math.min(COLD_CAP,m*COLD_PER_MIN):k==='massage'?MASSAGE_BOOST:0;}
+function sleepOn(date){const v=(S.sleep||{})[date];if(v!=null)return v;if(S.wear&&date===dayISO(0))return WEAR_DEMO.sleep;return null;}
+function sleepFactor(h){return h==null?1:h<6?1.12:h<7?1.05:h>=8?.97:1;}
+function plannedSets(){return GOALS[S.goal||'build'].sets;}
+function sessionLoad(l){const extra=l.sets.length-plannedSets();return Math.max(.88,Math.min(1.3,1+.06*extra))*(l.fb==='hard'?1.25:1);}
+function hoursSince(l){return l.at?(Date.now()-l.at)/36e5:daysAgo(l.date)*24+12;}
+function logBoost(l){return Math.min(BOOST_CAP,S.rec.filter(r=>r.date>=l.date&&daysAgo(l.date)-daysAgo(r.date)<=2&&(!l.at||!r.at||r.at>=l.at)).reduce((a,r)=>a+boostOf(r),0));}
+function logSleep(l){const ds=[];for(let i=daysAgo(l.date)-1;i>=0;i--)ds.push(sleepOn(dayISO(i)));const v=ds.filter(x=>x!=null);return v.length?Math.min(...v):null;}
+function recoveryDetail(){const out={};Object.keys(MUSCLES).forEach(k=>out[k]={pct:100,left:0});
+  S.logs.forEach(l=>{const m=M(l.m);if(!m)return;const hrs=hoursSince(l);if(hrs>200)return;
+    const mult=sessionLoad(l)*(m.cardio?.4:1)*sleepFactor(logSleep(l))*(1-logBoost(l));
+    const hit=(k,share)=>{if(!out[k])return;const need=(RECOVERY_H[k]||48)*mult*share;const pct=Math.min(100,Math.round(hrs/need*100));if(pct<out[k].pct)out[k]={pct,left:Math.max(0,Math.round(need-hrs))};};
+    m.muscles.forEach(k=>hit(k,1));(m.sec||[]).forEach(k=>hit(k,.5));});
+  return out;}
+function recovery(){const d=recoveryDetail();const o={};for(const k in d)o[k]=d[k].pct;return o;}
+// What a single recovery session does, in words, for the toast and the info sheet.
+function boostText(r){const b=Math.round(boostOf(r)*100);const recent=S.logs.some(l=>daysAgo(l.date)<=2&&!M(l.m).cardio);
+  return recent?`speeds up muscles trained in the last 2 days by about ${b}%`:`no recent training to speed up, but it still counts toward your weekly goal`;}
+// Muscles worked recently, weighted by sets (for the therapist view).
+function workedRecently(days=4){const w={};Object.keys(MUSCLES).forEach(k=>w[k]={sets:0,last:null,hard:false});
+  S.logs.filter(l=>daysAgo(l.date)<=days).forEach(l=>{const m=M(l.m);if(!m||m.cardio)return;const add=(k,f)=>{if(!w[k])return;w[k].sets+=l.sets.length*f;if(!w[k].last||l.date>w[k].last)w[k].last=l.date;if(l.fb==='hard')w[k].hard=true;};m.muscles.forEach(k=>add(k,1));(m.sec||[]).forEach(k=>add(k,.5));});
+  return w;}
+
+// ================= Body map (anatomical figure) =================
+// Muscle outlines adapted from react-body-highlighter (MIT licence, (c) 2020 GV79).
+function bodyMap(rec,mode){
+  const col=k=>{if(!k)return '#2b2a27';if(mode==='worked'){const w=rec[k];return !w||!w.sets?'#2b2a27':w.sets>=8||w.hard?'#d6735f':w.sets>=4?'var(--heat)':'var(--gold)';}
+    if(k==='d_front')return recCol(Math.min(rec.frontdelts,rec.sidedelts));if(k==='d_back')return recCol(Math.min(rec.reardelts,rec.sidedelts));return recCol(rec[k]);};
+  const fig=(list,label)=>`<svg viewBox="0 0 100 220" role="img" aria-label="${label} view">${list.map(([k,ps])=>ps.map(p=>`<polygon points="${p}" fill="${col(k)}" fill-opacity="${k?'.85':'1'}" stroke="#090908" stroke-width=".6"/>`).join('')).join('')}<text x="50" y="216" text-anchor="middle">${label.toUpperCase()}</text></svg>`;
+  const legend=mode==='worked'?`<div class="legend"><span><i style="background:var(--gold)"></i>Light</span><span><i style="background:var(--heat)"></i>Worked</span><span><i style="background:#d6735f"></i>Worked hard</span></div>`
+    :`<div class="legend"><span><i style="background:var(--good)"></i>Fresh</span><span><i style="background:var(--heat)"></i>Recovering</span><span><i style="background:#d6735f"></i>Rest</span></div>`;
+  let foot='';if(mode!=='worked'){const det=recoveryDetail();const low=Object.keys(MUSCLES).filter(k=>rec[k]<85).sort((a,b)=>rec[a]-rec[b]);
+    foot=`<p class="muted" style="font-size:13px;text-align:center">${low.length?'Still recovering: '+low.map(k=>`${MUSCLES[k]} ${rec[k]}%${det[k].left?` <span style="opacity:.7">(~${det[k].left}h)</span>`:''}`).join(' · '):'Every muscle group is fresh and ready to train.'}</p>`;}
+  return `<div class="bodymap">${fig(BODY.front,'Front')}${fig(BODY.back,'Back')}</div>${legend}${foot}`;}
+function therapistSheet(){const w=workedRecently(4);const list=Object.keys(MUSCLES).filter(k=>w[k].sets>0).sort((a,b)=>w[b].sets-w[a].sets);
+  const inj=(S.injuries||[]).map(k=>INJURIES[k]);
+  openSheet(`<p class="tag">Show your therapist</p><h1 style="font-size:30px">Where I've been <em>working</em></h1><p class="muted" style="font-size:13px">The last 4 days of training at Beachouse, so your therapist knows where to focus.</p>
+   ${bodyMap(w,'worked')}
+   <div class="list">${list.length?list.map(k=>`<div class="item"><span><b>${MUSCLES[k]}</b><br><span class="meta">${Math.round(w[k].sets)} sets · last ${daysAgo(w[k].last)===0?'today':daysAgo(w[k].last)===1?'yesterday':daysAgo(w[k].last)+' days ago'}${w[k].hard?' · felt hard':''}</span></span><span class="pill" style="color:${w[k].sets>=8||w[k].hard?'#d6735f':'var(--heat)'};border-color:currentColor">${w[k].sets>=8||w[k].hard?'Likely sore':'Worked'}</span></div>`).join(''):'<div class="item muted">No training logged in the last 4 days.</div>'}</div>
+   ${inj.length?`<p class="note heat">Injuries to work around: ${inj.join(', ')}.</p>`:''}`);}
+
+// ================= Massage =================
+
+function massageCard(){const w=workedRecently(4);const top=Object.keys(MUSCLES).filter(k=>w[k].sets>=4).sort((a,b)=>w[b].sets-w[a].sets).slice(0,3).map(k=>MUSCLES[k].toLowerCase());
+  return `<section class="card"><div class="row between"><h2>Massage${ib('Massage was the most effective recovery method for muscle soreness and tiredness in a 2018 review of 99 studies (Dupuy et al.). In the app, a massage logged within 2 days of training speeds up those muscles’ recovery by about 10%.')}</h2><span class="pill">+10% recovery</span></div>
+   <p style="font-size:14px">${top.length?`You've worked your ${top.join(', ')} hardest this week. A Deep Tension massage would target them.`:'Book a massage at 38° downstairs. Show your therapist where you’ve been training.'}</p>
+   <div class="row"><button class="btn gold small" style="flex:1" data-act="bookmassage">Book a massage</button><button class="btn ghost small" style="flex:1" data-act="therapist">Show my therapist</button></div></section>`;}
+
+// ================= Sleep =================
+function sleepChips(){const v=(S.sleep||{})[dayISO(0)];return `<div class="stack" style="gap:8px"><span class="tag" style="color:var(--muted)">Sleep last night${ib('Sleep is when muscles repair. Under 6 hours slows your recovery score by 12%, 6 to 7 hours by 5%, and 8 hours or more speeds it up by 3%. If you connect a wearable, this fills in by itself.')}</span><div class="chips">${[5,6,7,8,9].map(h=>`<button class="chip" data-sleep="${h}" aria-pressed="${v===h}">${h===9?'9h+':h+'h'}</button>`).join('')}</div></div>`;}
+
+// ================= "Because of what you logged" insights =================
+function insights(){const out=[];const today=dayISO(0);const det=recoveryDetail();const ses=sessionItems();
+  const add=(tone,title,body,why)=>out.push({tone,title,body,why});
+  // Extra sets in the last 2 days
+  const over=S.logs.filter(l=>daysAgo(l.date)<=1&&!M(l.m).cardio&&l.sets.length>plannedSets());
+  if(over.length){const ms=[...new Set(over.flatMap(l=>M(l.m).muscles))].map(k=>MUSCLES[k].toLowerCase());
+    add('heat','Extra sets logged',`You did more sets than planned on ${over.map(l=>M(l.m).name).join(', ')}. Your ${ms.join(', ')} need longer to recover, so aim for 8 hours' sleep and hit your protein today.`,'Each set over your plan adds about 8% to that muscle’s recovery time.');}
+  // Today's session vs recovery
+  const tired=ses.items.map(M).filter(m=>!m.cardio&&Math.min(...m.muscles.map(k=>det[k].pct))<60);
+  if(tired.length)add('heat','Lighter on some machines today',`${tired.map(m=>m.name).join(', ')} work${tired.length>1?'':'s'} muscles that are still recovering, so their targets are 10% lighter today.`,'When a machine’s main muscle is under 60% recovered, the app lowers the target weight by 10%.');
+  // Sleep
+  const sl=sleepOn(today);if(sl!=null&&sl<7)add('heat','Short sleep',`${sl} hours last night slows recovery by ${sl<6?12:5}%. Keep today's session moderate and try to get to bed earlier.`,'Sleep loss reduces muscle repair and raises perceived effort (Fullagar 2015).');
+  // Cold straight after weights when building muscle
+  const lifts=S.logs.filter(l=>l.date===today&&l.at&&!M(l.m).cardio);const cold=S.rec.filter(r=>r.date===today&&r.at&&ritual(r).kind==='cold');
+  if(['build','strength'].includes(S.goal||'build')&&lifts.length&&cold.some(c=>lifts.some(l=>c.at>l.at&&c.at-l.at<6*36e5)))
+    add('cold','Ice bath straight after weights','Cold right after lifting can reduce muscle growth. For your goal, use heat after training and save the ice bath for rest days or 6+ hours later.','A 2024 meta-analysis (Piñero et al.) found cold water immersion straight after resistance training reduced muscle growth.');
+  // Heat today adds water
+  const heatToday=S.rec.filter(r=>r.date===today&&ritual(r).kind==='heat');
+  if(heatToday.length)add('cold','Drink a bit more today',`Your ${heatToday.length>1?heatToday.length+' heat sessions':'heat session'} added ${(heatToday.length*.5).toFixed(1)} L to today's water target.`,'You sweat out roughly half a litre in a 15-minute sauna.');
+  // Training load spike
+  const lr=loadRatio();if(lr>1.25)add('heat','Big training week',`You've trained ${Math.round((lr-1)*100)}% more than your usual week, so your heat and cold goals went up.`,'Your recovery goals rise when this week’s training load is more than 25% above your 4-week average.');
+  // Injuries
+  if((S.injuries||[]).length)add('good','Working around your injuries',`Machines that load your ${(S.injuries||[]).map(k=>INJURIES[k].toLowerCase()).join(' and ')} are swapped out of your sessions.`,'Set or clear injuries in your profile.');
+  // Recovery visit helped
+  const recentBoost=S.rec.filter(r=>daysAgo(r.date)<=1&&boostOf(r)>0);
+  if(recentBoost.length&&S.logs.some(l=>daysAgo(l.date)<=2&&!M(l.m).cardio))add('good','Recovery is working',`Your ${recentBoost.map(r=>ritual(r).name.toLowerCase()).join(' and ')} sped up recovery by about ${Math.round(Math.min(BOOST_CAP,recentBoost.reduce((a,r)=>a+boostOf(r),0))*100)}%.`,RECOVERY_INFO);
+  if(S.glucoseFocus&&new Date().getHours()>=12&&new Date().getHours()<21)add('good','Walk after meals','A 10-minute walk after lunch or dinner lowers the blood sugar spike.','From your glucose monitor results.');
+  // Food done
+  const ft=foodTargets(),fd=foodToday();if(fd.p>=ft.palms&&fd.p>0)add('good','Protein target hit','That helps your muscles repair from today’s training.','Your protein target is based on your body weight and goal.');
+  return out;}
+function insightsCard(){const list=insights();if(!list.length)return '';
+  return `<section class="card"><div class="row between"><h2>Because of what you logged${ib('Everything you log feeds into everything else: sets, how hard it felt, sleep, heat, cold, massage, food and your results. This list shows what changed today and why.')}</h2></div>
+   <div class="stack" style="gap:12px">${list.slice(0,5).map(x=>`<div class="ins"><span class="dot" style="background:${x.tone==='heat'?'var(--heat)':x.tone==='cold'?'var(--cold)':'var(--good)'}"></span><span><b>${esc(x.title)}</b>${ib(x.why)}<br><span class="muted" style="font-size:13px">${esc(x.body)}</span></span></div>`).join('')}</div><button class="btn ghost small" data-act="science">How this works</button></section>`;}
+
+// ================= Food targets by sex, goal, weight and the day =================
+// Protein: 1.6-2.2 g/kg for people who train (ISSN position stand, Jäger 2017; Morton 2018); higher when leaning out to keep muscle.
+// Water: 2.6 L men, 2.1 L women (NHMRC adequate intake), + 0.5 L on training days and per heat session.
+// Veg: 6 serves men, 5 women; fruit: 2 serves (Australian Dietary Guidelines, adults 19-50).
+const PROTEIN_GKG={strength:1.8,build:2.0,fit:2.0};
+function foodTargets(){const kg=bodyKg();const f=S.sex==='f';const gkg=PROTEIN_GKG[S.goal||'build'];const protein=S.dietProtein||Math.round(kg*gkg/5)*5;
+  const heat=S.rec.filter(r=>r.date===dayISO(0)&&ritual(r).kind==='heat').length;
+  return {protein,gkg,palms:Math.max(3,Math.round(protein/25)),veg:f?5:6,fruit:2,water:Math.round(((f?2.1:2.6)+(sessionDoneToday()?.5:0)+heat*.5+(condFlag('t2d')?.5:0))*10)/10,heat};}
+function viewFood(){const ft=foodTargets();const d=Object.assign({p:0,v:0,f:0,w:0},foodToday());const focus=appliedFood();
+  const done=d.p>=ft.palms&&d.v>=ft.veg&&d.f>=ft.fruit&&d.w>=ft.water;
+  const row=(k,label,val,goal,unit,col,step)=>{const ok=val>=goal;return `<div class="stack" style="gap:6px"><div class="row between"><span>${label}${ok?' <span style="color:var(--good)">✓</span>':''}</span><span class="row" style="gap:6px"><span class="muted" style="font-variant-numeric:tabular-nums">${val}/${goal}${unit}</span><button class="btn ghost small fdb" data-fd="${k}" data-fs="-1" aria-label="Remove one">−</button><button class="btn ghost small fdb" data-fd="${k}" data-fs="1" aria-label="Add one"${ok?' disabled':''}>+</button></span></div><div class="bar" style="height:8px"><i style="width:${Math.min(100,Math.round(val/goal*100))}%;background:${ok?'var(--good)':col}"></i></div></div>`;};
+  return `${S.sex?`<div class="row between"><span class="muted" style="font-size:13px">Targets for</span><div class="chips"><button class="chip" data-sex="m" aria-pressed="${S.sex==='m'}">Male</button><button class="chip" data-sex="f" aria-pressed="${S.sex==='f'}">Female</button></div></div>`:`<section class="card"><h2>Set up your targets</h2><p class="muted" style="font-size:13px">Targets differ for men and women.</p><div class="chips"><button class="chip" data-sex="m">Male</button><button class="chip" data-sex="f">Female</button></div></section>`}
+  ${done?`<section class="card done"><span class="tick-big">✓</span><h3>Today's food guide complete</h3><p class="muted" style="font-size:14px">Every target hit. Come back tomorrow.</p></section>`:''}
+  <section class="card"><div class="row between"><h2>Today's food guide${ib(`How your targets are set. Protein: ${ft.gkg} g per kg of body weight for ${GOALS[S.goal||'build'].label.toLowerCase()} (sports nutrition research recommends 1.6 to 2.2 g/kg for people who train). A palm-sized serve is about 25 g. Veg: ${ft.veg} serves and fruit: 2 serves a day (Australian Dietary Guidelines, ${S.sex==='f'?'women':'men'} 19 to 50). Water: ${S.sex==='f'?'2.1':'2.6'} L a day (NHMRC), plus 0.5 L on training days and 0.5 L per heat session. Weight comes from your latest weigh-in (${bodyKg()} kg). A guide, not a diet: for allergies or medical conditions see a doctor or dietitian.`)}</h2><span class="muted" style="font-size:12px">${GOALS[S.goal||'build'].label}${S.sex?' · '+(S.sex==='f'?'Female':'Male'):''}</span></div>
+   <p class="muted" style="font-size:13px">About <b style="color:var(--fg)">${ft.protein} g protein</b>${S.kcal?` and <b style="color:var(--fg)">${S.kcal} kcal</b>`:''} today${sessionDoneToday()?' (training day)':''}${S.dietProtein?' \u00b7 from your dietitian':''}. Tap + as you go.</p>
+   ${row('p','Protein (palm-sized serves)',d.p,ft.palms,'','var(--gold)')}
+   ${row('v','Veg (handfuls)',d.v,ft.veg,'','var(--gold)')}
+   ${row('f','Fruit (pieces)',d.f,ft.fruit,'','var(--gold)')}
+   ${row('w','Water',d.w,ft.water,' L','var(--cold)')}
+   ${ft.heat?`<p class="note">+${(ft.heat*.5).toFixed(1)} L water added for your heat session${ft.heat>1?'s':''} today.</p>`:''}</section>
+  <section class="card"><h2>Your plate</h2><div class="stack" style="font-size:14px"><span>½ veg and salad</span><span>¼ protein: meat, fish, eggs, tofu or legumes</span><span>¼ smart carbs: rice, potato, oats, wholegrain bread</span><span class="muted" style="font-size:13px">${sessionDoneToday()?'Training day: add a carb serve and have protein within a couple of hours of your session.':'Rest day: keep protein up, carbs a little lower.'}</span></div></section>
+  ${S.glucoseFocus?`<section class="card" style="border-color:var(--good)"><div class="row between"><h2>Steadier blood sugar</h2><span class="ai">From your glucose monitor</span></div><div class="stack" style="font-size:14px"><span>Eat protein and veg first, carbs last</span><span>Swap white bread, rice and sugary drinks for wholegrains and water</span><span>Walk for 10 minutes after main meals</span><span class="muted" style="font-size:13px">Training with weights also improves blood sugar control for up to 48 hours.</span></div></section>`:''}
+  ${focus.length?`<section class="card" style="border-color:var(--good)"><div class="row between"><h2>Focus foods from your results</h2><span class="ai">Applied</span></div>${focus.map(k=>`<div class="stack" style="gap:2px"><b>${FOOD_FOCUS[k].t}</b><span class="muted" style="font-size:13px">${FOOD_FOCUS[k].f}</span></div>`).join('')}</section>`:''}`;}
+
+// ================= Health conditions (general exercise guidance, member approves each change) =================
+// Based on Exercise & Sports Science Australia (ESSA) and ACSM guidance. Not medical advice: members are told to check with their doctor.
+const CONDITIONS={
+ bp:{name:'High blood pressure',changes:['Rest between sets goes up by 30 seconds','Reminder to breathe out on every lift (no breath-holding)','Ice baths paused until your doctor says they’re OK'],rest:30,noCold:true,
+   why:'Breath-holding under heavy load and sudden cold both spike blood pressure. Regular strength training and sauna use are linked with lower blood pressure.'},
+ heart:{name:'Heart condition',changes:['Rest between sets goes up by 30 seconds','Sauna and ice bath goals paused until your doctor clears you','Sessions capped at “about right” effort'],rest:30,noCold:true,noHeat:true,capEffort:true,
+   why:'Heat and cold put extra load on the heart. Get medical clearance before using them or training hard.'},
+ t2d:{name:'Type 2 diabetes',changes:['Reminder to carry fast carbs and check glucose before training','Water target up by 0.5 L','Shorter sauna sessions (10 min)'],water:.5,
+   why:'Strength training improves blood sugar control. Heat and long sessions can drop glucose and dehydrate you.'},
+ asthma:{name:'Asthma',changes:['Longer warm-up on the bike or rower first','Reminder to keep your inhaler with you','Ice baths start shorter (1 minute)'],
+   why:'A gradual warm-up reduces exercise-induced symptoms. Sudden cold can trigger a reaction.'},
+ osteo:{name:'Osteoporosis or osteopenia',changes:['Crunch machines swapped for safer core work','Leg press and squats kept: loading strengthens bone'],swap:['ab-crunch','cable-crunch'],
+   why:'Progressive loading builds bone, but loaded spinal flexion (crunching under weight) raises fracture risk.'},
+ preg:{name:'Pregnancy',changes:['Bathhouse heat and cold goals turned off (38° can’t host pregnant guests)','Crunch and back-extension machines swapped out','Weights held, not increased'],noCold:true,noHeat:true,swap:['ab-crunch','cable-crunch','back-ext'],hold:true,
+   why:'Overheating and lying-down core work aren’t recommended during pregnancy. Check with your midwife or doctor.'},
+ knee:{name:'Knee arthritis',changes:['Machines that load the knee swapped out (same as a knee injury)'],injury:'knee',
+   why:'Low-load strengthening helps arthritis, but deep or heavy knee bending can flare it.'},
+ back:{name:'Ongoing lower back pain',changes:['Machines that load the lower back swapped out'],injury:'back',
+   why:'Staying active helps back pain, but heavy spinal loading can aggravate it.'}
+};
+function condActive(){return (S.conditions||[]).filter(k=>CONDITIONS[k]);}
+function condFlag(f){return condActive().some(k=>CONDITIONS[k][f]);}
+function conditionsCard(){const act=condActive();const pend=(S.condPending||[]).filter(k=>CONDITIONS[k]&&!act.includes(k));
+  return `<section class="card"><div class="row between"><h2>Health conditions${ib('Pick any condition you have and the app suggests changes to your training and recovery. Nothing changes until you approve it. General guidance from exercise physiology bodies, not medical advice: check with your doctor.')}</h2>${act.length?`<span class="pill pr">${act.length} active</span>`:''}</div>
+   <select id="condsel" aria-label="Add a condition" class="sel"><option value="">Add a condition…</option>${Object.entries(CONDITIONS).filter(([k])=>!act.includes(k)&&!pend.includes(k)).map(([k,c])=>`<option value="${k}">${c.name}</option>`).join('')}</select>
+   ${pend.map(k=>{const c=CONDITIONS[k];return `<div class="card" style="border-color:rgba(200,179,138,.45);gap:8px"><div class="row between"><b>${c.name}</b><button class="muted" style="font-size:12px;text-decoration:underline" data-condx="${k}">Cancel</button></div><span class="tag" style="color:var(--muted)">Suggested changes</span><ul class="ticks">${c.changes.map(x=>`<li>${x}</li>`).join('')}</ul><p class="muted" style="font-size:12px">${c.why}</p><button class="btn gold small" data-condok="${k}">Approve changes</button></div>`}).join('')}
+   ${act.map(k=>`<div class="row between"><span>${CONDITIONS[k].name} <span class="ai" style="margin-left:6px">Applied</span></span><button class="muted" style="font-size:12px;text-decoration:underline" data-condrm="${k}">Remove</button></div>`).join('')}
+   </section>`;}
+function connectedCard(){const n=(S.bloods||[]).length,d=(S.dexa||[]).length;
+  return `<section class="card"><h2>Connected to your health${ib('Everything here feeds into your training, recovery and food targets. Blood results and DEXA scans suggest changes you approve; a wearable adds sleep and readiness.')}</h2>
+   <div class="list">
+    <div class="item"><span><b>Blood tests</b><br><span class="meta">${n?n+' test'+(n>1?'s':'')+' on file':'Order through our partner clinic'}</span></span><span class="${n?'pill pr':'muted'}">${n?'Linked':'Not yet'}</span></div>
+    <div class="item"><span><b>DEXA body composition</b><br><span class="meta">${d?d+' scan'+(d>1?'s':'')+' on file':'Muscle, fat and bone by body part'}</span></span><span class="${d?'pill pr':'muted'}">${d?'Linked':'Not yet'}</span></div>
+    <button class="item" data-act="addwear"><span><b>Wearable</b><br><span class="meta">${S.wear?DEVICES[S.wear]+' · sleep and readiness':'WHOOP, Garmin, Apple Watch or Oura'}</span></span><span class="${S.wear?'pill pr':'muted'}">${S.wear?'Linked':'+ Connect'}</span></button>
+    <div class="item"><span><b>Conditions</b><br><span class="meta">${condActive().length?condActive().map(k=>CONDITIONS[k].name).join(', '):'None added'}</span></span><span class="${condActive().length?'pill pr':'muted'}">${condActive().length?'Applied':'Optional'}</span></div>
+   </div></section>`;}
+
+// ================= The science library =================
+const SCIENCE=[
+ {t:'Muscle recovery times',b:'Muscles rebuild for 1 to 3 days after a hard session. Smaller muscles that do less heavy lowering (biceps, calves, abs) bounce back in about 36 hours. Chest and shoulders take about 48 hours. Big muscles under long, heavy stretches (quads, hamstrings, back) take about 72 hours. Training a muscle twice a week builds more than once a week.',a:'Each muscle has its own clock. Helper muscles count for half. The body map shows what’s fresh.',src:'Brigatto 2019; Morán-Navarro 2017; Schoenfeld 2016'},
+ {t:'Extra sets and hard sessions',b:'More volume means more muscle damage to repair. Going past your plan isn’t bad, but those muscles need longer before you load them again.',a:'Every set over your plan adds 6% to that muscle’s recovery time. Rating a session “hard” adds 25%.',src:'Volume and recovery: Schoenfeld 2017; Helms 2018 (effort ratings)'},
+ {t:'Sleep',b:'Most muscle repair and growth hormone release happens in deep sleep. Short sleep raises stress hormones, lowers strength the next day and makes training feel harder.',a:'Under 6 hours slows recovery 12%, 6 to 7 hours 5%. 8 hours or more speeds it up 3%.',src:'Dattilo 2011; Fullagar 2015 (Sports Medicine)'},
+ {t:'Sauna and heat',b:'Regular sauna use is linked with lower blood pressure and better heart health. After training, heat relaxes muscles and can ease soreness. In trials it doesn’t bring strength back much faster than rest, so the effect we give it is small. You sweat roughly half a litre in a 15-minute sauna.',a:'Each minute of heat after training speeds recovery 0.5%, up to 8% a session, and adds 0.5 L to your water target. Weekly goal about 57 minutes.',src:'Laukkanen 2015 (JAMA Intern Med); Søberg 2021; Bayne 2026 (J Thermal Biol)'},
+ {t:'Ice baths and cold',b:'Cold reduces soreness and helps you feel recovered, especially in the first 24 hours. But an ice bath straight after weights can blunt muscle growth. If you’re building muscle, use cold on rest days, before training, or 6+ hours after.',a:'Each minute of cold after training speeds recovery 0.8%, up to 10%. You get a warning if you plunge straight after lifting while building muscle. Weekly goal about 11 minutes.',src:'Moore 2022 (Sports Med); Piñero 2024 (Eur J Sport Sci); Søberg 2021'},
+ {t:'Contrast therapy',b:'Alternating hot and cold (sauna, ice bath, rest, three rounds) is popular for feeling fresh. Evidence shows it eases soreness about as well as cold alone. Finish on cold to feel alert, or on heat to wind down before bed.',a:'Three easy-to-remember levels. Beginner: 10 min sauna, 1 min ice, 2 min rest, twice. Intermediate: 15, 2, 5, three times. Advanced: 20, 3, 5, three times. Tap \u201cI did this\u201d afterwards to log it.',src:'Dupuy 2018 (Frontiers in Physiology)'},
+ {t:'Massage',b:'In a review of 99 studies, massage was the most effective recovery method for soreness and tiredness. It doesn’t make you stronger faster, but you feel better and move better.',a:'A massage within 2 days of training speeds those muscles’ recovery 10%. Use “Show my therapist” so they know where to work.',src:'Dupuy 2018 (Frontiers in Physiology)'},
+ {t:'Protein',b:'Protein is the building block for muscle repair. People who train do best on 1.6 to 2.2 g per kg of body weight a day, spread over 3 to 5 meals. Higher amounts help keep muscle while leaning out.',a:'Your target is 1.8 to 2.0 g per kg depending on your goal, shown as palm-sized serves (about 25 g each).',src:'ISSN position stand (Jäger 2017); Morton 2018 (BJSM)'},
+ {t:'Water',b:'Adult women need about 2.1 L of fluid a day and men about 2.6 L, more when you sweat. Even mild dehydration lowers performance.',a:'Base target by sex, plus 0.5 L on training days and 0.5 L per heat session.',src:'NHMRC Nutrient Reference Values'},
+ {t:'Veg and fruit',b:'Australian guidelines are 6 serves of veg for men and 5 for women (19 to 50), plus 2 fruit. Colourful plants bring fibre, vitamins and antioxidants that support recovery and gut health.',a:'Your veg and fruit targets follow these serves.',src:'Australian Dietary Guidelines'},
+ {t:'How your weights go up',b:'Muscles grow when the challenge slowly increases. Alternating heavier and lighter days, and adjusting to how a session felt, keeps progress steady without burning out.',a:'If you beat your target, the weight goes up. If it felt hard, it holds. After 2+ weeks off it drops 10%. If the muscle is under 60% recovered, it’s 10% lighter today.',src:'Progressive overload: Kraemer & Ratamess 2004'},
+ {t:'Rest between sets',b:'Longer rests (2 to 3 minutes) let you lift heavier for strength. Shorter rests (45 to 90 seconds) suit muscle building and fitness. Big leg lifts need a little longer.',a:'Your rest timer is set by your goal, plus 30 seconds on big leg lifts.',src:'Schoenfeld 2016; ACSM 2009'},
+ {t:'Busy times',b:'Predicted from typical gym traffic: early mornings and after work are busiest, mid-morning to mid-afternoon is quietest.',a:'This becomes live check-in data once Mindbody is connected.',src:'Beachouse opening hours'},
+ {t:'VO2 max',b:'VO2 max measures how much oxygen your body can use at full effort. Higher fitness is linked with a longer, healthier life, and it improves with 2 to 3 cardio sessions a week.',a:'Your result is rated against typical ranges for your age and sex. A low result can add cardio finishers to your sessions.',src:'ACSM fitness norms; Mandsager 2018 (JAMA Netw Open)'},
+ {t:'Resting metabolism',b:'Your resting metabolic rate is the energy you burn doing nothing. Multiplied by your activity level it gives your daily calorie needs.',a:'Your calorie guide is resting rate \u00d7 1.5, then 15% less to lean out or 10% more to build muscle.',src:'Indirect calorimetry; Harris-Benedict activity factors'},
+ {t:'Blood sugar',b:'Big swings in blood sugar can leave you tired and hungry. Eating protein and veg before carbs and walking after meals both flatten the spike.',a:'Glucose monitor results can add food tips and post-meal walks.',src:'Buffey 2022 (Sports Med); Shukla 2015 (Diabetes Care)'},
+ {t:'Health conditions',b:'Exercise helps almost every long-term condition, but some need adjustments, like avoiding breath-holding with high blood pressure or skipping heat in pregnancy.',a:'Pick a condition, review the changes, and approve them. Always check with your doctor.',src:'Exercise & Sports Science Australia; ACSM'}
+];
+function scienceSheet(open){openSheet(`<p class="tag">How Beachouse works</p><h1 style="font-size:32px">The <em>science</em></h1><p class="muted" style="font-size:13px">Everything the app calculates, in plain English, with the research behind it.</p>
+  <div class="sci">${SCIENCE.map((x,i)=>`<details${open===i?' open':''}><summary>${x.t}</summary><p>${x.b}</p><p><span class="tag">In the app</span><br>${x.a}</p><p class="muted" style="font-size:12px">Research: ${x.src}</p></details>`).join('')}</div>
+  <p class="note">General information, not medical advice.</p>`);}
+
+// ---------- Contrast protocol: easy numbers to remember (the bathhouse is phone-free) ----------
+// Sauna 80-90°C, ice bath 3-6°C. Common evidence-based ranges: sauna 10-20 min, cold 1-3 min per dip, 2-3 rounds.
+const PROTOCOLS={
+ beginner:{l:'Beginner',sauna:10,ice:1,rest:2,rounds:2,note:'New to heat and cold. Get used to the cold first.'},
+ intermediate:{l:'Intermediate',sauna:15,ice:2,rest:5,rounds:3,note:'Done it a few times and the cold feels manageable.'},
+ advanced:{l:'Advanced',sauna:20,ice:3,rest:5,rounds:3,note:'Regular bathhouse user, comfortable in the cold.'}
+};
+function protocolCard(){const k=S.proto||'beginner';const P=PROTOCOLS[k];
+  return `<section class="card"><div class="row between"><h2>Contrast protocol${ib('Sauna at 80 to 90\u00b0C, then the ice bath at 3 to 6\u00b0C, then rest. Remember the numbers before you go in: the bathhouse is phone-free. Step out early if you feel dizzy, drink water between rounds, and skip the ice bath if you have a heart condition or high blood pressure unless your doctor has OK\u2019d it.')}</h2></div>
+   <div class="seg" style="grid-template-columns:repeat(3,1fr)" role="group" aria-label="Level">${Object.entries(PROTOCOLS).map(([id,x])=>`<button data-proto="${id}" aria-pressed="${id===k}">${x.l}</button>`).join('')}</div>
+   <div class="proto"><div><b>${P.sauna}</b><span class="heat">min sauna</span></div><i>\u2192</i><div><b>${P.ice}</b><span class="cold">min ice</span></div><i>\u2192</i><div><b>${P.rest}</b><span>min rest</span></div></div>
+   <p class="proto-x">Repeat <b>${P.rounds}\u00d7</b> \u00b7 about ${(P.sauna+P.ice+P.rest)*P.rounds-P.rest} min</p>
+   <p class="muted" style="font-size:13px;text-align:center">${P.note} Finish on cold to wake up, or on heat to wind down before bed.</p>
+   <button class="btn gold block" data-act="logproto">I did this · log it</button></section>`;}
+// ---------- Progress over time: everything members log is kept and charted ----------
+function weeksBack(n){const out=[];const ws=new Date(weekStart()+'T00:00');for(let i=n-1;i>=0;i--){const d=new Date(ws);d.setDate(d.getDate()-7*i);out.push(isoLocal(d));}return out;}
+function inWeek(date,wk){const e=new Date(wk+'T00:00');e.setDate(e.getDate()+7);return date>=wk&&date<isoLocal(e);}
+function weekBars(series,weeks,unit){const max=Math.max(1,...weeks.map((w,i)=>series.reduce((a,s)=>a+s.v[i],0)));
+  return `<div class="wbars" role="img" aria-label="Weekly chart">${weeks.map((w,i)=>`<div class="wb" title="Week of ${fmtDate(w)}">${series.map(s=>`<i style="height:${Math.round(s.v[i]/max*100)}%;background:${s.c}"></i>`).join('')}</div>`).join('')}</div>
+  <div class="row between muted" style="font-size:10px"><span>${fmtDate(weeks[0])}</span><span>This week</span></div>
+  ${series.length>1?`<div class="legend" style="justify-content:flex-start">${series.map(s=>`<span><i style="background:${s.c}"></i>${s.l}</span>`).join('')}</div>`:''}`;}
+function sinceStart(){const days=[...new Set(S.logs.map(l=>l.date))].sort();const first=[days[0],...(S.rec||[]).map(r=>r.date)].filter(Boolean).sort()[0];
+  const kind=k=>S.rec.filter(r=>ritual(r).kind===k);
+  return {first,sessions:days.length,tonnes:Math.round(S.logs.filter(l=>!M(l.m).cardio).reduce((a,l)=>a+vol(l),0)/100)/10,
+    heat:kind('heat').reduce((a,r)=>a+recMins(r),0),cold:kind('cold').reduce((a,r)=>a+recMins(r),0),massage:kind('massage').length,
+    foodDays:Object.values(S.food||{}).filter(d=>d.done).length,sleepNights:Object.keys(S.sleep||{}).length};}
+function progressExtra(){const W=weeksBack(12);const st=sinceStart();
+  const sess=W.map(w=>new Set(S.logs.filter(l=>inWeek(l.date,w)).map(l=>l.date)).size);
+  const heat=W.map(w=>S.rec.filter(r=>inWeek(r.date,w)&&ritual(r).kind==='heat').reduce((a,r)=>a+recMins(r),0));
+  const cold=W.map(w=>S.rec.filter(r=>inWeek(r.date,w)&&ritual(r).kind==='cold').reduce((a,r)=>a+recMins(r),0));
+  const sl=W.map(w=>{const v=Object.entries(S.sleep||{}).filter(([d])=>inWeek(d,w)).map(([,h])=>h);return v.length?v.reduce((a,b)=>a+b,0)/v.length:0;});
+  const food=W.map(w=>Object.entries(S.food||{}).filter(([d,x])=>inWeek(d,w)&&x.done).length);
+  const avg=a=>{const v=a.filter(x=>x>0);return v.length?Math.round(v.reduce((x,y)=>x+y,0)/v.length*10)/10:0;};
+  return `<section class="card"><h2>Since you started${st.first?' \u00b7 '+fmtDate(st.first):''}${ib('Everything you log is kept on your phone and adds up here: training, heat, cold, massage, sleep and food.')}</h2>
+   <div class="stats" style="grid-template-columns:repeat(3,1fr)"><div class="stat"><b>${st.sessions}</b><span>Sessions</span></div><div class="stat"><b>${st.tonnes}</b><span>Tonnes lifted</span></div><div class="stat"><b>${st.heat}</b><span>Heat min</span></div><div class="stat"><b>${st.cold}</b><span>Cold min</span></div><div class="stat"><b>${st.massage}</b><span>Massages</span></div><div class="stat"><b>${st.foodDays}</b><span>Food days done</span></div></div></section>
+  <section class="card"><div class="row between"><h2>Sessions per week</h2><span class="muted" style="font-size:12px">avg ${avg(sess)}</span></div>${weekBars([{v:sess,c:'var(--gold)',l:'Sessions'}],W)}</section>
+  <section class="card"><div class="row between"><h2>Heat and cold per week</h2><span class="muted" style="font-size:12px">min</span></div>${weekBars([{v:heat,c:'var(--heat)',l:'Heat'},{v:cold,c:'var(--cold)',l:'Cold'}],W)}</section>
+  <section class="card"><div class="row between"><h2>Sleep</h2><span class="muted" style="font-size:12px">${avg(sl)?'avg '+avg(sl)+' h a night':'Log sleep on Today'}</span></div>${weekBars([{v:sl,c:'#9b8fd6',l:'Hours'}],W)}</section>
+  <section class="card"><div class="row between"><h2>Food guide days completed</h2><span class="muted" style="font-size:12px">of 7 each week</span></div>${weekBars([{v:food,c:'var(--good)',l:'Days'}],W)}</section>`;}
+function recoverProgress(){const W=weeksBack(6);const tot=W.map(w=>S.rec.filter(r=>inWeek(r.date,w)&&boostOf(r)>0).length);const st=sinceStart();
+  return `<section class="card"><div class="row between"><h2>Your recovery progress</h2><button class="muted" style="font-size:12px" data-act="toprogress">All progress \u203a</button></div>
+   <div class="stats"><div class="stat"><b>${st.heat}</b><span>Heat min</span></div><div class="stat"><b>${st.cold}</b><span>Cold min</span></div><div class="stat"><b>${st.massage}</b><span>Massages</span></div></div>
+   <span class="muted" style="font-size:12px">Recovery visits, last 6 weeks</span>${weekBars([{v:tot,c:'var(--gold)',l:'Visits'}],W)}</section>`;}
+// ================= Extra health services: results feed back into training, recovery and food =================
+const VO2_NORMS={m:[[29,[38,42,46,52]],[39,[36,40,44,50]],[49,[34,38,42,48]],[59,[31,35,39,45]],[200,[28,32,36,42]]],f:[[29,[31,35,39,45]],[39,[29,33,37,43]],[49,[27,31,35,41]],[59,[24,28,32,38]],[200,[21,25,29,35]]]};
+function vo2Rating(v,age,sex){const row=(VO2_NORMS[sex==='f'?'f':'m']).find(r=>age<=r[0])[1];const L=['Needs work','Fair','Good','Excellent','Superior'];let i=0;while(i<4&&v>=row[i])i++;return {l:L[i],i};}
+const SERVICES=[
+ {id:'vo2',name:'VO2 max test',what:'Your aerobic fitness: how much oxygen your body uses at full effort. One of the strongest predictors of long-term health.',
+  fields:[['v','VO2 max','ml/kg/min'],['age','Your age','years']],links:'Sets your cardio and can add cardio finishers to your sessions.'},
+ {id:'rmr',name:'Resting metabolism test',what:'How many calories your body burns at rest, measured from your breath. Takes the guesswork out of calorie targets.',
+  fields:[['v','Resting metabolic rate','kcal/day']],links:'Adds a daily calorie guide to your food targets, matched to your goal.'},
+ {id:'cgm',name:'Glucose monitor',what:'A 2-week sensor on your arm that tracks blood sugar around the clock, so you see how food, sleep and training affect you.',
+  fields:[['avg','Average glucose','mmol/L'],['tir','Time in range (3.9–7.8)','%']],links:'Adds glucose-friendly food tips and walks after meals if your levels run high.'},
+ {id:'physio',name:'Physio',what:'Assessment and treatment for injuries and niggles, plus a plan to get you back to full training.',
+  fields:[['area','Area treated','',['shoulder','elbow','back','hip','knee']],['status','Physio says','',['avoid','cleared']]],links:'Machines that load the area are swapped out until your physio clears you.'},
+ {id:'diet',name:'Dietitian',what:'A personalised eating plan from an accredited practising dietitian, for performance, body composition or health conditions.',
+  fields:[['protein','Protein target','g/day'],['kcal','Calorie target','kcal/day']],links:'Your dietitian’s numbers replace the app’s general food targets.'}
+];
+const AREA_L={shoulder:'Shoulder',elbow:'Elbow or wrist',back:'Lower back',hip:'Hip',knee:'Knee'},STATUS_L={avoid:'Avoid loading it for now',cleared:'Cleared to train'};
+function lastT(id){const a=((S.tests||{})[id]||[]).slice().sort((x,y)=>x.date<y.date?1:-1);return a[0];}
+function prevT(id){const a=((S.tests||{})[id]||[]).slice().sort((x,y)=>x.date<y.date?1:-1);return a[1];}
+function testLine(id,t){if(!t)return '';
+  if(id==='vo2'){const r=vo2Rating(t.v,t.age||35,S.sex);return `${t.v} ml/kg/min · ${r.l} for your age`;}
+  if(id==='rmr')return `${t.v} kcal at rest`;
+  if(id==='cgm')return `Avg ${t.avg} mmol/L · ${t.tir}% in range`;
+  if(id==='physio')return `${AREA_L[t.area]} · ${STATUS_L[t.status]}`;
+  if(id==='diet')return `${t.protein?t.protein+' g protein':''}${t.protein&&t.kcal?' · ':''}${t.kcal?t.kcal+' kcal':''}`;return '';}
+function trend(id){const a=lastT(id),b=prevT(id);if(!a||!b)return '';const k=id==='cgm'?'tir':'v';if(a[k]==null||b[k]==null)return '';const d=Math.round((a[k]-b[k])*10)/10;return d?` <span style="color:${d>0?'var(--good)':'var(--heat)'}">${d>0?'↑':'↓'} ${Math.abs(d)} since last</span>`:'';}
+// Suggestions from these results, approved by the member (same flow as blood and DEXA).
+function testSuggestions(){const out=[];const done=S.testDone||{};
+  const v=lastT('vo2');if(v){const r=vo2Rating(v.v,v.age||35,S.sex);if(r.i<=1)out.push({id:'vo2-'+v.date,title:'Build your aerobic fitness',why:`Your VO2 max is ${r.l.toLowerCase()} for your age.`,note:'Adds a 10-minute rower finisher to your sessions. Fitness improves fastest with 2 to 3 cardio sessions a week.',apply:()=>{S.planAdds=[...new Set((S.planAdds||[]).concat('rower'))];}});}
+  const m=lastT('rmr');if(m){const kcal=Math.round(m.v*1.5*({fit:.85,build:1.1,strength:1.05}[S.goal||'build'])/50)*50;out.push({id:'rmr-'+m.date,title:`Calorie guide: about ${kcal} kcal a day`,why:`Resting burn ${m.v} kcal × 1.5 for an active day, adjusted for your goal (${GOALS[S.goal||'build'].label.toLowerCase()}).`,note:'Adds a calorie line to your food guide.',apply:()=>{S.kcal=kcal;}});}
+  const g=lastT('cgm');if(g&&(g.avg>6.5||g.tir<90))out.push({id:'cgm-'+g.date,title:'Steadier blood sugar',why:`${g.tir<90?'Only '+g.tir+'% of your time was in range':'Your average glucose ran a little high'}.`,note:'Adds food tips (protein and veg first, fewer refined carbs) and a 10-minute walk after main meals, which lowers the spike.',apply:()=>{S.glucoseFocus=true;}});
+  const p=lastT('physio');if(p)out.push({id:'physio-'+p.date,title:p.status==='avoid'?`Protect your ${AREA_L[p.area].toLowerCase()}`:`Back to full training: ${AREA_L[p.area].toLowerCase()}`,why:`Your physio says: ${STATUS_L[p.status].toLowerCase()}.`,note:p.status==='avoid'?'Machines that load it are swapped out of your sessions.':'Machines for that area come back into your sessions.',apply:()=>{const inj=new Set(S.injuries||[]);p.status==='avoid'?inj.add(p.area):inj.delete(p.area);S.injuries=[...inj];}});
+  const d=lastT('diet');if(d&&(d.protein||d.kcal))out.push({id:'diet-'+d.date,title:'Use your dietitian’s targets',why:`${d.protein?d.protein+' g protein':''}${d.protein&&d.kcal?' and ':''}${d.kcal?d.kcal+' kcal':''} a day.`,note:'Replaces the app’s general food targets.',apply:()=>{if(d.protein)S.dietProtein=+d.protein;if(d.kcal)S.kcal=+d.kcal;}});
+  return out.filter(x=>!done[x.id]);}
+function servicesCard(){const sg=testSuggestions();
+  return `<section class="stack"><div class="row between"><h2>More tests and services${ib('Book through our local partners and add your results here. Each result can suggest changes to your training, recovery or food, and nothing changes until you approve it.')}</h2></div>
+   ${sg.length?`<section class="card" style="border-color:rgba(200,179,138,.5)"><div class="row between"><h2>Suggested from your tests</h2><span class="ai">Ready to apply</span></div>${sg.map(x=>`<div class="stack" style="gap:4px"><div class="row between"><b>${esc(x.title)}</b><button class="btn ghost small" data-tsok="${x.id}">Approve</button></div><span class="muted" style="font-size:13px">${esc(x.why)} ${esc(x.note)}</span></div>`).join('')}${sg.length>1?'<button class="btn block" data-act="tsall">Approve all</button>':''}</section>`:''}
+   <div class="list">${SERVICES.map(sv=>{const t=lastT(sv.id);return `<button class="item" data-svc="${sv.id}"><span><b>${sv.name}</b><br><span class="meta">${t?testLine(sv.id,t)+' · '+fmtDate(t.date)+trend(sv.id):esc(sv.links)}</span></span><span class="chev">›</span></button>`}).join('')}</div></section>`;}
+function serviceSheet(id){const sv=SERVICES.find(x=>x.id===id);const hist=((S.tests||{})[id]||[]).slice().sort((a,b)=>a.date<b.date?1:-1);
+  const inp='style="background:var(--bg);border:1px solid var(--line-2);border-radius:12px;padding:12px;color:var(--fg);font:inherit;width:100%;min-width:0"';
+  openSheet(`<p class="tag">Health services</p><h1 style="font-size:30px">${sv.name}</h1><p style="font-size:14px">${sv.what}</p>
+   <p class="note">In the app: ${sv.links}</p>
+   <button class="btn ghost block" id="svbook">Book with our partner</button>
+   <div class="card" style="gap:10px"><h2>Add a result</h2><input id="svd" type="date" ${inp} value="${dayISO(0)}">
+    ${sv.fields.map(([k,l,u,opts])=>opts?`<label class="stack" style="gap:4px"><span class="tag" style="color:var(--muted)">${l}</span><select id="sv_${k}" ${inp}>${opts.map(o=>`<option value="${o}">${(k==='area'?AREA_L:STATUS_L)[o]}</option>`).join('')}</select></label>`:`<label class="stack" style="gap:4px"><span class="tag" style="color:var(--muted)">${l}${u?' ('+u+')':''}</span><input id="sv_${k}" inputmode="decimal" ${inp}></label>`).join('')}
+    <button class="btn block" id="svsave">Save result</button></div>
+   ${hist.length?`<div class="stack"><h2>Your results</h2><div class="list">${hist.map(t=>`<div class="item"><span>${testLine(id,t)}</span><span class="meta">${fmtDate(t.date)}</span></div>`).join('')}</div></div>`:''}`,
+  s=>{s.querySelector('#svbook').onclick=()=>toast('Partner booking is coming soon. We’ll let you know when it’s live');
+    s.querySelector('#svsave').onclick=()=>{const r={date:s.querySelector('#svd').value||dayISO(0)};for(const [k,,,opts] of sv.fields){const v=s.querySelector('#sv_'+k).value.trim();if(!v){toast('Fill in every field');return;}r[k]=opts?v:parseFloat(v);if(!opts&&isNaN(r[k])){toast('Numbers only, please');return;}}
+      S.tests=S.tests||{};(S.tests[id]=S.tests[id]||[]).push(r);save();closeSheet();render();toast(testSuggestions().length?'Saved. Check your suggestions to apply it':'Saved');};});}
+function applyTests(ids){const sg=testSuggestions().filter(x=>ids.includes(x.id));if(!sg.length)return;S.testDone=S.testDone||{};sg.forEach(x=>{x.apply();S.testDone[x.id]=true;});save();render();toast(sg.length>1?'All applied':'Applied');}
+
 const VIEWS={home:viewHome,train:viewTrain,progress:viewProgress,bath:viewBath,medical:viewMedical,club:viewClub};
 let lastTab=null;
 function render(){setTimeout(sessionClock,0);
@@ -1224,14 +1594,14 @@ function machineSheet(id){
     const draw=()=>{s.querySelector('#sets').innerHTML=`<div class="set"><span></span><span class="tag" style="text-align:center">${m.cardio?'Distance ('+m.unit+')':'Weight (kg)'}</span><span class="tag" style="text-align:center">${m.cardio?'Rounds':'Reps'}</span><span class="tag" style="text-align:center">Done</span><span></span></div>`+sets.map((x,i)=>`<div class="set${done[i]?' done':''}"><span class="n">${i+1}</span><input id="w${i}" inputmode="decimal" aria-label="Set ${i+1} ${m.cardio?'distance':'weight'}" value="${x[0]}"><input id="r${i}" inputmode="numeric" aria-label="Set ${i+1} reps" value="${x[1]}"><button class="tick" data-tick="${i}" aria-pressed="${!!done[i]}" aria-label="Set ${i+1} done">✓</button><button data-del="${i}" aria-label="Remove set ${i+1}" style="color:var(--muted)">×</button></div>`).join('');};
     const read=()=>{sets=sets.map((x,i)=>[parseFloat(s.querySelector('#w'+i).value)||0,parseInt(s.querySelector('#r'+i).value)||0]);};
     draw();
-    s.querySelector('#addSet').onclick=()=>{read();sets.push((sets[sets.length-1]||[t.w,t.r]).slice());draw();};
+    s.querySelector('#addSet').onclick=()=>{read();sets.push((sets[sets.length-1]||[t.w,t.r]).slice());draw();if(!m.cardio&&sets.length===plannedSets()+1)toast('Over your plan: this adds recovery time for these muscles');};
     s.querySelector('#sets').addEventListener('click',e=>{const d=e.target.dataset.del;if(d!==undefined){read();sets.splice(+d,1);done.splice(+d,1);draw();return;}
       const k=e.target.dataset.tick;if(k!==undefined){read();done[+k]=!done[+k];draw();if(done[+k]){if(!S.sess){S.sess=Date.now();save();}const last=done.filter(Boolean).length>=sets.length;if(last){stopRest();toast('All sets done. Save your session');}else startRest(restFor(id));}}});
     s.querySelectorAll('[data-fbv]').forEach(btn=>btn.onclick=()=>{fb=btn.dataset.fbv;s.querySelectorAll('[data-fbv]').forEach(x=>x.setAttribute('aria-pressed',x===btn));});
     s.querySelector('#saveSets').onclick=()=>{read();const valid=sets.filter(x=>x[0]>0&&x[1]>0);if(!valid.length){toast('Add a weight and reps first');return;}
-      const prev=best(id);S.logs.push({m:id,date:dayISO(0),sets:valid,fb});stopRest();save();closeSheet();render();
+      const prev=best(id);S.logs.push({m:id,date:dayISO(0),sets:valid,fb,at:Date.now()});const extra=valid.length-plannedSets();stopRest();save();closeSheet();render();
       const nb=Math.max(...valid.map(x=>x[0]));const nt=target(id);
-      if(nb>prev&&prev>0){toast(`New personal best · ${m.name} ${nb}${m.unit}`,'pr');if(navigator.vibrate)navigator.vibrate([30,40,30]);}else toast(`Saved. Next time: ${nt.text}`);};
+      if(nb>prev&&prev>0){toast(`New personal best · ${m.name} ${nb}${m.unit}`,'pr');if(navigator.vibrate)navigator.vibrate([30,40,30]);}else if(extra>0&&!m.cardio){toast(`${extra} extra set${extra>1?'s':''}: your ${m.muscles.map(k=>MUSCLES[k].toLowerCase()).join(' and ')} need about ${Math.round(extra*6)}% longer to recover. Sleep well tonight.`);}else toast(`Saved. Next time: ${nt.text}`);};
   });
 }
 let stream=null;
@@ -1283,8 +1653,26 @@ document.addEventListener('click',e=>{
   else if(t.dataset.zone){zone=t.dataset.zone;render();}
   else if(t.dataset.tv){trainView=t.dataset.tv;render();}
   else if(t.dataset.mood){S.mood=S.mood||{};S.mood[dayISO(0)]=t.dataset.mood;save();render();}
-  else if(t.dataset.act==='guide')guide();
+  else if(t.dataset.act==='guide'||t.dataset.act==='gorec'){tab='bath';location.hash=tab;render();window.scrollTo(0,0);}
   else if(t.dataset.act==='support')supportSheet();
+  else if(t.dataset.act==='card')cardSheet();
+  else if(t.dataset.act==='therapist')therapistSheet();
+  else if(t.dataset.svc)serviceSheet(t.dataset.svc);
+  else if(t.dataset.tsok)applyTests([t.dataset.tsok]);
+  else if(t.dataset.act==='tsall')applyTests(testSuggestions().map(x=>x.id));
+  else if(t.dataset.act==='toprogress'){tab='train';trainView='progress';location.hash=tab;render();window.scrollTo(0,0);}
+  else if(t.dataset.proto){S.proto=t.dataset.proto;save();render();}
+  else if(t.dataset.act==='logproto'){const P=PROTOCOLS[S.proto||'beginner'];const at=Date.now();const h={r:'sauna',date:dayISO(0),mins:P.sauna*P.rounds,at},c={r:'plunge',date:dayISO(0),mins:P.ice*P.rounds,at:at+1};S.rec.push(h,c);save();render();toast(`Logged ${h.mins} min heat and ${c.mins} min cold. ${boostText({r:'sauna',mins:h.mins})}`.replace('. speeds','. Speeds'));}
+  else if(t.dataset.act==='science')scienceSheet();
+  else if(t.dataset.act==='bookmassage')bookSheet({group:'massage'});
+  else if(t.dataset.sleep){S.sleep=S.sleep||{};S.sleep[dayISO(0)]=+t.dataset.sleep;save();render();toast(+t.dataset.sleep<7?'Logged. Short sleep slows recovery a little today':'Logged. Good sleep helps your muscles recover');}
+  else if(t.dataset.sex){S.sex=t.dataset.sex;save();render();toast('Targets updated');}
+  else if(t.dataset.condok){S.conditions=[...new Set((S.conditions||[]).concat(t.dataset.condok))];S.condPending=(S.condPending||[]).filter(k=>k!==t.dataset.condok);save();render();toast('Approved. Your training and recovery are updated');}
+  else if(t.dataset.condx){S.condPending=(S.condPending||[]).filter(k=>k!==t.dataset.condx);save();render();}
+  else if(t.dataset.condrm){if(confirm('Remove '+CONDITIONS[t.dataset.condrm].name+' and undo its changes?')){S.conditions=(S.conditions||[]).filter(k=>k!==t.dataset.condrm);save();render();}}
+  else if(t.dataset.act==='book')bookSheet();
+  else if(t.dataset.bookev){const [k,d]=t.dataset.bookev.split('|');bookSheet({k,date:d||undefined});}
+  else if(t.dataset.act==='busyinfo'){tab='club';clubView='info';busyDay=new Date().getDay();location.hash=tab;render();window.scrollTo(0,0);}
   else if(t.dataset.act==='rnew'){const r={id:'r'+Date.now().toString(36),name:'Routine '+(routines().length+1),items:[]};routines().push(r);save();render();routinePicker(r.id);}
   else if(t.dataset.radd)routinePicker(t.dataset.radd);
   else if(t.dataset.rdel){const r=routineById(t.dataset.rdel);if(r&&confirm('Delete '+r.name+'?')){S.routines=routines().filter(x=>x!==r);if(S.plan==='r:'+r.id){S.plan='start';S.planDay=0;}save();render();}}
@@ -1293,7 +1681,7 @@ document.addEventListener('click',e=>{
   else if(t.dataset.goal){S.goal=t.dataset.goal;save();render();toast('Goal set: '+GOALS[S.goal].label);}
   else if(t.dataset.plan){S.plan=t.dataset.plan;S.planDay=0;save();render();toast('Plan started');}
   else if(t.dataset.prog){progM=t.dataset.prog;render();}
-  else if(t.dataset.rit){{const R=RITUALS.find(r=>r.id===t.dataset.rit);S.rec.push({r:R.id,date:dayISO(0),mins:R.mins});save();render();const w=weekTotals(S.period||'week');const G=goalTargets(S.period||'week');toast(`Logged ${R.name} · ${R.kind==='cold'?w.cold+'/'+G.cold:w.heat+'/'+G.heat} min ${PERIODS[S.period||'week'].label.toLowerCase()}`);}}
+  else if(t.dataset.rit){{const R=RITUALS.find(r=>r.id===t.dataset.rit);if(R.kind==='cold'&&condFlag('noCold')&&!confirm('Ice baths are paused for your health condition. Log it anyway?'))return;const e={r:R.id,date:dayISO(0),mins:R.mins,at:Date.now()};S.rec.push(e);save();render();toast(`${R.name} logged: ${boostText(e)}`);}}
   else if(t.dataset.act==='scan')scanSheet();
   else if(t.dataset.act==='startsess'){S.sess=Date.now();save();render();sessionClock();toast('Session started');}
   else if(t.dataset.act==='nextday'){const mins=S.sess?Math.round((Date.now()-S.sess)/60000):0;S.sess=null;S.planDay++;stopRest();save();render();summarySheet(mins);}
@@ -1310,7 +1698,7 @@ document.addEventListener('click',e=>{
   else if(t.dataset.act==='gohealth'){tab='medical';healthView='results';render();window.scrollTo(0,0);}
   else if(t.dataset.act==='applyres'){const lt=lastTest();S.applied=Object.assign({},S.applied,{[lt.date]:true});save();render();toast('Training, recovery and food updated');}
   else if(t.dataset.act==='unapply'){const lt=lastTest();S.applied=Object.assign({},S.applied);delete S.applied[lt.date];save();render();toast('Changes undone');}
-  else if(t.dataset.fd){const k=t.dataset.fd;S.food=S.food||{};const d=S.food[dayISO(0)]=Object.assign({p:0,v:0,w:0},S.food[dayISO(0)]);d[k]=Math.round((d[k]+(k==='w'?0.5:1))*10)/10;save();render();}
+  else if(t.dataset.fd){const k=t.dataset.fd;const st=+(t.dataset.fs||1);S.food=S.food||{};const d=S.food[dayISO(0)]=Object.assign({p:0,v:0,f:0,w:0},S.food[dayISO(0)]);d[k]=Math.max(0,Math.round((d[k]+st*(k==='w'?0.25:1))*100)/100);save();render();const ft=foodTargets();d.done=d.p>=ft.palms&&d.v>=ft.veg&&d.f>=ft.fruit&&d.w>=ft.water;save();if(st>0&&d.done)toast('Food guide complete for today. Come back tomorrow','pr');}
   else if(t.dataset.dxa)applyDexa([t.dataset.dxa]);
   else if(t.dataset.act==='dxall')applyDexa(dexaSuggestions().map(x=>x.id));
   else if(t.dataset.act==='dxreset'){S.planAdds=[];S.dexaDone=[];save();render();toast('Plan changes undone');}
