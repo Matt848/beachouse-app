@@ -319,6 +319,13 @@ main{padding-bottom:150px}
 .wb{flex:1;height:100%;display:flex;flex-direction:column-reverse;gap:1px}
 .wb i{display:block;border-radius:3px;min-height:0}
 .wb:last-child i{box-shadow:0 0 0 1px var(--fg) inset}
+.soon{position:relative;flex:1;min-width:0}
+.row>.soon:has(>.btn){flex:0 0 auto}
+.soon>*{opacity:.32;pointer-events:none;filter:grayscale(1)}
+.soon::after{content:attr(data-soon);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:rgba(26,25,23,.92);border:1px solid rgba(200,179,138,.5);color:var(--gold-2)}
+.soonlist>*{opacity:.32;filter:grayscale(1)}
+.soonlist .item::after{content:"Coming soon";font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-2)}
+.soonlist .chev{display:none}
 .igh{display:flex;align-items:center;justify-content:space-between}
 .igbtn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--fg);flex:none}
 .igbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5}
@@ -616,7 +623,7 @@ function viewHome(){
     <button class="btn small" data-act="scan">Scan a machine</button>`:`<div class="row"><button class="btn small" style="flex:1" data-act="startsess">Start session</button><button class="btn ghost small" style="flex:1" data-act="scan">Scan a machine</button></div>`}
   </section>
   ${goalsCard()}
-  <div class="row"><button class="item" style="flex:1;border:1px solid var(--line);border-radius:14px" data-act="coach"><span><span class="ai">Ask Coach</span><br><b>Ask anything</b></span></button>${S.wear?'':`<button class="item" style="flex:1;border:1px solid var(--line);border-radius:14px" data-act="addwear"><span><span class="muted" style="font-size:11px;letter-spacing:.08em">WEARABLE</span><br><b>+ Connect</b></span></button>`}</div>
+  <div class="row">${(SOON.coach?soon:(x=>x))(`<button class="item" style="flex:1;width:100%;border:1px solid var(--line);border-radius:14px" data-act="coach"><span><span class="ai">Ask Coach</span><br><b>Ask anything</b></span></button>`)}${S.wear?'':(SOON.wear?soon:(x=>x))(`<button class="item" style="flex:1;width:100%;border:1px solid var(--line);border-radius:14px" data-act="addwear"><span><span class="muted" style="font-size:11px;letter-spacing:.08em">WEARABLE</span><br><b>+ Connect</b></span></button>`)}</div>
   ${S.wear?wearCard():''}
   ${eventsCard()}
   <section class="stack">
@@ -685,7 +692,7 @@ let progView='training';
 function viewHealth(){
   const t=lastTest();const due=nextDue();
   let out=`<section class="card"><h2>Blood tests${ib('Order a test, add your results, and compare each test with the last. Ranges are typical lab ranges; your lab report takes priority. Results stay private to you.')}</h2>
-   <div class="row" style="flex-wrap:wrap"><button class="btn small" data-act="orderblood">Order a blood test</button><button class="btn ghost small" data-act="addblood">Add my results</button></div>
+   <div class="row" style="flex-wrap:wrap">${SOON.orderblood?soon('<button class="btn small" data-act="orderblood">Order a blood test</button>'):'<button class="btn small" data-act="orderblood">Order a blood test</button>'}<button class="btn ghost small" data-act="addblood">Add my results</button></div>
    ${due?`<p class="muted" style="font-size:13px">Next test due: <b style="color:var(--fg)">${fmtDate(due)}</b>${due<=dayISO(0)?' · due now':''}</p>`:''}</section>`;
   if(!t)return out+`<p class="note">No results yet. Once you add your first test, each marker shows here against the typical range.</p>`;
   const flagged=MARKERS.filter(mk=>t.v[mk.id]!=null&&mstatus(mk,t.v[mk.id])!=='ok');
@@ -774,7 +781,7 @@ const DEXA_FIELDS=[{id:'bf',name:'Body fat',unit:'%'},{id:'lean',name:'Lean mass
 function viewDexa(){const sc=(S.dexa||[]).slice().sort((a,b)=>a.date<b.date?-1:1);const last=sc[sc.length-1],prev=sc[sc.length-2];
   let due=null;if(last){const d=new Date(last.date+'T00:00');d.setMonth(d.getMonth()+3);due=d.toISOString().slice(0,10);}
   return `<section class="card"><h2>Body composition (DEXA)${ib('DEXA is the most accurate everyday scan for body fat, muscle and bone. Scan every 3 months to see what your training is changing.')}</h2>
-   <div class="row" style="flex-wrap:wrap"><button class="btn small" data-act="dexainfo">Book a DEXA scan</button><button class="btn ghost small" data-act="adddexa">Add my scan</button></div>
+   <div class="row" style="flex-wrap:wrap">${SOON.dexabook?soon('<button class="btn small" data-act="dexainfo">Book a DEXA scan</button>'):'<button class="btn small" data-act="dexainfo">Book a DEXA scan</button>'}<button class="btn ghost small" data-act="adddexa">Add my scan</button></div>
    ${due?`<p class="muted" style="font-size:13px">Next scan due: <b style="color:var(--fg)">${fmtDate(due)}</b></p>`:''}
    ${last?`<div class="stats" style="grid-template-columns:repeat(3,1fr)">${['bf','lean','fat'].map(k=>{const f=DEXA_FIELDS.find(x=>x.id===k);const v=last.v[k];const p=prev&&prev.v[k];return v!=null?`<div class="stat"><b>${v}${f.unit==='%'?'%':''}</b><span>${f.name}${f.unit&&f.unit!=='%'?' '+f.unit:''}${p!=null?` · ${v>p?'↑':v<p?'↓':'→'}${Math.abs(Math.round((v-p)*10)/10)}`:''}</span></div>`:''}).join('')}</div>
    ${sc.length>1?`<h2 style="margin-top:6px">Body fat trend</h2>${lineChart(sc.filter(x=>x.v.bf!=null).map(x=>[x.date,x.v.bf]))}`:''}`:''}
@@ -851,7 +858,7 @@ function wearSheet(){
 }
 
 function wearCard(){
-  if(!S.wear)return `<button class="item" style="border:1px solid var(--line);border-radius:14px" data-act="addwear"><span><b>+ Add a wearable</b><br><span class="meta">WHOOP, Garmin, Apple Watch or Oura</span></span><span class="chev">›</span></button>`;
+  if(!S.wear)return (SOON.wear?soon:(x=>x))(`<button class="item" style="border:1px solid var(--line);border-radius:14px;width:100%" data-act="addwear"><span><b>+ Add a wearable</b><br><span class="meta">WHOOP, Garmin, Apple Watch or Oura</span></span><span class="chev">›</span></button>`);
   const d=WEAR_DEMO;const col=d.recovery>=67?'var(--good)':d.recovery>=34?'var(--heat)':'#d97a6c';
   const adv=d.recovery>=67?'Green light: go for your planned session.':d.recovery>=34?'Moderate recovery: keep today steady and add a 38° heat round.':'Low recovery: take a lighter session and prioritise sauna and cold.';
   return `<section class="card"><div class="row between"><h2>${DEVICES[S.wear]} · today</h2><button class="muted" style="font-size:12px" data-act="unwear">Disconnect</button></div>
@@ -1442,7 +1449,7 @@ function connectedCard(){const n=(S.bloods||[]).length,d=(S.dexa||[]).length;
    <div class="list">
     <div class="item"><span><b>Blood tests</b><br><span class="meta">${n?n+' test'+(n>1?'s':'')+' on file':'Order through our partner clinic'}</span></span><span class="${n?'pill pr':'muted'}">${n?'Linked':'Not yet'}</span></div>
     <div class="item"><span><b>DEXA body composition</b><br><span class="meta">${d?d+' scan'+(d>1?'s':'')+' on file':'Muscle, fat and bone by body part'}</span></span><span class="${d?'pill pr':'muted'}">${d?'Linked':'Not yet'}</span></div>
-    <button class="item" data-act="addwear"><span><b>Wearable</b><br><span class="meta">${S.wear?DEVICES[S.wear]+' · sleep and readiness':'WHOOP, Garmin, Apple Watch or Oura'}</span></span><span class="${S.wear?'pill pr':'muted'}">${S.wear?'Linked':'+ Connect'}</span></button>
+    ${(SOON.wear?soon:(x=>x))(`<button class="item" style="width:100%" data-act="addwear"><span><b>Wearable</b><br><span class="meta">${S.wear?DEVICES[S.wear]+' · sleep and readiness':'WHOOP, Garmin, Apple Watch or Oura'}</span></span><span class="${S.wear?'pill pr':'muted'}">${S.wear?'Linked':'+ Connect'}</span></button>`)}
     <div class="item"><span><b>Conditions</b><br><span class="meta">${condActive().length?condActive().map(k=>CONDITIONS[k].name).join(', '):'None added'}</span></span><span class="${condActive().length?'pill pr':'muted'}">${condActive().length?'Applied':'Optional'}</span></div>
    </div></section>`;}
 
@@ -1548,8 +1555,8 @@ function testSuggestions(){const out=[];const done=S.testDone||{};
   return out.filter(x=>!done[x.id]);}
 function servicesCard(){const sg=testSuggestions();
   return `<section class="stack"><div class="row between"><h2>More tests and services${ib('Book through our local partners and add your results here. Each result can suggest changes to your training, recovery or food, and nothing changes until you approve it.')}</h2></div>
-   ${sg.length?`<section class="card" style="border-color:rgba(200,179,138,.5)"><div class="row between"><h2>Suggested from your tests</h2><span class="ai">Ready to apply</span></div>${sg.map(x=>`<div class="stack" style="gap:4px"><div class="row between"><b>${esc(x.title)}</b><button class="btn ghost small" data-tsok="${x.id}">Approve</button></div><span class="muted" style="font-size:13px">${esc(x.why)} ${esc(x.note)}</span></div>`).join('')}${sg.length>1?'<button class="btn block" data-act="tsall">Approve all</button>':''}</section>`:''}
-   <div class="list">${SERVICES.map(sv=>{const t=lastT(sv.id);return `<button class="item" data-svc="${sv.id}"><span><b>${sv.name}</b><br><span class="meta">${t?testLine(sv.id,t)+' · '+fmtDate(t.date)+trend(sv.id):esc(sv.links)}</span></span><span class="chev">›</span></button>`}).join('')}</div></section>`;}
+   ${sg.length&&!SOON.services?`<section class="card" style="border-color:rgba(200,179,138,.5)"><div class="row between"><h2>Suggested from your tests</h2><span class="ai">Ready to apply</span></div>${sg.map(x=>`<div class="stack" style="gap:4px"><div class="row between"><b>${esc(x.title)}</b><button class="btn ghost small" data-tsok="${x.id}">Approve</button></div><span class="muted" style="font-size:13px">${esc(x.why)} ${esc(x.note)}</span></div>`).join('')}${sg.length>1?'<button class="btn block" data-act="tsall">Approve all</button>':''}</section>`:''}
+   ${SOON.services?'<p class="muted" style="font-size:13px">We\u2019re lining up trusted local partners with member rates. These open soon.</p>':''}<div class="list${SOON.services?' soonlist':''}">${SERVICES.map(sv=>{const t=lastT(sv.id);return `<button class="item" data-svc="${sv.id}"><span><b>${sv.name}</b><br><span class="meta">${t?testLine(sv.id,t)+' · '+fmtDate(t.date)+trend(sv.id):esc(sv.links)}</span></span><span class="chev">›</span></button>`}).join('')}</div></section>`;}
 function serviceSheet(id){const sv=SERVICES.find(x=>x.id===id);const hist=((S.tests||{})[id]||[]).slice().sort((a,b)=>a.date<b.date?1:-1);
   const inp='style="background:var(--bg);border:1px solid var(--line-2);border-radius:12px;padding:12px;color:var(--fg);font:inherit;width:100%;min-width:0"';
   openSheet(`<p class="tag">Health services</p><h1 style="font-size:30px">${sv.name}</h1><p style="font-size:14px">${sv.what}</p>
@@ -1564,6 +1571,9 @@ function serviceSheet(id){const sv=SERVICES.find(x=>x.id===id);const hist=((S.te
       S.tests=S.tests||{};(S.tests[id]=S.tests[id]||[]).push(r);save();closeSheet();render();toast(testSuggestions().length?'Saved. Check your suggestions to apply it':'Saved');};});}
 function applyTests(ids){const sg=testSuggestions().filter(x=>ids.includes(x.id));if(!sg.length)return;S.testDone=S.testDone||{};sg.forEach(x=>{x.apply();S.testDone[x.id]=true;});save();render();toast(sg.length>1?'All applied':'Applied');}
 
+// ---------- Coming soon: features waiting on partners or setup are shown greyed out ----------
+const SOON={coach:true,wear:true,services:true,orderblood:true,dexabook:true};
+function soon(html,label){return `<div class="soon" aria-disabled="true" data-soon="${label||'Coming soon'}">${html}</div>`;}
 const VIEWS={home:viewHome,train:viewTrain,progress:viewProgress,bath:viewBath,medical:viewMedical,club:viewClub};
 let lastTab=null;
 function render(){setTimeout(sessionClock,0);
@@ -1647,6 +1657,7 @@ function bwSheet(){
 
 // ---------- events ----------
 document.addEventListener('click',e=>{
+  if(e.target.closest('.soon,.soonlist')){toast('Coming soon');return;}
   const t=e.target.closest('button');if(t&&t.closest('form'))return;if(!t||t.closest('.sheet'))return;
   if(t.dataset.tab){tab=t.dataset.tab;location.hash=tab;render();window.scrollTo(0,0);if(tab==='train'&&!S.onboarded)quickStart();}
   else if(t.dataset.machine)machineSheet(t.dataset.machine);
