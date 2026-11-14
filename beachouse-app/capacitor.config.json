@@ -1,0 +1,7 @@
+{
+  "appId": "com.beachousebondi.app",
+  "appName": "Beachouse",
+  "webDir": "docs",
+  "backgroundColor": "#000000",
+  "ios": { "contentInset": "never", "backgroundColor": "#000000" }
+}
