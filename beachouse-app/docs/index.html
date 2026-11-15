@@ -66,7 +66,7 @@ p{margin:0}
 .chip{padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;white-space:nowrap}
 .chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:rgba(11,11,11,.96);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
-nav.tabs .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr)}
+nav.tabs .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
 nav.tabs button{padding:10px 0 12px;display:grid;justify-items:center;gap:4px;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 nav.tabs button[aria-current="page"]{color:var(--fg)}
 nav.tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5}
@@ -105,11 +105,11 @@ nav.tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1
 
 </head>
 <body>
-<div class="splash" id="splash" aria-hidden="true"><div class="wordmark">B Ξ A C H O U S Ξ<small>HEALTH CLUB</small></div></div>
+<div class="splash" id="splash" aria-hidden="true"><div class="wordmark">B Ξ A C H O U S Ξ<small>× 38° THE BATHHOUSE</small></div></div>
 
 <div class="app">
   <header class="top">
-    <div class="wordmark" aria-label="Beachouse Health Club">BΞACHOUSΞ<small>HEALTH CLUB</small></div>
+    <div class="wordmark" aria-label="Beachouse and 38° The Bathhouse">BΞACHOUSΞ<small>× 38° THE BATHHOUSE</small></div>
     <span class="row" style="gap:8px"><button class="cardbtn" data-act="card" aria-label="Member card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6v12M7 6v12M9.5 6v12M13 6v12M15 6v12M18 6v12M20 6v12"/></svg></button><button class="avatar" id="avatarBtn" aria-label="Your profile">MA</button></span>
   </header>
   <main id="view" aria-live="polite"></main>
@@ -391,36 +391,77 @@ const ICONS={
  club:'<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg>',
  scan:'<svg viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/></svg>'
 };
-const TABS=[['home','Today'],['train','Train'],['bath','Recover'],['medical','Health'],['crew','Crew'],['club','Club']];
+const TABS=[['home','Today'],['train','Train'],['bath','Recover'],['medical','Health'],['club','Club']];
 
 // Starter machine list — Beachouse will name its own machines (e.g. "Leg Press 1") once Marc sends the list.
 const MACHINES=[
- {id:'leg-press',name:'Leg Press',zone:'Legs',type:'Plate loaded',muscles:['quads','glutes'],sec:['hamstrings'],step:5,cue:'Feet hip-width mid-platform. Lower until knees reach 90°, drive through heels. Don’t lock out.',unit:'kg'},
- {id:'hack-squat',name:'Hack Squat',zone:'Legs',type:'Plate loaded',muscles:['quads','glutes'],step:5,cue:'Back flat on the pad. Sit deep under control, push up through the whole foot.',unit:'kg'},
- {id:'leg-ext',name:'Leg Extension',zone:'Legs',type:'Selectorised',muscles:['quads'],step:2.5,cue:'Pad on lower shin. Lift to full extension, pause one second, lower slowly.',unit:'kg'},
- {id:'leg-curl',name:'Seated Leg Curl',zone:'Legs',type:'Selectorised',muscles:['hamstrings'],step:2.5,cue:'Knees lined up with the pivot. Curl down hard, control the return.',unit:'kg'},
- {id:'chest-press',name:'Chest Press',zone:'Push',type:'Selectorised',muscles:['chest'],sec:['frontdelts','triceps'],step:2.5,cue:'Handles at mid-chest. Press out, shoulders stay down and back.',unit:'kg'},
- {id:'shoulder-press',name:'Shoulder Press',zone:'Push',type:'Selectorised',muscles:['frontdelts','sidedelts'],sec:['triceps'],step:2.5,cue:'Seat so handles start at shoulder height. Press up without arching.',unit:'kg'},
- {id:'cable-cross',name:'Cable Crossover',zone:'Push',type:'Cable',muscles:['chest'],sec:['frontdelts'],step:2.5,cue:'Slight forward lean, soft elbows. Bring hands together in front of the chest.',unit:'kg'},
- {id:'lat-pull',name:'Lat Pulldown',zone:'Pull',type:'Selectorised',muscles:['lats'],sec:['biceps','upperback'],step:2.5,cue:'Grip just wider than shoulders. Pull the bar to the top of the chest, elbows down.',unit:'kg'},
- {id:'seated-row',name:'Seated Row',zone:'Pull',type:'Cable',muscles:['upperback','lats'],sec:['biceps','reardelts'],step:2.5,cue:'Tall chest. Pull to the stomach, squeeze shoulder blades, slow return.',unit:'kg'},
- {id:'assist-pull',name:'Assisted Pull-up',zone:'Pull',type:'Selectorised',muscles:['lats'],sec:['biceps','upperback'],step:2.5,assist:true,cue:'More weight means more help. The app lowers the assistance as you get stronger.',unit:'kg'},
- {id:'smith',name:'Smith Machine',zone:'Free weights',type:'Plate loaded',muscles:['quads','glutes'],sec:['lowerback'],step:2.5,cue:'Use for squats, presses and rows. Set the safety stops before you start.',unit:'kg'},
- {id:'dumbbells',name:'Dumbbells',zone:'Free weights',type:'Free weight',muscles:['sidedelts','biceps','triceps'],step:2,cue:'Log the weight of one dumbbell.',unit:'kg'},
- {id:'hip-thrust',name:'Hip Thrust',zone:'Glutes & core',type:'Plate loaded',muscles:['glutes'],sec:['hamstrings'],step:5,cue:'Upper back on the pad, feet flat. Drive hips up until your body is straight, squeeze your glutes for one second at the top.',unit:'kg'},
- {id:'rdl',name:'Romanian Deadlift',zone:'Glutes & core',type:'Free weight',muscles:['hamstrings','glutes'],sec:['lowerback'],step:2.5,cue:'Soft knees, push your hips back and slide the weight down your legs until you feel a stretch. Back stays flat.',unit:'kg'},
- {id:'kickback',name:'Cable Glute Kickback',zone:'Glutes & core',type:'Cable',muscles:['glutes'],step:2.5,cue:'Ankle strap on, slight forward lean. Kick back and up without arching your lower back. Log the weight for one leg.',unit:'kg'},
- {id:'abductor',name:'Hip Abduction',zone:'Glutes & core',type:'Selectorised',muscles:['glutes'],step:2.5,cue:'Sit tall, push your knees out against the pads, pause, then return slowly. Works the side of the glutes.',unit:'kg'},
- {id:'back-ext',name:'Back Extension',zone:'Glutes & core',type:'Plate loaded',muscles:['lowerback','glutes'],sec:['hamstrings'],step:2.5,cue:'Hips on the pad. Lower with a flat back, then rise by squeezing your glutes. Hold a plate across your chest and log its weight.',unit:'kg'},
- {id:'ab-crunch',name:'Ab Crunch Machine',zone:'Glutes & core',type:'Selectorised',muscles:['abs'],step:2.5,cue:'Curl your ribs towards your hips, breathe out at the bottom, control the way back.',unit:'kg'},
- {id:'cable-crunch',name:'Kneeling Cable Crunch',zone:'Glutes & core',type:'Cable',muscles:['abs'],step:2.5,cue:'Kneel facing the cable, rope by your head. Crunch down by rounding your spine, hips stay still.',unit:'kg'},
- {id:'calf',name:'Calf Raise',zone:'Legs',type:'Selectorised',muscles:['calves'],step:5,cue:'Balls of the feet on the edge. Full stretch at the bottom, rise as high as you can, pause.',unit:'kg'},
- {id:'lateral',name:'Lateral Raise Machine',zone:'Push',type:'Selectorised',muscles:['sidedelts'],step:2.5,cue:'Pads on the outside of your arms. Raise to shoulder height, lead with the elbows.',unit:'kg'},
- {id:'rear-delt',name:'Reverse Pec Deck',zone:'Pull',type:'Selectorised',muscles:['reardelts'],sec:['upperback'],step:2.5,cue:'Face the pad, arms straight. Sweep back until your arms line up with your shoulders.',unit:'kg'},
- {id:'rower',name:'Rower',zone:'Cardio',type:'Cardio',muscles:['lats','quads'],cue:'Legs, body, arms on the drive; arms, body, legs on the return.',unit:'m',cardio:true},
- {id:'ski',name:'SkiErg',zone:'Cardio',type:'Cardio',muscles:['lats','triceps'],cue:'Hinge at the hips and drive the handles down past the knees.',unit:'m',cardio:true},
- {id:'bike',name:'Assault Bike',zone:'Cardio',type:'Cardio',muscles:['quads'],cue:'Push and pull the handles while you pedal.',unit:'cal',cardio:true}
+ // ----- Legs -----
+ {id:'leg-press',name:'Leg Press',brand:'Technogym Pure Strength',room:2,zone:'Legs',type:'Plate loaded',muscles:['quads','glutes'],sec:['hamstrings'],step:5,cue:'Feet hip-width mid-platform. Lower until knees reach 90°, drive through heels. Don’t lock out.',unit:'kg'},
+ {id:'hack-squat',name:'Hack Squat',brand:'MTorture',room:2,zone:'Legs',type:'Plate loaded',muscles:['quads','glutes'],step:5,cue:'Back flat on the pad. Sit deep under control, push up through the whole foot.',unit:'kg'},
+ {id:'hack-cybex',name:'Hack Squat',brand:'Cybex',room:2,zone:'Legs',type:'Plate loaded',muscles:['quads','glutes'],step:5,cue:'Shoulders under the pads, feet mid-platform. Sit deep, drive up without locking your knees.',unit:'kg'},
+ {id:'squat',name:'Barbell Squat',brand:'Squat racks (6)',room:2,zone:'Legs',type:'Free weight',muscles:['quads','glutes'],sec:['lowerback','hamstrings'],step:2.5,cue:'Set the safety bars just below your bottom position. Brace, sit down between your heels, drive up.',unit:'kg'},
+ {id:'split-squat',name:'Split Squat',brand:'Split squat frames / Booty Builder platform',room:2,zone:'Legs',type:'Free weight',muscles:['quads','glutes'],step:2,cue:'Back foot on the frame, dumbbells by your sides. Drop the back knee straight down. Log one dumbbell.',unit:'kg'},
+ {id:'leg-ext',name:'Leg Extension',brand:'Technogym',room:1,zone:'Legs',type:'Pin loaded',muscles:['quads'],step:2.5,cue:'Pad on lower shin. Lift to full extension, pause one second, lower slowly.',unit:'kg'},
+ {id:'leg-ext-ps',name:'Leg Extension',brand:'Technogym Pure Strength',room:2,zone:'Legs',type:'Plate loaded',muscles:['quads'],step:5,cue:'Pad on lower shin. Lift to full extension, pause, lower slowly.',unit:'kg'},
+ {id:'leg-curl',name:'Seated Leg Curl',brand:'Technogym',room:1,zone:'Legs',type:'Pin loaded',muscles:['hamstrings'],step:2.5,cue:'Knees lined up with the pivot. Curl down hard, control the return.',unit:'kg'},
+ {id:'prone-curl',name:'Prone Leg Curl',brand:'Technogym',room:1,zone:'Legs',type:'Pin loaded',muscles:['hamstrings'],step:2.5,cue:'Lie face down, hips pressed into the pad. Curl your heels up, lower slowly.',unit:'kg'},
+ {id:'adductor',name:'Adductor / Abductor',brand:'Technogym',room:1,zone:'Legs',type:'Pin loaded',muscles:['glutes'],step:2.5,cue:'Set it to push out (abductor, side glutes) or squeeze in (adductor, inner thighs). Pause at the end of each rep.',unit:'kg'},
+ {id:'calf',name:'Calf Raise on the Leg Press',brand:'Technogym Pure Strength',room:2,zone:'Legs',type:'Plate loaded',muscles:['calves'],step:5,cue:'Balls of the feet on the bottom edge of the platform. Full stretch, then push up as high as you can.',unit:'kg'},
+ // ----- Glutes -----
+ {id:'hip-thrust',name:'Plate-Loaded Hip Thrust',brand:'Booty Builder',room:1,zone:'Glutes',type:'Plate loaded',muscles:['glutes'],sec:['hamstrings'],step:5,cue:'Upper back on the pad, feet flat. Drive hips up until your body is straight, squeeze your glutes for one second at the top.',unit:'kg'},
+ {id:'hip-thrust-pin',name:'Pin-Loaded Hip Thrust',brand:'Booty Builder',room:1,zone:'Glutes',type:'Pin loaded',muscles:['glutes'],sec:['hamstrings'],step:2.5,cue:'Belt across your hips, feet flat. Drive up, squeeze at the top, lower slowly.',unit:'kg'},
+ {id:'hip-thrust-mt',name:'Hip Thrust',brand:'MTorture',room:2,zone:'Glutes',type:'Plate loaded',muscles:['glutes'],sec:['hamstrings'],step:5,cue:'Back on the pad, pad across your hips. Drive up until your body is straight and squeeze.',unit:'kg'},
+ {id:'abductor',name:'Standing Abduction',brand:'Booty Builder',room:1,zone:'Glutes',type:'Pin loaded',muscles:['glutes'],step:2.5,cue:'Stand tall, pad on the outside of your knee. Push the leg out to the side, pause, return slowly. Log one leg.',unit:'kg'},
+ {id:'back-ext',name:'Loaded Back Extension',brand:'Booty Builder',room:1,zone:'Glutes',type:'Plate loaded',muscles:['glutes','lowerback'],sec:['hamstrings'],step:5,cue:'Hips on the pad. Lower with a flat back, then rise by squeezing your glutes.',unit:'kg'},
+ {id:'hyperext',name:'Hyperextension',brand:'Technogym',room:1,zone:'Glutes',type:'Bodyweight',muscles:['lowerback','glutes'],sec:['hamstrings'],step:2.5,cue:'Ankles under the rollers, hips on the pad. Bend forward with a flat back, rise until you’re straight. Hold a plate to make it harder and log its weight.',unit:'kg'},
+ {id:'kickback',name:'Rear Kick',brand:'Technogym Pure Strength',room:2,zone:'Glutes',type:'Plate loaded',muscles:['glutes'],step:2.5,cue:'Foot on the plate, chest on the pad. Kick back and up without arching your lower back. Log one leg.',unit:'kg'},
+ {id:'cable-kick',name:'Cable Glute Kickback',brand:'Technogym dual cable',room:2,zone:'Glutes',type:'Cable',muscles:['glutes'],step:2.5,cue:'Ankle strap on, slight forward lean. Kick back without arching. Log one leg.',unit:'kg'},
+ {id:'rdl',name:'Romanian Deadlift',brand:'Booty Builder platform',room:2,zone:'Glutes',type:'Free weight',muscles:['hamstrings','glutes'],sec:['lowerback'],step:2.5,cue:'Soft knees, push your hips back and slide the weight down your legs until you feel a stretch. Back stays flat.',unit:'kg'},
+ {id:'deadlift',name:'Deadlift',brand:'Booty Builder platform',room:2,zone:'Glutes',type:'Free weight',muscles:['glutes','hamstrings','lowerback'],sec:['quads','upperback'],step:2.5,cue:'Bar over mid-foot, brace, push the floor away. Bar stays close to your legs.',unit:'kg'},
+ {id:'kb-swing',name:'Kettlebell Swing',brand:'Kettlebells 12–24 kg',room:2,zone:'Glutes',type:'Free weight',muscles:['glutes','hamstrings'],step:4,cue:'Hinge, hike the bell back, snap your hips forward. Arms just guide it.',unit:'kg'},
+ // ----- Push -----
+ {id:'chest-press',name:'Chest Press',brand:'Technogym',room:1,zone:'Push',type:'Pin loaded',muscles:['chest'],sec:['frontdelts','triceps'],step:2.5,cue:'Handles at mid-chest. Press out, shoulders stay down and back.',unit:'kg'},
+ {id:'ps-chest',name:'Chest Press',brand:'Technogym Pure Strength',room:2,zone:'Push',type:'Plate loaded',muscles:['chest'],sec:['frontdelts','triceps'],step:5,cue:'Handles at mid-chest. Press out, control the return.',unit:'kg'},
+ {id:'ps-incline',name:'Incline Chest Press',brand:'Technogym Pure Strength',room:2,zone:'Push',type:'Plate loaded',muscles:['chest','frontdelts'],sec:['triceps'],step:5,cue:'Handles at upper chest. Press up and in, shoulders stay down.',unit:'kg'},
+ {id:'bench',name:'Bench Press',brand:'Iron Edge',room:2,zone:'Push',type:'Free weight',muscles:['chest'],sec:['frontdelts','triceps'],step:2.5,cue:'Eyes under the bar, feet planted. Lower to mid-chest, press up. Use a spotter or the safeties when you go heavy.',unit:'kg'},
+ {id:'db-press',name:'Dumbbell Bench Press',brand:'Technogym benches + dumbbells to 55 kg',room:2,zone:'Push',type:'Free weight',muscles:['chest'],sec:['frontdelts','triceps'],step:2,cue:'Flat or incline. Lower until elbows are just below the bench, press up. Log one dumbbell.',unit:'kg'},
+ {id:'pec-fly',name:'Pec Fly',brand:'Technogym pec fly / reverse fly',room:1,zone:'Push',type:'Pin loaded',muscles:['chest'],step:2.5,cue:'Set to pec fly. Soft elbows, hug the handles together in front of your chest.',unit:'kg'},
+ {id:'cable-cross',name:'Cable Crossover',brand:'Technogym dual cable',room:2,zone:'Push',type:'Cable',muscles:['chest'],sec:['frontdelts'],step:2.5,cue:'Slight forward lean, soft elbows. Bring hands together in front of the chest.',unit:'kg'},
+ {id:'shoulder-press',name:'Shoulder Press',brand:'Technogym',room:1,zone:'Push',type:'Pin loaded',muscles:['frontdelts','sidedelts'],sec:['triceps'],step:2.5,cue:'Seat so handles start at shoulder height. Press up without arching.',unit:'kg'},
+ {id:'ps-shoulder',name:'Shoulder Press',brand:'Technogym Pure Strength',room:2,zone:'Push',type:'Plate loaded',muscles:['frontdelts','sidedelts'],sec:['triceps'],step:5,cue:'Handles at shoulder height. Press up, ribs down.',unit:'kg'},
+ {id:'lateral',name:'Dumbbell Lateral Raise',brand:'Dumbbells',room:2,zone:'Push',type:'Free weight',muscles:['sidedelts'],step:1,cue:'Slight bend in the elbows. Raise to shoulder height, lead with the elbows. Log one dumbbell.',unit:'kg'},
+ {id:'dips',name:'Dips',brand:'Roman chair',room:2,zone:'Push',type:'Bodyweight',muscles:['triceps','chest'],sec:['frontdelts'],step:2.5,cue:'Lower until your shoulders are just below your elbows, press up. Log added weight, or 0.',unit:'kg'},
+ // ----- Pull -----
+ {id:'lat-pull',name:'Lat Pulldown',brand:'Technogym cable station',room:2,zone:'Pull',type:'Cable',muscles:['lats'],sec:['biceps','upperback'],step:2.5,cue:'Grip just wider than shoulders. Pull the bar to the top of the chest, elbows down.',unit:'kg'},
+ {id:'seated-row',name:'Seated Cable Row',brand:'Technogym cable station',room:2,zone:'Pull',type:'Cable',muscles:['upperback','lats'],sec:['biceps','reardelts'],step:2.5,cue:'Tall chest. Pull to the stomach, squeeze shoulder blades, slow return.',unit:'kg'},
+ {id:'ps-row',name:'Row',brand:'Technogym Pure Strength',room:2,zone:'Pull',type:'Plate loaded',muscles:['upperback','lats'],sec:['biceps','reardelts'],step:5,cue:'Chest on the pad. Pull elbows back, squeeze, lower slowly.',unit:'kg'},
+ {id:'high-row',name:'High Row',brand:'Life Fitness',room:2,zone:'Pull',type:'Plate loaded',muscles:['lats','upperback'],sec:['biceps'],step:5,cue:'Pull down and back towards your chest, elbows wide. Control the return.',unit:'kg'},
+ {id:'assist-pull',name:'Easy Chin Dip',brand:'Technogym kneeling',room:1,zone:'Pull',type:'Pin loaded',muscles:['lats'],sec:['biceps','upperback'],step:2.5,assist:true,cue:'Kneel on the pad. More weight means more help. The app lowers the assistance as you get stronger.',unit:'kg'},
+ {id:'pullup',name:'Pull-up',brand:'Roman chair / cable chin-up bars',room:2,zone:'Pull',type:'Bodyweight',muscles:['lats'],sec:['biceps','upperback'],step:2.5,cue:'Full hang, pull your chest to the bar. Log added weight, or 0.',unit:'kg'},
+ {id:'rear-delt',name:'Reverse Fly',brand:'Technogym pec fly / reverse fly',room:1,zone:'Pull',type:'Pin loaded',muscles:['reardelts'],sec:['upperback'],step:2.5,cue:'Set to reverse fly, face the pad. Sweep back until your arms line up with your shoulders.',unit:'kg'},
+ // ----- Arms -----
+ {id:'preacher-tg',name:'Preacher Curl',brand:'Technogym',room:2,zone:'Arms',type:'Plate loaded',muscles:['biceps'],step:2.5,cue:'Armpits snug on the pad. Curl up, lower all the way under control.',unit:'kg'},
+ {id:'preacher-ez',name:'Standing Preacher Curl',brand:'EZ bar in the preacher frame',room:2,zone:'Arms',type:'Free weight',muscles:['biceps'],step:2.5,cue:'Flat side for strict curls, angled side for a longer stretch. Log the bar plus plates.',unit:'kg'},
+ {id:'bar-curl',name:'Barbell Curl',brand:'Fixed barbells 10–45 kg',room:2,zone:'Arms',type:'Free weight',muscles:['biceps'],step:2.5,cue:'Elbows by your sides, curl without swinging.',unit:'kg'},
+ {id:'pushdown',name:'Triceps Pushdown',brand:'Technogym cable station',room:2,zone:'Arms',type:'Cable',muscles:['triceps'],step:2.5,cue:'Elbows pinned to your sides, push down to straight arms, slow return.',unit:'kg'},
+ {id:'dumbbells',name:'Dumbbells',brand:'Technogym 4–55 kg · Iron Edge 1–10 kg',room:2,zone:'Arms',type:'Free weight',muscles:['sidedelts','biceps','triceps'],step:2,cue:'Log the weight of one dumbbell.',unit:'kg'},
+ {id:'smith',name:'Smith Machine',brand:'Smith machine',room:2,zone:'Free weights',type:'Plate loaded',muscles:['quads','glutes'],sec:['lowerback'],step:2.5,cue:'Use for squats, presses and rows. Set the safety stops before you start.',unit:'kg'},
+ // ----- Core -----
+ {id:'ab-crunch',name:'Ab Crunch',brand:'Tough Stuff',room:2,zone:'Core',type:'Pin loaded',muscles:['abs'],step:2.5,cue:'Curl your ribs towards your hips, breathe out at the bottom, control the way back.',unit:'kg'},
+ {id:'cable-crunch',name:'Kneeling Cable Crunch',brand:'Technogym dual cable',room:2,zone:'Core',type:'Cable',muscles:['abs'],step:2.5,cue:'Kneel facing the cable, rope by your head. Crunch down by rounding your spine, hips stay still.',unit:'kg'},
+ {id:'decline-sit',name:'Decline Sit-up',brand:'Heavy-duty decline bench',room:2,zone:'Core',type:'Bodyweight',muscles:['abs'],step:2.5,cue:'Feet hooked, curl up one vertebra at a time. Hold a plate to make it harder.',unit:'kg'},
+ {id:'knee-raise',name:'Knee Raise',brand:'Roman chair',room:2,zone:'Core',type:'Bodyweight',muscles:['abs'],step:2.5,cue:'Back on the pad, lift your knees to your chest without swinging.',unit:'kg'},
+ // ----- Cardio -----
+ {id:'rower',name:'Rower',brand:'Rogue (2)',room:2,zone:'Cardio',type:'Cardio',muscles:['lats','quads'],cue:'Legs, body, arms on the drive; arms, body, legs on the return.',unit:'m',cardio:true},
+ {id:'ski',name:'SkiErg',brand:'Rogue (2)',room:2,zone:'Cardio',type:'Cardio',muscles:['lats','triceps'],cue:'Hinge at the hips and drive the handles down past the knees.',unit:'m',cardio:true},
+ {id:'bike',name:'BikeErg',brand:'Concept2',room:2,zone:'Cardio',type:'Cardio',muscles:['quads'],cue:'Steady cadence, drive through the whole pedal stroke.',unit:'cal',cardio:true},
+ {id:'treadmill',name:'Treadmill',brand:'Technogym',room:1,zone:'Cardio',type:'Cardio',muscles:['quads','calves'],cue:'Log distance in metres. An incline walk is easy on the joints.',unit:'m',cardio:true},
+ {id:'elliptical',name:'Elliptical',brand:'Technogym',room:1,zone:'Cardio',type:'Cardio',muscles:['quads','glutes'],cue:'Upright posture, push and pull the handles.',unit:'cal',cardio:true},
+ {id:'stairs',name:'Stair Climber',brand:'Technogym',room:1,zone:'Cardio',type:'Cardio',muscles:['glutes','quads'],cue:'Light hands on the rails, full step each time.',unit:'cal',cardio:true},
+ {id:'recumbent',name:'Recumbent Bike',brand:'Technogym',room:1,zone:'Cardio',type:'Cardio',muscles:['quads'],cue:'Back on the seat, knees slightly bent at full reach.',unit:'cal',cardio:true}
 ];
+// Kit that isn't a logged exercise, shown in Club > Info.
+const EXTRAS=['Swiss balls','Half BOSU balls','Mats','2 split squat frames','Barbells and plates','EZ bars (load your own)','Pre-loaded fixed barbells 10–45 kg','Cable handles and attachments','Technogym adjustable and flat benches','2 Technogym decline benches'];
 const MUSCLES={glutes:'Glutes',quads:'Quads',hamstrings:'Hamstrings',calves:'Calves',chest:'Chest',frontdelts:'Front delts',sidedelts:'Side delts',reardelts:'Rear delts',lats:'Lats',upperback:'Upper back',lowerback:'Lower back',biceps:'Biceps',triceps:'Triceps',abs:'Abs'};
 // Hours each muscle takes to recover from a moderate-to-hard session. Big, long-range muscles with heavy lowering work (quads, hamstrings, back) take longest.
 // Sources: Brigatto et al. 2019 (pressing ~48 h, lower body ~72 h), Moran-Navarro et al. 2017 (quads 48-72 h after near-failure squats), Schoenfeld et al. 2016 (train each muscle 2x a week). Glutes, abs and calves are coaching estimates.
@@ -701,7 +742,7 @@ function viewTrain(){
   const zones=['All',...new Set(MACHINES.map(m=>m.zone))];const list=MACHINES.filter(m=>zone==='All'||m.zone===zone);
   return `<section class="stack"><h1>Train</h1></section>${seg}
   <div class="chips" role="group" aria-label="Filter by area">${zones.map(z=>`<button class="chip" data-zone="${z}" aria-pressed="${z===zone}">${z}</button>`).join('')}</div>
-  <div class="list">${list.map(m=>{const t=target(m.id);return `<button class="item" data-machine="${m.id}"><span><b>${m.name}</b><br><span class="meta">${esc(t.text)}</span></span><span class="row">${blocked(m.id)?'<span class="pill" style="color:var(--heat);border-color:var(--heat)">Injury</span>':''}<span class="chev">›</span></span></button>`}).join('')}</div>
+  <div class="list">${list.map(m=>{const t=target(m.id);return `<button class="item" data-machine="${m.id}"><span><b>${m.name}</b><br><span class="meta">${m.brand?esc(m.brand)+' · ':''}${esc(t.text)}</span></span><span class="row">${blocked(m.id)?'<span class="pill" style="color:var(--heat);border-color:var(--heat)">Injury</span>':''}<span class="chev">›</span></span></button>`}).join('')}</div>
   <p class="note">Starter list. Beachouse's own named machines go here, each with its own QR sticker.</p>`;
 }
 
@@ -1009,6 +1050,8 @@ function busyChart(day,h=90){const pts=busyCurve(day);const now=new Date();const
  <div class="row between muted" style="font-size:10px"><span>${hLabel(pts[0][0])}</span><span>${hLabel(pts[Math.floor(pts.length/2)][0])}</span><span>${hLabel(pts[pts.length-1][0])}</span></div>
  <div class="legend" style="justify-content:flex-start"><span><i style="background:var(--good)"></i>Quiet</span><span><i style="background:var(--gold)"></i>Not so busy</span><span><i style="background:#d6735f"></i>Busy</span></div>`;}
 let busyDay=new Date().getDay();
+function equipCard(){const room=r=>{const ms=MACHINES.filter(m=>(m.room||1)===r);const g={};ms.forEach(m=>{(g[m.zone]=g[m.zone]||[]).push(m)});return Object.entries(g).map(([z,l])=>`<p style="font-size:13px"><b>${z}:</b> <span class="muted">${l.map(m=>m.name+(m.brand?' ('+m.brand+')':'')).join(', ')}</span></p>`).join('');};
+ return `<section class="card"><h2>Equipment${ib('Tap Train, then Machines, to open any of these and log your sets.')}</h2><details><summary class="tag" style="cursor:pointer">Room 1</summary><div class="stack" style="gap:6px;margin-top:8px">${room(1)}</div></details><details><summary class="tag" style="cursor:pointer">Room 2</summary><div class="stack" style="gap:6px;margin-top:8px">${room(2)}<p style="font-size:13px"><b>Also:</b> <span class="muted">${EXTRAS.join(', ')}</span></p></div></details></section>`;}
 function viewClub(){
   const seg=`<div class="seg" style="grid-template-columns:repeat(3,1fr)" role="group" aria-label="Club"><button data-cv="join" aria-pressed="${clubView==='join'}">Join</button><button data-cv="info" aria-pressed="${clubView==='info'}">Info</button><button data-cv="coaches" aria-pressed="${clubView==='coaches'}">Coaches</button></div>`;
   if(clubView==='crews')return `<section class="stack"><h1>Crews</h1><p class="muted">Train together. Visit every day as a crew and win a group session at 38\u00b0.</p></section>${seg}${crewCard()}${leaderboardCard()}${credit()}`;
@@ -1017,6 +1060,7 @@ function viewClub(){
    <p class="note">In-app chat with coaches is coming. For now, Message opens a text to the coach.</p>${credit()}`;
   if(clubView==='info'){const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
    return `<section class="stack"><h1>Club info</h1></section>${seg}
+   ${equipCard()}
    <section class="card"><div class="row between"><h2>Busy times</h2><span class="pill">Predicted</span></div>
     <div class="chips">${[1,2,3,4,5,6,0].map(d=>`<button class="chip" data-bd="${d}" aria-pressed="${d===busyDay}">${days[d]}</button>`).join('')}</div>
     ${busyChart(busyDay)}<p class="muted" style="font-size:12px">Quietest: ${quietest(busyDay)}.</p></section>
@@ -1786,7 +1830,7 @@ function crewSheet(mode){const code=Math.random().toString(36).slice(2,8).toUppe
      s.querySelector('#cgo').onclick=()=>{const n=s.querySelector('#cn').value.trim();if(!n){toast('Name your crew');return;}S.avatar=me;
        S.crew={name:n,code,av,others:S.example?[{n:'Ella',av:{c:'#9b8fd6',t:'E'},pat:'1111111'},{n:'Jack',av:{c:'#2A7FB0',t:'J'},pat:'1111011'}]:[]};save();closeSheet();render();crewSheet('manage');};});}
 
-const VIEWS={crew:viewCrew,home:viewHome,train:viewTrain,progress:viewProgress,bath:viewBath,medical:viewMedical,club:viewClub};
+const VIEWS={crew:viewHome,home:viewHome,train:viewTrain,progress:viewProgress,bath:viewBath,medical:viewMedical,club:viewClub};
 let lastTab=null;
 
 // ================= Beta notice =================
@@ -1855,7 +1899,7 @@ function machineSheet(id){
   const m=M(id);const t=target(id);const b=best(id);const hist=logsFor(id).map(x=>[x.date,Math.round(m.cardio?x.sets[0][0]:e1rm(x))]);
   const start=[...Array(t.sets)].map(()=>[t.w||'',t.r||'']);
   openSheet(`
-    <div class="row between"><div><p class="tag">${m.zone} · ${m.type}</p><h1 style="font-size:22px">${m.name}${ib(m.cue)}</h1></div>${b?`<span class="pill pr">Best ${b}${m.unit}</span>`:''}</div>
+    <div class="row between"><div><p class="tag">${m.brand?esc(m.brand)+' · ':''}${m.type} · Room ${m.room||1}</p><h1 style="font-size:22px">${m.name}${ib(m.cue)}</h1></div>${b?`<span class="pill pr">Best ${b}${m.unit}</span>`:''}</div>
     <div class="target"><span><span class="ai">Today's target</span><br><b>${esc(t.text)}</b></span></div>
     <p class="muted" style="font-size:13px">${esc(t.why)}</p>
     ${(()=>{const l=lastLog(id);return l?`<p class="muted" style="font-size:12px">Last time, ${fmtDate(l.date)}: ${m.cardio?l.sets[0][0]+' '+m.unit:l.sets.map(x=>x[1]+' × '+x[0]+'kg').join(', ')}</p>`:''})()}
