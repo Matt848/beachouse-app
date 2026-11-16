@@ -27,6 +27,9 @@ workflows:
           # iPhone only (no iPad version)
           sed -i '' 's/TARGETED_DEVICE_FAMILY = "1,2";/TARGETED_DEVICE_FAMILY = 1;/g' ios/App/App.xcodeproj/project.pbxproj
           npx cap sync ios
+          # Beachouse app icon and launch screen (replace the Capacitor placeholders)
+          cp resources/appicon-1024.png ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png
+          for f in ios/App/App/Assets.xcassets/Splash.imageset/*.png; do cp resources/splash-2732.png "$f"; done
       - name: App permissions
         script: |
           PLIST=ios/App/App/Info.plist
