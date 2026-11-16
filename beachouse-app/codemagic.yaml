@@ -11,7 +11,7 @@ workflows:
         distribution_type: app_store
         bundle_identifier: com.beachousebondi.app
       vars:
-        APP_STORE_APPLE_ID: 0000000000   # replace with the Apple ID number of the app record in App Store Connect
+        APP_STORE_APPLE_ID: 6835252594   # Beachouse Health Club in App Store Connect
       node: 20
       xcode: latest
       cocoapods: default
