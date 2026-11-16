@@ -2137,6 +2137,7 @@ async function authInit(){if(!SB)return;
   if(USER)cloudLoad();render();}
 
 // Features that need an account: show an unlock card instead (16 Nov 2026)
+window.authGate=authGate;
 function lockCard(title,why){return `<section class="card stack" style="gap:10px;text-align:center;padding:26px 20px"><span class="tag">Members only</span><h2 style="font-size:20px;margin:0">${title}</h2><p class="muted" style="font-size:13px;margin:0">${why}</p><button class="btn gold block" onclick="authGate('signup')">Create a free account to unlock</button><button class="btn ghost block" onclick="authGate('login')">I already have an account</button></section>`;}
 function needsAccount(fn,title,why){return function(){if(SB&&!USER)return lockCard(title,why);return fn.apply(this,arguments);};}
 viewMedical=needsAccount(viewMedical,'Unlock <em>Health</em>','Create an account to save your health results and food tracking privately, so they are safe on any phone.');
