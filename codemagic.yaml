@@ -22,6 +22,9 @@ workflows:
       - name: Add iOS project
         script: |
           [ -d ios ] || npx cap add ios
+          # Apple requires iOS 15 or later from April 2027
+          sed -i '' "s/IPHONEOS_DEPLOYMENT_TARGET = 1[0-4].0;/IPHONEOS_DEPLOYMENT_TARGET = 15.0;/g" ios/App/App.xcodeproj/project.pbxproj
+          sed -i '' "s/platform :ios, '1[0-4].0'/platform :ios, '15.0'/" ios/App/Podfile
           npx cap sync ios
       - name: App permissions
         script: |
@@ -45,4 +48,4 @@ workflows:
     publishing:
       app_store_connect:
         auth: integration
-        submit_to_testflight: true
+        submit_to_testflight: false   # internal testers get each build automatically; external beta review not needed yet
