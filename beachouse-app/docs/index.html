@@ -2145,6 +2145,34 @@ crewCard=needsAccount(crewCard,'Join a <em>crew</em>','Create an account to trai
 leaderboardCard=(f=>function(){return (SB&&!USER)?'':f.apply(this,arguments);})(leaderboardCard);
 VIEWS.medical=function(){return viewMedical.apply(this,arguments);};VIEWS.progress=function(){return viewProgress.apply(this,arguments);};
 authInit();
+
+// ---------- Feedback: side tab always on screen + one-off survey after 15 minutes of use (emails matty@beachousebondi.com) ----------
+function feedbackSheet(kind){kind=kind||'tab';let rating=0;
+  const inp='background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;color:var(--fg);font:inherit;width:100%;box-sizing:border-box';
+  openSheet(`<h1 style="font-size:22px">${kind==='survey'?'Quick question':'Send us feedback'}</h1>
+   <p class="muted" style="font-size:13px">${kind==='survey'?'You have been using the app for a while. How is it going so far?':'Tell us what is working, what is not, or what you would like to see. It goes straight to the team.'}</p>
+   <span class="tag">How would you rate the app?</span>
+   <div class="chips" id="fbr" style="flex-wrap:wrap">${['Poor','Not great','OK','Good','Love it'].map((l,i)=>`<button class="chip" data-r="${i+1}" aria-pressed="false">${i+1} · ${l}</button>`).join('')}</div>
+   <span class="tag">${kind==='survey'?'What is one thing we should improve?':'Your feedback'}</span>
+   <textarea id="fbm" rows="4" maxlength="4000" placeholder="Type here" style="${inp};resize:vertical"></textarea>
+   ${USER?'':`<input id="fbe" type="email" inputmode="email" autocomplete="email" placeholder="Your email (optional, if you want a reply)" style="${inp}">`}
+   <button class="btn gold block" id="fbsend">Send feedback</button>
+   ${kind==='survey'?'<button class="btn ghost block" id="fbskip">Not now</button>':''}`,
+  s=>{s.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{rating=+b.dataset.r;s.querySelectorAll('[data-r]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});
+    const sk=s.querySelector('#fbskip');if(sk)sk.onclick=closeSheet;
+    s.querySelector('#fbsend').onclick=async()=>{const msg=s.querySelector('#fbm').value.trim();if(!rating&&!msg){toast('Pick a rating or write a note');return;}
+      const em=USER?(USER.email||''):((s.querySelector('#fbe')||{}).value||'').trim();
+      const row={rating:rating||null,message:msg||null,email:em||null,kind,page:String(tab||''),platform:(window.Capacitor&&window.Capacitor.getPlatform)?window.Capacitor.getPlatform():'web'};
+      const b=s.querySelector('#fbsend');b.disabled=true;
+      try{if(!SB)throw new Error('offline');const {error}=await SB.from('feedback').insert(row);if(error)throw error;
+        try{track('Feedback',{rating:rating||0,kind});}catch(e){}closeSheet();toast('Thanks, we got your feedback');}
+      catch(e){b.disabled=false;location.href='mailto:matty@beachousebondi.com?subject='+encodeURIComponent('App feedback'+(rating?' ('+rating+'/5)':''))+'&body='+encodeURIComponent(msg);}};});}
+(function(){const t=document.createElement('button');t.id='fbTab';t.type='button';t.textContent='Feedback';t.setAttribute('aria-label','Send feedback');
+  t.style.cssText='position:fixed;right:0;top:46%;z-index:20;transform:translateX(50%) rotate(-90deg) translateX(50%);transform-origin:center;background:var(--gold,#C8A27A);color:#111;border:0;border-radius:8px 8px 0 0;padding:6px 14px;font:600 11px/1 inherit;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 2px 10px rgba(0,0,0,.35);cursor:pointer';
+  t.style.transform='translateY(-50%) rotate(-90deg)';t.style.transformOrigin='100% 100%';t.style.right='0';
+  t.onclick=()=>feedbackSheet('tab');document.body.appendChild(t);
+  setInterval(()=>{if(document.hidden)return;const used=(lsGet('bh_use_s')||0)+15;lsSet('bh_use_s',used);
+    if(used>=900&&!lsGet('bh_survey_done')&&!document.querySelector('.sheet')&&!document.getElementById('authGate')){lsSet('bh_survey_done',Date.now());feedbackSheet('survey');}},15000);})();
 if(/[?&]shots=1/.test(location.search))window.__app={S:()=>S,user:u=>{USER=u;},go:t=>{tab=t;render();window.scrollTo(0,0);}};
 
 
