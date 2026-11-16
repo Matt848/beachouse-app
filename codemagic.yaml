@@ -25,6 +25,8 @@ workflows:
           # Apple requires iOS 15 or later from April 2027
           sed -i '' "s/IPHONEOS_DEPLOYMENT_TARGET = 1[0-4].0;/IPHONEOS_DEPLOYMENT_TARGET = 15.0;/g" ios/App/App.xcodeproj/project.pbxproj
           sed -i '' "s/platform :ios, '1[0-4].0'/platform :ios, '15.0'/" ios/App/Podfile
+          # iPhone only (no iPad version)
+          sed -i '' 's/TARGETED_DEVICE_FAMILY = "1,2";/TARGETED_DEVICE_FAMILY = 1;/g' ios/App/App.xcodeproj/project.pbxproj
           npx cap sync ios
       - name: App permissions
         script: |

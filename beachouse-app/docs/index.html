@@ -1514,7 +1514,7 @@ function connectedCard(){const n=(S.bloods||[]).length,d=(S.dexa||[]).length,sg=
     ${row('Blood tests',n?n+' test'+(n>1?'s':'')+' on file \u00b7 adjusts training, recovery and food':'Adjusts training, recovery and food',n,n?'Linked':'Not yet')}
     ${row('DEXA body composition',d?d+' scan'+(d>1?'s':'')+' on file \u00b7 evens out your training':'Evens out muscle by body part',d,d?'Linked':'Not yet')}
     ${row('Conditions',condActive().length?condActive().map(k=>CONDITIONS[k].name).join(', '):'Adjusts exercise and recovery',condActive().length,condActive().length?'Applied':'Optional')}
-    ${(SOON.wear?soon:(x=>x))(`<button class="item" style="width:100%" data-act="addwear"><span><b>Wearable</b><br><span class="meta">${wearToday()?'Today\u2019s numbers added':'Type in recovery, HRV and sleep \u00b7 auto-sync coming soon'}</span></span><span class="${wearToday()?'pill pr':'muted'}">${wearToday()?'Added':'+ Add'}</span></button>`)}
+    ${(SOON.wear?soon:(x=>x))(`<button class="item" style="width:100%" data-act="addwear"><span><b>Wearable</b><br><span class="meta">${wearToday()?'Today\u2019s numbers added':('Type in recovery, HRV and sleep'+(isStore()?'':' \u00b7 auto-sync coming soon'))}</span></span><span class="${wearToday()?'pill pr':'muted'}">${wearToday()?'Added':'+ Add'}</span></button>`)}
    </div>
    <span class="tag" style="color:var(--muted);margin-top:4px">Tests and services</span>
    ${SOON.services?'<p class="muted" style="font-size:13px">Add results you already have, or upload the report. Booking with our partners is coming soon.</p>':''}
@@ -1642,7 +1642,7 @@ function applyTests(ids){const sg=testSuggestions().filter(x=>ids.includes(x.id)
 
 // ---------- Coming soon: features waiting on partners or setup are shown greyed out ----------
 const SOON={coach:true,wear:false,services:false,orderblood:true,dexabook:true};
-function soon(html,label){return `<div class="soon" aria-disabled="true" data-soon="${label||'Coming soon'}">${html}</div>`;}
+function soon(html,label){if(isStore())return '';return `<div class="soon" aria-disabled="true" data-soon="${label||'Coming soon'}">${html}</div>`;}
 // ================= Member card: added once, staff reset only =================
 const STAFF_PIN='2026'; // change before launch; front-desk staff use it to reset a member's barcode
 function cardSheet(){const id=S.barcode||'';if(id&&recordVisit()){setTimeout(()=>toast('Visit recorded for today'),300);setTimeout(render,0);}
@@ -1673,7 +1673,7 @@ function bodyTodayCard(){const rec=recovery(),det=recoveryDetail();const ks=Obje
 // ================= How do you feel (wearable fills it in when connected) =================
 function feelCard(){const m=(S.mood||{})[dayISO(0)];
   return `<section class="card"><div class="row between"><h2>How do you feel today?</h2></div>
-   ${wearToday()?wearCard().replace('<section class="card">','<div class="stack" style="gap:10px">').replace(/<\/section>$/,'</div>'):`<button class="item" style="width:100%;border:1px dashed var(--line-2);border-radius:12px" data-act="addwear"><span><b>+ Add today\u2019s wearable numbers</b><br><span class="meta">WHOOP, Garmin, Apple Watch or Oura \u00b7 auto-sync coming soon</span></span><span class="chev">\u203a</span></button>`}
+   ${wearToday()?wearCard().replace('<section class="card">','<div class="stack" style="gap:10px">').replace(/<\/section>$/,'</div>'):`<button class="item" style="width:100%;border:1px dashed var(--line-2);border-radius:12px" data-act="addwear"><span><b>+ Add today\u2019s wearable numbers</b><br><span class="meta">WHOOP, Garmin, Apple Watch or Oura${isStore()?'':' \u00b7 auto-sync coming soon'}</span></span><span class="chev">\u203a</span></button>`}
    ${sleepChips()}<span class="tag" style="color:var(--muted)">Energy</span>
    <div class="chips" role="group" aria-label="How you feel">${Object.entries(MOODS).map(([k,v])=>`<button class="chip" data-mood="${k}" aria-pressed="${m===k}">${v.l}</button>`).join('')}</div>
    ${m?`<p style="font-size:14px">${esc(MOODS[m].tip)}</p>${MOODS[m].act?`<button class="btn ghost small" data-act="${MOODS[m].act}">${MOODS[m].btn}</button>`:''}`:''}</section>`;}
@@ -1837,7 +1837,8 @@ let lastTab=null;
 
 // ================= Beta notice =================
 const BETA_TEXT='This is a free app in beta. We’re shaping it around what members need, so expect big updates as we go, and your data may be lost along the way.';
-function betaNote(){return `<p class="beta"><b>Beta</b> ${BETA_TEXT}</p>`;}
+function isStore(){try{return !!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform())||/[?&]store=1/.test(location.search);}catch(e){return false;}}
+function betaNote(){if(isStore())return '';return `<p class="beta"><b>Beta</b> ${BETA_TEXT}</p>`;}
 
 // ================= Home hub: membership via Mindbody (coming with member accounts) =================
 function hubCard(){const mb=S.mb;
@@ -1845,6 +1846,7 @@ function hubCard(){const mb=S.mb;
    <div class="hubgrid"><div><span class="tag">Plan</span><b>${esc(mb.plan)}</b></div><div><span class="tag">You pay</span><b>${esc(mb.price)}</b></div><div><span class="tag">Next payment</span><b>${fmtDate(mb.next)}</b></div><div><span class="tag">Visits this month</span><b>${mb.visits}</b></div></div>
    ${S.example?'<p class="note">Example membership. Real details appear once Mindbody sign-in is live.</p>':''}
    <div class="row"><a class="btn ghost small" style="flex:1" href="${SITE}/memberships-passes" target="_blank" rel="noopener">Change plan</a><button class="btn ghost small" style="flex:1" data-act="support">Pause or cancel</button></div></section>`;
+  if(isStore())return '';
   return `<section class="card"><h2>Your membership</h2><p class="muted" style="font-size:13px">Sign in with your Mindbody login to see your plan, what you pay and your visits. The same login will keep your workouts, progress and settings on every device.</p>
    ${soon('<button class="btn block" tabindex="-1">Sign in with Mindbody</button>')}</section>`;}
 
@@ -1955,7 +1957,7 @@ function profileSheet(){
    <button class="btn block" id="psave">Save</button>
    <button class="btn ghost block" id="pquick">Redo quick start</button>
    <button class="btn ghost block" id="pclear">Clear my history</button>
-   <p class="note">Membership, bookings and door check-in appear here once the app is linked to Mindbody.</p>`,
+   <p class="note">Membership, bookings and door check-in appear here once the app is linked to Mindbody.</p><p class="muted" style="font-size:12px;text-align:center"><a href="privacy.html" target="_blank" style="color:inherit">Privacy policy</a> · <a href="support.html" target="_blank" style="color:inherit">Support</a></p>`,
    s=>{bindAccount(s);s.querySelectorAll('[data-pf]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.pf;s.querySelectorAll('[data-pf]').forEach(x=>x.setAttribute('aria-pressed',x===b));});
    s.querySelectorAll('[data-pi]').forEach(b=>b.onclick=()=>{const k=b.dataset.pi;const a=new Set(S.injuries||[]);a.has(k)?a.delete(k):a.add(k);S.injuries=[...a];b.setAttribute('aria-pressed',a.has(k));});
    s.querySelectorAll('[data-pg]').forEach(b=>b.onclick=()=>{S.goal=b.dataset.pg;s.querySelectorAll('[data-pg]').forEach(x=>x.setAttribute('aria-pressed',x===b));});s.querySelector('#psave').onclick=()=>{S.name=s.querySelector('#pname').value.trim()||S.name;save();closeSheet();render();toast('Saved');};
@@ -2050,90 +2052,6 @@ if(deep&&M(deep)){history.replaceState(null,'',location.pathname);setTimeout(()=
 loadEvents();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 setTimeout(()=>{const s=$('#splash');s.style.opacity='0';setTimeout(()=>s.remove(),700);},900);
-})();
-
-// ---------- Ad and organic attribution (added 16 Nov 2026) ----------
-// Fill in the IDs below to switch each platform on. Leave blank to keep it off.
-// metaAppId is the Beachouse App on Meta for Developers (used later for the Instagram Story sticker in the App Store build).
-const TRACK={metaPixel:'',ga4:'',googleAds:'',googleAdsCheckoutLabel:'',tiktokPixel:'',metaAppId:'1949031732729226',host:'https://app.beachousebondi.com',endpoint:'/api/track'};
-const NATIVE=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
-function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||'null');}catch(e){return null;}}
-function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
-function channelOf(a){a=a||{};const src=(a.utm_source||'')+' '+(a.referrer||'');
-  if(a.gclid||a.gbraid||a.wbraid)return'google_ads';if(a.ttclid)return'tiktok_ads';if(a.msclkid)return'microsoft_ads';if(a.li_fat_id)return'linkedin_ads';if(a.twclid)return'x_ads';if(a.sccid)return'snapchat_ads';
-  if(/chatgpt|openai/i.test(src))return a.utm_medium&&/cpc|paid|ads/i.test(a.utm_medium)?'chatgpt_ads':'chatgpt';
-  if(a.fbclid)return /instagram|^ig/i.test(a.utm_source||'')?'instagram':'meta';
-  if(a.utm_source)return a.utm_source+(a.utm_medium?'/'+a.utm_medium:'');
-  if(a.referrer){try{const h=new URL(a.referrer).hostname;return /google\.|bing\.|duckduckgo|yahoo/.test(h)?'organic_search':/instagram|facebook|tiktok|t\.co|linkedin/.test(h)?'organic_social':'referral:'+h;}catch(e){}}
-  return'direct';}
-(function captureAttribution(){try{if(!location.protocol.startsWith('http'))return;const q=new URLSearchParams(location.search);const a={};
-  ['gclid','gbraid','wbraid','fbclid','ttclid','msclkid','li_fat_id','twclid','sccid','utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(k=>{const v=q.get(k);if(v)a[k]=v;});
-  if(!Object.keys(a).length&&document.referrer&&!document.referrer.includes(location.hostname))a.referrer=document.referrer;
-  if(Object.keys(a).length){a.at=Date.now();a.channel=channelOf(a);a.landing=location.pathname;lsSet('bh_last_touch',a);if(!lsGet('bh_first_touch'))lsSet('bh_first_touch',a);}
-  if(!lsGet('bh_vid'))lsSet('bh_vid',Date.now().toString(36)+Math.random().toString(36).slice(2,10));}catch(e){}})();
-function attribution(){const l=lsGet('bh_last_touch');return{visitor:lsGet('bh_vid'),channel:(l&&l.channel)||'direct',first:lsGet('bh_first_touch'),last:l};}
-// Third-party pixels load on the web app only. The App Store build skips them so it needs no tracking permission prompt.
-if(!NATIVE){
-  if(TRACK.metaPixel){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',TRACK.metaPixel);fbq('track','PageView');}
-  if(TRACK.ga4||TRACK.googleAds){const g=document.createElement('script');g.async=true;g.src='https://www.googletagmanager.com/gtag/js?id='+(TRACK.ga4||TRACK.googleAds);document.head.appendChild(g);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments);};gtag('js',new Date());if(TRACK.ga4)gtag('config',TRACK.ga4);if(TRACK.googleAds)gtag('config',TRACK.googleAds);}
-  if(TRACK.tiktokPixel){!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=d.createElement("script");o.type="text/javascript",o.async=!0,o.src=r+"?sdkid="+e+"&lib="+t;var a=d.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};ttq.load(TRACK.tiktokPixel);ttq.page();}(window,document,'ttq');}
-}
-// One call sends the event to every platform that is switched on, plus our own log (Beachouse keeps its own copy of every event).
-function track(name,data){data=data||{};const att=attribution();
-  try{if(window.fbq)fbq('track',name,data);}catch(e){}
-  try{if(window.gtag){gtag('event',({InitiateCheckout:'begin_checkout',Purchase:'purchase',Share:'share',Lead:'generate_lead'})[name]||name,data);
-    if(name==='InitiateCheckout'&&TRACK.googleAds&&TRACK.googleAdsCheckoutLabel)gtag('event','conversion',{send_to:TRACK.googleAds+'/'+TRACK.googleAdsCheckoutLabel});}}catch(e){}
-  try{if(window.ttq)ttq.track(name,data);}catch(e){}
-  try{if(!location.protocol.startsWith('http')&&!NATIVE)return;const url=(NATIVE?TRACK.host:'')+TRACK.endpoint;
-    const body=JSON.stringify({event:name,at:new Date().toISOString(),app:NATIVE?'ios':'web',visitor:att.visitor,channel:att.channel,first:att.first,last:att.last,data});
-    if(navigator.sendBeacon&&!NATIVE)navigator.sendBeacon(url,new Blob([body],{type:'application/json'}));else fetch(url,{method:'POST',body,headers:{'content-type':'application/json'},keepalive:true}).catch(()=>{});}catch(e){}}
-// Checkout links (Mindbody memberships, 38° bookings and vouchers): pass the ad details through and log the click.
-const CHECKOUT_RX=/mindbodyonline\.com|try\.be|38thebathhouse\.com|beachousebondi\.com\/memberships/;
-function tagCheckoutUrl(href){let u;try{u=new URL(href,location.href);}catch(e){return href;}if(!CHECKOUT_RX.test(u.href))return href;
-  const l=lsGet('bh_last_touch')||{};['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','fbclid','ttclid'].forEach(k=>{if(l[k]&&!u.searchParams.has(k))u.searchParams.set(k,l[k]);});
-  if(!u.searchParams.has('utm_source')){u.searchParams.set('utm_source','beachouse_app');u.searchParams.set('utm_medium',NATIVE?'ios_app':'web_app');}return u.toString();}
-document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href]');if(!a||!CHECKOUT_RX.test(a.href))return;
-  a.href=tagCheckoutUrl(a.href);const card=a.closest('section');const h=card&&card.querySelector('h2,h3');
-  track('InitiateCheckout',{content_name:((h&&h.textContent)||a.textContent||'').trim().slice(0,80),destination:new URL(a.href).hostname});},true);
-(function(){const o=window.open;window.open=function(u,...r){try{if(u&&CHECKOUT_RX.test(String(u))){u=tagCheckoutUrl(String(u));track('InitiateCheckout',{destination:new URL(u).hostname});}}catch(e){}return o.call(window,u,...r);};})();
-
-// ---------- Share a finished session to Instagram Stories (added 16 Nov 2026) ----------
-// Member picks or takes a photo; we build a 1080x1920 story image with their stats and @beachousebondi on it,
-// copy @beachousebondi for a mention sticker, then open the phone's share sheet (Instagram > Story).
-function storyShare(d){const inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.style.display='none';document.body.appendChild(inp);
-  inp.onchange=async()=>{const f=inp.files&&inp.files[0];inp.remove();if(!f)return;toast('Making your story');
-    try{const blob=await makeStory(f,d);const url=URL.createObjectURL(blob);
-      openSheet(`<h1 style="font-size:22px">Your story</h1><img src="${url}" alt="Story preview" style="width:100%;max-width:280px;display:block;margin:0 auto;border-radius:14px">
-        <p class="muted" style="font-size:13px;text-align:center">Tap Share, then Instagram, then Story. @beachousebondi is copied: paste it into a mention sticker so we can reshare you.</p>
-        <button class="btn gold block" id="storyGo">Share</button><button class="btn ghost block" id="storyNo">Cancel</button>`,
-        s=>{s.querySelector('#storyGo').onclick=()=>shareStory(blob);s.querySelector('#storyNo').onclick=closeSheet;});}
-    catch(err){toast('Could not make the story image');}};
-  inp.click();}
-function loadImg(file){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=URL.createObjectURL(file);});}
-async function makeStory(file,d){const W=1080,H=1920;const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
-  const img=await loadImg(file);const sc=Math.max(W/img.width,H/img.height);x.drawImage(img,(W-img.width*sc)/2,(H-img.height*sc)/2,img.width*sc,img.height*sc);
-  let g=x.createLinearGradient(0,0,0,520);g.addColorStop(0,'rgba(0,0,0,.65)');g.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=g;x.fillRect(0,0,W,520);
-  g=x.createLinearGradient(0,H-900,0,H);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.45,'rgba(0,0,0,.6)');g.addColorStop(1,'rgba(0,0,0,.88)');x.fillStyle=g;x.fillRect(0,H-900,W,900);
-  const cs=getComputedStyle(document.documentElement);const gold=(cs.getPropertyValue('--gold')||'').trim()||'#c8b38a';const font=getComputedStyle(document.body).fontFamily||'Helvetica, Arial, sans-serif';
-  x.textAlign='center';x.fillStyle='#fff';x.font=`600 54px ${font}`;x.fillText('BEACHOUSE × 38°',W/2,170);
-  x.fillStyle=gold;x.font=`500 34px ${font}`;x.fillText(new Date().toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long'}).toUpperCase(),W/2,228);
-  const stats=[[d.mins||'–','MINUTES'],[d.sets||0,'SETS'],[(+d.ton||0).toFixed(1),'TONNES']];const prs=(d.prs||[]).slice(0,3);
-  let y=H-(prs.length?560+prs.length*70:420);
-  stats.forEach((s,i)=>{const cx=W/6+i*W/3;x.fillStyle='#fff';x.font=`700 110px ${font}`;x.fillText(String(s[0]),cx,y);x.fillStyle='rgba(255,255,255,.75)';x.font=`500 32px ${font}`;x.fillText(s[1],cx,y+52);});
-  if(prs.length){y+=150;x.fillStyle=gold;x.font=`600 40px ${font}`;x.fillText('NEW PERSONAL BEST'+(prs.length>1?'S':''),W/2,y);x.fillStyle='#fff';x.font=`500 44px ${font}`;prs.forEach((p,i)=>x.fillText(`${p.n}  ${p.v}`,W/2,y+70*(i+1)));}
-  x.fillStyle='#fff';x.font=`600 46px ${font}`;x.fillText('@beachousebondi',W/2,H-150);
-  return await new Promise(r=>c.toBlob(r,'image/jpeg',.9));}
-function blobToB64(b){return new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(String(fr.result).split(',')[1]);fr.readAsDataURL(b);});}
-async function shareStory(blob){const tag='@beachousebondi';try{await navigator.clipboard.writeText(tag);}catch(e){}
-  try{const P=window.Capacitor&&window.Capacitor.Plugins;
-    if(NATIVE&&P&&P.Share&&P.Filesystem){const w=await P.Filesystem.writeFile({path:'beachouse-story.jpg',data:await blobToB64(blob),directory:'CACHE'});await P.Share.share({title:'Beachouse',files:[w.uri]});}
-    else{const file=new File([blob],'beachouse-story.jpg',{type:'image/jpeg'});
-      if(navigator.canShare&&navigator.canShare({files:[file]}))await navigator.share({files:[file],title:'Beachouse'});
-      else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='beachouse-story.jpg';document.body.appendChild(a);a.click();a.remove();toast('Saved. Post it from your camera roll');}}
-    closeSheet();track('Share',{method:'instagram_story'});
-    try{if(NATIVE&&P&&P.Haptics)P.Haptics.notification({type:'SUCCESS'});}catch(e){}}
-  catch(err){if(!(err&&err.name==='AbortError'))toast('Sharing did not open. Try again');}}
-
 
 // ---------- Member accounts (Supabase): sign up, log in, password reset, synced data (added 16 Nov 2026) ----------
 const SITE_URL='https://matt848.github.io/beachouse-app/';
@@ -2227,6 +2145,93 @@ crewCard=needsAccount(crewCard,'Join a <em>crew</em>','Create an account to trai
 leaderboardCard=(f=>function(){return (SB&&!USER)?'':f.apply(this,arguments);})(leaderboardCard);
 VIEWS.medical=function(){return viewMedical.apply(this,arguments);};VIEWS.progress=function(){return viewProgress.apply(this,arguments);};
 authInit();
+if(/[?&]shots=1/.test(location.search))window.__app={S:()=>S,user:u=>{USER=u;},go:t=>{tab=t;render();window.scrollTo(0,0);}};
+
+
+})();
+
+// ---------- Ad and organic attribution (added 16 Nov 2026) ----------
+// Fill in the IDs below to switch each platform on. Leave blank to keep it off.
+// metaAppId is the Beachouse App on Meta for Developers (used later for the Instagram Story sticker in the App Store build).
+const TRACK={metaPixel:'',ga4:'',googleAds:'',googleAdsCheckoutLabel:'',tiktokPixel:'',metaAppId:'1949031732729226',host:'https://app.beachousebondi.com',endpoint:'/api/track'};
+const NATIVE=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||'null');}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function channelOf(a){a=a||{};const src=(a.utm_source||'')+' '+(a.referrer||'');
+  if(a.gclid||a.gbraid||a.wbraid)return'google_ads';if(a.ttclid)return'tiktok_ads';if(a.msclkid)return'microsoft_ads';if(a.li_fat_id)return'linkedin_ads';if(a.twclid)return'x_ads';if(a.sccid)return'snapchat_ads';
+  if(/chatgpt|openai/i.test(src))return a.utm_medium&&/cpc|paid|ads/i.test(a.utm_medium)?'chatgpt_ads':'chatgpt';
+  if(a.fbclid)return /instagram|^ig/i.test(a.utm_source||'')?'instagram':'meta';
+  if(a.utm_source)return a.utm_source+(a.utm_medium?'/'+a.utm_medium:'');
+  if(a.referrer){try{const h=new URL(a.referrer).hostname;return /google\.|bing\.|duckduckgo|yahoo/.test(h)?'organic_search':/instagram|facebook|tiktok|t\.co|linkedin/.test(h)?'organic_social':'referral:'+h;}catch(e){}}
+  return'direct';}
+(function captureAttribution(){try{if(!location.protocol.startsWith('http'))return;const q=new URLSearchParams(location.search);const a={};
+  ['gclid','gbraid','wbraid','fbclid','ttclid','msclkid','li_fat_id','twclid','sccid','utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(k=>{const v=q.get(k);if(v)a[k]=v;});
+  if(!Object.keys(a).length&&document.referrer&&!document.referrer.includes(location.hostname))a.referrer=document.referrer;
+  if(Object.keys(a).length){a.at=Date.now();a.channel=channelOf(a);a.landing=location.pathname;lsSet('bh_last_touch',a);if(!lsGet('bh_first_touch'))lsSet('bh_first_touch',a);}
+  if(!lsGet('bh_vid'))lsSet('bh_vid',Date.now().toString(36)+Math.random().toString(36).slice(2,10));}catch(e){}})();
+function attribution(){const l=lsGet('bh_last_touch');return{visitor:lsGet('bh_vid'),channel:(l&&l.channel)||'direct',first:lsGet('bh_first_touch'),last:l};}
+// Third-party pixels load on the web app only. The App Store build skips them so it needs no tracking permission prompt.
+if(!NATIVE){
+  if(TRACK.metaPixel){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',TRACK.metaPixel);fbq('track','PageView');}
+  if(TRACK.ga4||TRACK.googleAds){const g=document.createElement('script');g.async=true;g.src='https://www.googletagmanager.com/gtag/js?id='+(TRACK.ga4||TRACK.googleAds);document.head.appendChild(g);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments);};gtag('js',new Date());if(TRACK.ga4)gtag('config',TRACK.ga4);if(TRACK.googleAds)gtag('config',TRACK.googleAds);}
+  if(TRACK.tiktokPixel){!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=d.createElement("script");o.type="text/javascript",o.async=!0,o.src=r+"?sdkid="+e+"&lib="+t;var a=d.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};ttq.load(TRACK.tiktokPixel);ttq.page();}(window,document,'ttq');}
+}
+// One call sends the event to every platform that is switched on, plus our own log (Beachouse keeps its own copy of every event).
+function track(name,data){data=data||{};const att=attribution();
+  try{if(window.fbq)fbq('track',name,data);}catch(e){}
+  try{if(window.gtag){gtag('event',({InitiateCheckout:'begin_checkout',Purchase:'purchase',Share:'share',Lead:'generate_lead'})[name]||name,data);
+    if(name==='InitiateCheckout'&&TRACK.googleAds&&TRACK.googleAdsCheckoutLabel)gtag('event','conversion',{send_to:TRACK.googleAds+'/'+TRACK.googleAdsCheckoutLabel});}}catch(e){}
+  try{if(window.ttq)ttq.track(name,data);}catch(e){}
+  try{if(!location.protocol.startsWith('http')&&!NATIVE)return;const url=(NATIVE?TRACK.host:'')+TRACK.endpoint;
+    const body=JSON.stringify({event:name,at:new Date().toISOString(),app:NATIVE?'ios':'web',visitor:att.visitor,channel:att.channel,first:att.first,last:att.last,data});
+    if(navigator.sendBeacon&&!NATIVE)navigator.sendBeacon(url,new Blob([body],{type:'application/json'}));else fetch(url,{method:'POST',body,headers:{'content-type':'application/json'},keepalive:true}).catch(()=>{});}catch(e){}}
+// Checkout links (Mindbody memberships, 38° bookings and vouchers): pass the ad details through and log the click.
+const CHECKOUT_RX=/mindbodyonline\.com|try\.be|38thebathhouse\.com|beachousebondi\.com\/memberships/;
+function tagCheckoutUrl(href){let u;try{u=new URL(href,location.href);}catch(e){return href;}if(!CHECKOUT_RX.test(u.href))return href;
+  const l=lsGet('bh_last_touch')||{};['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','fbclid','ttclid'].forEach(k=>{if(l[k]&&!u.searchParams.has(k))u.searchParams.set(k,l[k]);});
+  if(!u.searchParams.has('utm_source')){u.searchParams.set('utm_source','beachouse_app');u.searchParams.set('utm_medium',NATIVE?'ios_app':'web_app');}return u.toString();}
+document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href]');if(!a||!CHECKOUT_RX.test(a.href))return;
+  a.href=tagCheckoutUrl(a.href);const card=a.closest('section');const h=card&&card.querySelector('h2,h3');
+  track('InitiateCheckout',{content_name:((h&&h.textContent)||a.textContent||'').trim().slice(0,80),destination:new URL(a.href).hostname});},true);
+(function(){const o=window.open;window.open=function(u,...r){try{if(u&&CHECKOUT_RX.test(String(u))){u=tagCheckoutUrl(String(u));track('InitiateCheckout',{destination:new URL(u).hostname});}}catch(e){}return o.call(window,u,...r);};})();
+
+// ---------- Share a finished session to Instagram Stories (added 16 Nov 2026) ----------
+// Member picks or takes a photo; we build a 1080x1920 story image with their stats and @beachousebondi on it,
+// copy @beachousebondi for a mention sticker, then open the phone's share sheet (Instagram > Story).
+function storyShare(d){const inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.style.display='none';document.body.appendChild(inp);
+  inp.onchange=async()=>{const f=inp.files&&inp.files[0];inp.remove();if(!f)return;toast('Making your story');
+    try{const blob=await makeStory(f,d);const url=URL.createObjectURL(blob);
+      openSheet(`<h1 style="font-size:22px">Your story</h1><img src="${url}" alt="Story preview" style="width:100%;max-width:280px;display:block;margin:0 auto;border-radius:14px">
+        <p class="muted" style="font-size:13px;text-align:center">Tap Share, then Instagram, then Story. @beachousebondi is copied: paste it into a mention sticker so we can reshare you.</p>
+        <button class="btn gold block" id="storyGo">Share</button><button class="btn ghost block" id="storyNo">Cancel</button>`,
+        s=>{s.querySelector('#storyGo').onclick=()=>shareStory(blob);s.querySelector('#storyNo').onclick=closeSheet;});}
+    catch(err){toast('Could not make the story image');}};
+  inp.click();}
+function loadImg(file){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=URL.createObjectURL(file);});}
+async function makeStory(file,d){const W=1080,H=1920;const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  const img=await loadImg(file);const sc=Math.max(W/img.width,H/img.height);x.drawImage(img,(W-img.width*sc)/2,(H-img.height*sc)/2,img.width*sc,img.height*sc);
+  let g=x.createLinearGradient(0,0,0,520);g.addColorStop(0,'rgba(0,0,0,.65)');g.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=g;x.fillRect(0,0,W,520);
+  g=x.createLinearGradient(0,H-900,0,H);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.45,'rgba(0,0,0,.6)');g.addColorStop(1,'rgba(0,0,0,.88)');x.fillStyle=g;x.fillRect(0,H-900,W,900);
+  const cs=getComputedStyle(document.documentElement);const gold=(cs.getPropertyValue('--gold')||'').trim()||'#c8b38a';const font=getComputedStyle(document.body).fontFamily||'Helvetica, Arial, sans-serif';
+  x.textAlign='center';x.fillStyle='#fff';x.font=`600 54px ${font}`;x.fillText('BEACHOUSE × 38°',W/2,170);
+  x.fillStyle=gold;x.font=`500 34px ${font}`;x.fillText(new Date().toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long'}).toUpperCase(),W/2,228);
+  const stats=[[d.mins||'–','MINUTES'],[d.sets||0,'SETS'],[(+d.ton||0).toFixed(1),'TONNES']];const prs=(d.prs||[]).slice(0,3);
+  let y=H-(prs.length?560+prs.length*70:420);
+  stats.forEach((s,i)=>{const cx=W/6+i*W/3;x.fillStyle='#fff';x.font=`700 110px ${font}`;x.fillText(String(s[0]),cx,y);x.fillStyle='rgba(255,255,255,.75)';x.font=`500 32px ${font}`;x.fillText(s[1],cx,y+52);});
+  if(prs.length){y+=150;x.fillStyle=gold;x.font=`600 40px ${font}`;x.fillText('NEW PERSONAL BEST'+(prs.length>1?'S':''),W/2,y);x.fillStyle='#fff';x.font=`500 44px ${font}`;prs.forEach((p,i)=>x.fillText(`${p.n}  ${p.v}`,W/2,y+70*(i+1)));}
+  x.fillStyle='#fff';x.font=`600 46px ${font}`;x.fillText('@beachousebondi',W/2,H-150);
+  return await new Promise(r=>c.toBlob(r,'image/jpeg',.9));}
+function blobToB64(b){return new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(String(fr.result).split(',')[1]);fr.readAsDataURL(b);});}
+async function shareStory(blob){const tag='@beachousebondi';try{await navigator.clipboard.writeText(tag);}catch(e){}
+  try{const P=window.Capacitor&&window.Capacitor.Plugins;
+    if(NATIVE&&P&&P.Share&&P.Filesystem){const w=await P.Filesystem.writeFile({path:'beachouse-story.jpg',data:await blobToB64(blob),directory:'CACHE'});await P.Share.share({title:'Beachouse',files:[w.uri]});}
+    else{const file=new File([blob],'beachouse-story.jpg',{type:'image/jpeg'});
+      if(navigator.canShare&&navigator.canShare({files:[file]}))await navigator.share({files:[file],title:'Beachouse'});
+      else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='beachouse-story.jpg';document.body.appendChild(a);a.click();a.remove();toast('Saved. Post it from your camera roll');}}
+    closeSheet();track('Share',{method:'instagram_story'});
+    try{if(NATIVE&&P&&P.Haptics)P.Haptics.notification({type:'SUCCESS'});}catch(e){}}
+  catch(err){if(!(err&&err.name==='AbortError'))toast('Sharing did not open. Try again');}}
+
 
 </script>
 
