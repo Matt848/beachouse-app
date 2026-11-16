@@ -23,6 +23,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Keep the member accounts database awake (Supabase free plan pauses after 7 idle days)
+        run: curl -fsS -X POST "https://ralwydqyauoudiizxmje.supabase.co/rest/v1/rpc/ping" -H "apikey: sb_publishable_bKJbBUWNOJ7h94-YgwRdGQ_Mzxa5O7K" -H "Content-Type: application/json" -d '{}' || echo "Ping failed"
       - name: Refresh events from Trybe
         working-directory: beachouse-app
         run: node scripts/fetch-events.mjs docs/events.json || echo "Events refresh failed, keeping the last saved list"

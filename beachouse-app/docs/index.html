@@ -379,6 +379,7 @@ main{padding-bottom:150px}
 .igbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5}
 .face{width:46px;height:46px;border-radius:50%;object-fit:cover;flex:none;border:1px solid rgba(200,179,138,.45);display:grid;place-items:center;font-family:var(--serif);font-size:16px;color:var(--gold-2);background:var(--surface-2)}
 </style>
+<script src="supabase.js"></script>
 <script>
 (function(){
 const ICONS={
@@ -554,7 +555,7 @@ const KEY='bhc-app-v3';
 const localISO=(x=>`${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}-${String(x.getDate()).padStart(2,'0')}`);
 function dayISO(off){const d=new Date();d.setDate(d.getDate()-off);return localISO(d);}
 function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.logs)return s;}catch(e){}return location.search.includes('demo')?seed():{name:'',goal:'build',plan:'start',planDay:0,logs:[],rec:[],bw:[],example:false};}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}if(typeof cloudSave==='function')cloudSave();}
 function seed(){
   const logs=[];
   const base={'leg-press':120,'chest-press':45,'lat-pull':50,'seated-row':45,'leg-curl':35,'shoulder-press':30,'leg-ext':40};
@@ -1946,7 +1947,7 @@ function scanSheet(){
    s=>{startCam(s);s.addEventListener('click',e=>{const b=e.target.closest('[data-pick]');if(b){stopCam();machineSheet(b.dataset.pick);}});});
 }
 function profileSheet(){
-  openSheet(`<h1 style="font-size:22px">Profile</h1><p class="muted" style="font-size:13px">Your focus and any injuries shape your sessions and recovery goals.</p>${betaNote()}
+  openSheet(`<h1 style="font-size:22px">Profile</h1>${accountBlock()}<p class="muted" style="font-size:13px">Your focus and any injuries shape your sessions and recovery goals.</p>${betaNote()}
    <label class="stack" for="pname"><span class="tag">Name</span></label><input id="pname" value="${esc(S.name)}" style="background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;color:var(--fg);font:inherit">
    <span class="tag">Goal</span><div class="chips">${Object.entries(GOALS).map(([k,g])=>`<button class="chip" data-pg="${k}" aria-pressed="${S.goal===k}">${g.label}</button>`).join('')}</div>
    <span class="tag">Focus</span><div class="chips">${Object.entries(FOCUS).map(([k,f])=>`<button class="chip" data-pf="${k}" aria-pressed="${(S.focus||'balanced')===k}">${f.label}</button>`).join('')}</div>
@@ -1955,7 +1956,7 @@ function profileSheet(){
    <button class="btn ghost block" id="pquick">Redo quick start</button>
    <button class="btn ghost block" id="pclear">Clear my history</button>
    <p class="note">Membership, bookings and door check-in appear here once the app is linked to Mindbody.</p>`,
-   s=>{s.querySelectorAll('[data-pf]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.pf;s.querySelectorAll('[data-pf]').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+   s=>{bindAccount(s);s.querySelectorAll('[data-pf]').forEach(b=>b.onclick=()=>{S.focus=b.dataset.pf;s.querySelectorAll('[data-pf]').forEach(x=>x.setAttribute('aria-pressed',x===b));});
    s.querySelectorAll('[data-pi]').forEach(b=>b.onclick=()=>{const k=b.dataset.pi;const a=new Set(S.injuries||[]);a.has(k)?a.delete(k):a.add(k);S.injuries=[...a];b.setAttribute('aria-pressed',a.has(k));});
    s.querySelectorAll('[data-pg]').forEach(b=>b.onclick=()=>{S.goal=b.dataset.pg;s.querySelectorAll('[data-pg]').forEach(x=>x.setAttribute('aria-pressed',x===b));});s.querySelector('#psave').onclick=()=>{S.name=s.querySelector('#pname').value.trim()||S.name;save();closeSheet();render();toast('Saved');};
        s.querySelector('#pquick').onclick=()=>{closeSheet();quickStart();};
@@ -2132,6 +2133,100 @@ async function shareStory(blob){const tag='@beachousebondi';try{await navigator.
     closeSheet();track('Share',{method:'instagram_story'});
     try{if(NATIVE&&P&&P.Haptics)P.Haptics.notification({type:'SUCCESS'});}catch(e){}}
   catch(err){if(!(err&&err.name==='AbortError'))toast('Sharing did not open. Try again');}}
+
+
+// ---------- Member accounts (Supabase): sign up, log in, password reset, synced data (added 16 Nov 2026) ----------
+const SITE_URL='https://matt848.github.io/beachouse-app/';
+const SB_URL='https://ralwydqyauoudiizxmje.supabase.co',SB_KEY='sb_publishable_bKJbBUWNOJ7h94-YgwRdGQ_Mzxa5O7K';
+const SB=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'implicit'}}):null;
+let USER=null,cloudT=null,cloudReady=false,cloudLoading=false;
+function cloudSave(){if(!SB||!USER||!cloudReady)return;clearTimeout(cloudT);cloudT=setTimeout(async()=>{try{
+  await SB.from('member_state').upsert({user_id:USER.id,name:S.name||null,state:S,marketing_opt_in:!!(USER.user_metadata&&USER.user_metadata.marketing_opt_in),updated_at:new Date().toISOString()});}catch(e){}},1500);}
+async function cloudLoad(){if(!SB||!USER||cloudLoading)return;cloudLoading=true;try{
+  const {data}=await SB.from('member_state').select('state').eq('user_id',USER.id).maybeSingle();
+  const size=x=>((x&&x.logs)||[]).length+((x&&x.rec)||[]).length+((x&&x.bw)||[]).length;
+  if(data&&data.state&&data.state.logs&&size(data.state)>=size(S)){S=data.state;try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}render();}
+  if(!S.name&&USER.user_metadata&&USER.user_metadata.name){S.name=USER.user_metadata.name;try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}render();}
+}catch(e){}cloudReady=true;cloudLoading=false;cloudSave();}
+function friendlyAuthError(e){const m=String((e&&e.message)||e||'');
+  if(/invalid login credentials/i.test(m))return "That email or password isn't right.";
+  if(/email not confirmed/i.test(m))return 'Please confirm your email first. Check your inbox for our link.';
+  if(/already registered|already been registered/i.test(m))return "There's already an account with that email. Log in instead.";
+  if(/rate limit|too many/i.test(m))return 'Too many tries. Please wait a minute and try again.';
+  if(/valid email|invalid email|unable to validate email/i.test(m))return 'Please enter a valid email address.';
+  if(/password/i.test(m)&&/(short|least|weak)/i.test(m))return 'Use at least 8 characters for your password.';
+  if(/failed to fetch|network/i.test(m))return "Can't connect right now. Check your internet and try again.";
+  return m||'Something went wrong. Please try again.';}
+function authGate(mode){if(!SB)return;mode=mode||'signup';let g=document.getElementById('authGate');
+  if(!g){g=document.createElement('div');g.id='authGate';g.setAttribute('role','dialog');g.setAttribute('aria-modal','true');document.body.appendChild(g);}
+  g.style.cssText='position:fixed;inset:0;z-index:60;background:var(--bg,#0b0b0b);overflow:auto;padding:max(56px,env(safe-area-inset-top)) 24px 40px';
+  const inp='style="background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:14px;color:var(--fg);font:inherit;width:100%;box-sizing:border-box"';
+  const T={signup:['Create your <em>account</em>','Save your training, recovery and progress to your account, so it is safe on any phone.'],
+    login:['Welcome <em>back</em>','Log in to pick up where you left off.'],
+    reset:['Reset your <em>password</em>','Enter your email and we will send you a link to set a new one.'],
+    newpass:['Set a new <em>password</em>','Choose a new password for your account.']};
+  g.innerHTML=`<div class="stack" style="max-width:440px;margin:0 auto;gap:14px">
+    <div class="wordmark" aria-label="Beachouse and 38° The Bathhouse">BΞACHOUSΞ<small>× 38° THE BATHHOUSE</small></div>
+    <h1>${T[mode][0]}</h1><p class="muted">${T[mode][1]}</p>
+    ${mode==='signup'?`<input id="aname" placeholder="First name" autocomplete="given-name" ${inp}>`:''}
+    ${mode!=='newpass'?`<input id="aemail" type="email" inputmode="email" placeholder="Email" autocomplete="email" autocapitalize="off" ${inp}>`:''}
+    ${mode!=='reset'?`<input id="apass" type="password" placeholder="${mode==='login'?'Password':'Password (at least 8 characters)'}" autocomplete="${mode==='login'?'current-password':'new-password'}" ${inp}>`:''}
+    ${mode==='signup'?`<label class="row" style="gap:10px;font-size:13px;align-items:center"><input type="checkbox" id="aopt"> Send me Beachouse and 38° news and offers</label>`:''}
+    <p id="aerr" class="note" style="display:none" role="alert"></p>
+    <button class="btn gold block" id="ago">${({signup:'Create account',login:'Log in',reset:'Send reset link',newpass:'Save new password'})[mode]}</button>
+    ${mode==='signup'?`<button class="btn ghost block" data-am="login">I already have an account</button>`:''}
+    ${mode==='login'?`<button class="btn ghost block" data-am="signup">Create an account</button><button class="btn ghost block" data-am="reset">Forgot password?</button>`:''}
+    ${mode==='reset'?`<button class="btn ghost block" data-am="login">Back to log in</button>`:''}
+    ${mode==='signup'||mode==='login'?`<button class="btn ghost small" id="askip" style="align-self:center;opacity:.7">Not now</button>`:''}
+    ${mode==='signup'?`<p class="muted" style="font-size:11px;text-align:center">By creating an account you agree we can store your training data to run the app. You can delete your account any time in your profile.</p>`:''}
+  </div>`;
+  const err=m=>{const e=g.querySelector('#aerr');e.textContent=m||'';e.style.display=m?'block':'none';};
+  g.querySelectorAll('[data-am]').forEach(b=>b.onclick=()=>authGate(b.dataset.am));
+  const sk=g.querySelector('#askip');if(sk)sk.onclick=()=>{lsSet('bh_auth_skip',Date.now());g.remove();};
+  const done=(h,btn,next)=>{g.querySelector('.stack').innerHTML=`<div class="wordmark">BΞACHOUSΞ<small>× 38° THE BATHHOUSE</small></div>${h}<button class="btn gold block" id="anext">${btn}</button>`;g.querySelector('#anext').onclick=next;};
+  g.querySelector('#ago').onclick=async()=>{const b=g.querySelector('#ago');const ev=g.querySelector('#aemail');const email=ev?ev.value.trim():'';const pv=g.querySelector('#apass');const pass=pv?pv.value:'';
+    err('');if(mode!=='newpass'&&!email){err('Please enter your email.');return;}b.disabled=true;
+    try{
+      if(mode==='signup'){if(pass.length<8)throw new Error('Use at least 8 characters for your password.');const name=g.querySelector('#aname').value.trim();
+        const {data,error}=await SB.auth.signUp({email,password:pass,options:{emailRedirectTo:SITE_URL,data:{name,marketing_opt_in:g.querySelector('#aopt').checked}}});
+        if(error)throw error;if(name&&!S.name){S.name=name;save();}
+        try{track('CompleteRegistration',{method:'email'});}catch(e){}
+        if(data&&data.session){g.remove();toast('Account created');}
+        else done(`<h1>Check your <em>email</em></h1><p class="muted">We have sent a link to <b>${esc(email)}</b>. Tap it to confirm your account, then log in here.</p>`,'Log in',()=>authGate('login'));}
+      else if(mode==='login'){const {error}=await SB.auth.signInWithPassword({email,password:pass});if(error)throw error;g.remove();toast('Logged in');}
+      else if(mode==='reset'){const {error}=await SB.auth.resetPasswordForEmail(email,{redirectTo:SITE_URL});if(error)throw error;
+        done(`<h1>Check your <em>email</em></h1><p class="muted">If there is an account for <b>${esc(email)}</b>, we have sent a link to reset your password.</p>`,'Back to log in',()=>authGate('login'));}
+      else if(mode==='newpass'){if(pass.length<8)throw new Error('Use at least 8 characters for your password.');const {error}=await SB.auth.updateUser({password:pass});if(error)throw error;g.remove();toast('Password updated');}
+    }catch(e){err(friendlyAuthError(e));}finally{const bb=g.querySelector('#ago');if(bb)bb.disabled=false;}};
+  const first=g.querySelector('input');if(first)setTimeout(()=>first.focus(),50);}
+function accountBlock(){if(!SB)return'';
+  return USER?`<div class="card stack" style="gap:8px"><span class="tag">Account</span><b style="font-weight:500">${esc(USER.email||'')}</b><p class="muted" style="font-size:12px;margin:0">Your training is saved to your account and syncs across your devices.</p><div class="row" style="gap:8px"><button class="btn ghost small" style="flex:1" id="alogout">Log out</button><button class="btn ghost small" style="flex:1" id="adelete">Delete account</button></div></div>`
+  :`<div class="card stack" style="gap:8px"><span class="tag">Account</span><p class="muted" style="font-size:13px;margin:0">Create an account so your progress is saved and safe if you change phones.</p><div class="row" style="gap:8px"><button class="btn gold small" style="flex:1" id="asignup">Create account</button><button class="btn ghost small" style="flex:1" id="alogin">Log in</button></div></div>`;}
+function bindAccount(s){const q=id=>s.querySelector(id);
+  if(q('#asignup'))q('#asignup').onclick=()=>{closeSheet();authGate('signup');};
+  if(q('#alogin'))q('#alogin').onclick=()=>{closeSheet();authGate('login');};
+  if(q('#alogout'))q('#alogout').onclick=async()=>{clearTimeout(cloudT);try{await SB.auth.signOut();}catch(e){}USER=null;cloudReady=false;closeSheet();toast('Logged out');};
+  if(q('#adelete'))q('#adelete').onclick=()=>openSheet(`<h1 style="font-size:22px">Delete your account?</h1><p class="muted">This permanently deletes your account and everything saved to it. It cannot be undone.</p><button class="btn block" id="adyes" style="background:#b3261e;color:#fff">Delete my account</button><button class="btn ghost block" id="adno">Cancel</button>`,
+    s2=>{s2.querySelector('#adno').onclick=closeSheet;s2.querySelector('#adyes').onclick=async()=>{const {error}=await SB.rpc('delete_my_account');if(error){toast('Could not delete. Please try again');return;}
+      try{await SB.auth.signOut();}catch(e){}USER=null;try{localStorage.removeItem(KEY);localStorage.removeItem('bh_auth_skip');}catch(e){}location.reload();};});}
+async function authInit(){if(!SB)return;
+  SB.auth.onAuthStateChange((ev,session)=>{USER=session?session.user:null;
+    if(ev==='PASSWORD_RECOVERY'){authGate('newpass');return;}
+    if(ev==='SIGNED_IN'&&!cloudReady)setTimeout(cloudLoad,0);
+    if(ev==='SIGNED_OUT'){cloudReady=false;}
+    if(ev==='SIGNED_IN'||ev==='SIGNED_OUT')setTimeout(render,0);});
+  try{const {data}=await SB.auth.getSession();USER=data&&data.session?data.session.user:null;}catch(e){}
+  if(USER)cloudLoad();render();}
+
+// Features that need an account: show an unlock card instead (16 Nov 2026)
+function lockCard(title,why){return `<section class="card stack" style="gap:10px;text-align:center;padding:26px 20px"><span class="tag">Members only</span><h2 style="font-size:20px;margin:0">${title}</h2><p class="muted" style="font-size:13px;margin:0">${why}</p><button class="btn gold block" onclick="authGate('signup')">Create a free account to unlock</button><button class="btn ghost block" onclick="authGate('login')">I already have an account</button></section>`;}
+function needsAccount(fn,title,why){return function(){if(SB&&!USER)return lockCard(title,why);return fn.apply(this,arguments);};}
+viewMedical=needsAccount(viewMedical,'Unlock <em>Health</em>','Create an account to save your health results and food tracking privately, so they are safe on any phone.');
+viewProgress=needsAccount(viewProgress,'Unlock your <em>progress</em>','Create an account to see your strength trends and personal bests over time. Workouts you log now are kept and added once you join.');
+crewCard=needsAccount(crewCard,'Join a <em>crew</em>','Create an account to train as a crew and climb the leaderboard.');
+leaderboardCard=(f=>function(){return (SB&&!USER)?'':f.apply(this,arguments);})(leaderboardCard);
+VIEWS.medical=function(){return viewMedical.apply(this,arguments);};VIEWS.progress=function(){return viewProgress.apply(this,arguments);};
+authInit();
 
 </script>
 
