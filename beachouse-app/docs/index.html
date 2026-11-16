@@ -1141,8 +1141,9 @@ function summarySheet(mins){
    ${prs.length?`<div class="card" style="border-color:rgba(200,179,138,.45)"><h2 style="color:var(--gold)">New personal bests</h2>${prs.map(l=>`<div class="row between"><span>${M(l.m).name}</span><span class="pill pr">${Math.max(...l.sets.map(s=>s[0]))}${M(l.m).unit}</span></div>`).join('')}</div>`:''}
    ${mus.length?`<p class="muted" style="font-size:13px">Worked today: ${mus.join(', ')}</p>`:''}
    <p class="note">Heat or cold at 38° in the next 2 days speeds up your muscle recovery score by up to 25%.</p>
+   <button class="btn gold block" id="sumShare">Share to your Instagram story</button>
    <div class="row"><button class="btn ghost" style="flex:1" id="sumDone">Done</button><button class="btn gold" style="flex:1" id="sumRec">Plan recovery</button></div>`,
-   s=>{s.querySelector('#sumDone').onclick=closeSheet;s.querySelector('#sumRec').onclick=()=>{closeSheet();tab='bath';location.hash=tab;render();window.scrollTo(0,0);};});
+   s=>{s.querySelector('#sumShare').onclick=()=>storyShare({mins,sets,ton,prs:prs.map(l=>({n:M(l.m).name,v:Math.max(...l.sets.map(x=>x[0]))+M(l.m).unit}))});s.querySelector('#sumDone').onclick=closeSheet;s.querySelector('#sumRec').onclick=()=>{closeSheet();tab='bath';location.hash=tab;render();window.scrollTo(0,0);};});
 }
 
 // Guided contrast protocol (Othership / Remedy Place style): heat, cold with breath pacing, rest, three rounds, then it logs itself.
@@ -2049,6 +2050,89 @@ loadEvents();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 setTimeout(()=>{const s=$('#splash');s.style.opacity='0';setTimeout(()=>s.remove(),700);},900);
 })();
+
+// ---------- Ad and organic attribution (added 16 Nov 2026) ----------
+// Fill in the IDs below to switch each platform on. Leave blank to keep it off.
+// metaAppId is the Beachouse App on Meta for Developers (used later for the Instagram Story sticker in the App Store build).
+const TRACK={metaPixel:'',ga4:'',googleAds:'',googleAdsCheckoutLabel:'',tiktokPixel:'',metaAppId:'1949031732729226',host:'https://app.beachousebondi.com',endpoint:'/api/track'};
+const NATIVE=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||'null');}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function channelOf(a){a=a||{};const src=(a.utm_source||'')+' '+(a.referrer||'');
+  if(a.gclid||a.gbraid||a.wbraid)return'google_ads';if(a.ttclid)return'tiktok_ads';if(a.msclkid)return'microsoft_ads';if(a.li_fat_id)return'linkedin_ads';if(a.twclid)return'x_ads';if(a.sccid)return'snapchat_ads';
+  if(/chatgpt|openai/i.test(src))return a.utm_medium&&/cpc|paid|ads/i.test(a.utm_medium)?'chatgpt_ads':'chatgpt';
+  if(a.fbclid)return /instagram|^ig/i.test(a.utm_source||'')?'instagram':'meta';
+  if(a.utm_source)return a.utm_source+(a.utm_medium?'/'+a.utm_medium:'');
+  if(a.referrer){try{const h=new URL(a.referrer).hostname;return /google\.|bing\.|duckduckgo|yahoo/.test(h)?'organic_search':/instagram|facebook|tiktok|t\.co|linkedin/.test(h)?'organic_social':'referral:'+h;}catch(e){}}
+  return'direct';}
+(function captureAttribution(){try{if(!location.protocol.startsWith('http'))return;const q=new URLSearchParams(location.search);const a={};
+  ['gclid','gbraid','wbraid','fbclid','ttclid','msclkid','li_fat_id','twclid','sccid','utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(k=>{const v=q.get(k);if(v)a[k]=v;});
+  if(!Object.keys(a).length&&document.referrer&&!document.referrer.includes(location.hostname))a.referrer=document.referrer;
+  if(Object.keys(a).length){a.at=Date.now();a.channel=channelOf(a);a.landing=location.pathname;lsSet('bh_last_touch',a);if(!lsGet('bh_first_touch'))lsSet('bh_first_touch',a);}
+  if(!lsGet('bh_vid'))lsSet('bh_vid',Date.now().toString(36)+Math.random().toString(36).slice(2,10));}catch(e){}})();
+function attribution(){const l=lsGet('bh_last_touch');return{visitor:lsGet('bh_vid'),channel:(l&&l.channel)||'direct',first:lsGet('bh_first_touch'),last:l};}
+// Third-party pixels load on the web app only. The App Store build skips them so it needs no tracking permission prompt.
+if(!NATIVE){
+  if(TRACK.metaPixel){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',TRACK.metaPixel);fbq('track','PageView');}
+  if(TRACK.ga4||TRACK.googleAds){const g=document.createElement('script');g.async=true;g.src='https://www.googletagmanager.com/gtag/js?id='+(TRACK.ga4||TRACK.googleAds);document.head.appendChild(g);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments);};gtag('js',new Date());if(TRACK.ga4)gtag('config',TRACK.ga4);if(TRACK.googleAds)gtag('config',TRACK.googleAds);}
+  if(TRACK.tiktokPixel){!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=d.createElement("script");o.type="text/javascript",o.async=!0,o.src=r+"?sdkid="+e+"&lib="+t;var a=d.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};ttq.load(TRACK.tiktokPixel);ttq.page();}(window,document,'ttq');}
+}
+// One call sends the event to every platform that is switched on, plus our own log (Beachouse keeps its own copy of every event).
+function track(name,data){data=data||{};const att=attribution();
+  try{if(window.fbq)fbq('track',name,data);}catch(e){}
+  try{if(window.gtag){gtag('event',({InitiateCheckout:'begin_checkout',Purchase:'purchase',Share:'share',Lead:'generate_lead'})[name]||name,data);
+    if(name==='InitiateCheckout'&&TRACK.googleAds&&TRACK.googleAdsCheckoutLabel)gtag('event','conversion',{send_to:TRACK.googleAds+'/'+TRACK.googleAdsCheckoutLabel});}}catch(e){}
+  try{if(window.ttq)ttq.track(name,data);}catch(e){}
+  try{if(!location.protocol.startsWith('http')&&!NATIVE)return;const url=(NATIVE?TRACK.host:'')+TRACK.endpoint;
+    const body=JSON.stringify({event:name,at:new Date().toISOString(),app:NATIVE?'ios':'web',visitor:att.visitor,channel:att.channel,first:att.first,last:att.last,data});
+    if(navigator.sendBeacon&&!NATIVE)navigator.sendBeacon(url,new Blob([body],{type:'application/json'}));else fetch(url,{method:'POST',body,headers:{'content-type':'application/json'},keepalive:true}).catch(()=>{});}catch(e){}}
+// Checkout links (Mindbody memberships, 38° bookings and vouchers): pass the ad details through and log the click.
+const CHECKOUT_RX=/mindbodyonline\.com|try\.be|38thebathhouse\.com|beachousebondi\.com\/memberships/;
+function tagCheckoutUrl(href){let u;try{u=new URL(href,location.href);}catch(e){return href;}if(!CHECKOUT_RX.test(u.href))return href;
+  const l=lsGet('bh_last_touch')||{};['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','fbclid','ttclid'].forEach(k=>{if(l[k]&&!u.searchParams.has(k))u.searchParams.set(k,l[k]);});
+  if(!u.searchParams.has('utm_source')){u.searchParams.set('utm_source','beachouse_app');u.searchParams.set('utm_medium',NATIVE?'ios_app':'web_app');}return u.toString();}
+document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href]');if(!a||!CHECKOUT_RX.test(a.href))return;
+  a.href=tagCheckoutUrl(a.href);const card=a.closest('section');const h=card&&card.querySelector('h2,h3');
+  track('InitiateCheckout',{content_name:((h&&h.textContent)||a.textContent||'').trim().slice(0,80),destination:new URL(a.href).hostname});},true);
+(function(){const o=window.open;window.open=function(u,...r){try{if(u&&CHECKOUT_RX.test(String(u))){u=tagCheckoutUrl(String(u));track('InitiateCheckout',{destination:new URL(u).hostname});}}catch(e){}return o.call(window,u,...r);};})();
+
+// ---------- Share a finished session to Instagram Stories (added 16 Nov 2026) ----------
+// Member picks or takes a photo; we build a 1080x1920 story image with their stats and @beachousebondi on it,
+// copy @beachousebondi for a mention sticker, then open the phone's share sheet (Instagram > Story).
+function storyShare(d){const inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.style.display='none';document.body.appendChild(inp);
+  inp.onchange=async()=>{const f=inp.files&&inp.files[0];inp.remove();if(!f)return;toast('Making your story');
+    try{const blob=await makeStory(f,d);const url=URL.createObjectURL(blob);
+      openSheet(`<h1 style="font-size:22px">Your story</h1><img src="${url}" alt="Story preview" style="width:100%;max-width:280px;display:block;margin:0 auto;border-radius:14px">
+        <p class="muted" style="font-size:13px;text-align:center">Tap Share, then Instagram, then Story. @beachousebondi is copied: paste it into a mention sticker so we can reshare you.</p>
+        <button class="btn gold block" id="storyGo">Share</button><button class="btn ghost block" id="storyNo">Cancel</button>`,
+        s=>{s.querySelector('#storyGo').onclick=()=>shareStory(blob);s.querySelector('#storyNo').onclick=closeSheet;});}
+    catch(err){toast('Could not make the story image');}};
+  inp.click();}
+function loadImg(file){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=URL.createObjectURL(file);});}
+async function makeStory(file,d){const W=1080,H=1920;const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  const img=await loadImg(file);const sc=Math.max(W/img.width,H/img.height);x.drawImage(img,(W-img.width*sc)/2,(H-img.height*sc)/2,img.width*sc,img.height*sc);
+  let g=x.createLinearGradient(0,0,0,520);g.addColorStop(0,'rgba(0,0,0,.65)');g.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=g;x.fillRect(0,0,W,520);
+  g=x.createLinearGradient(0,H-900,0,H);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.45,'rgba(0,0,0,.6)');g.addColorStop(1,'rgba(0,0,0,.88)');x.fillStyle=g;x.fillRect(0,H-900,W,900);
+  const cs=getComputedStyle(document.documentElement);const gold=(cs.getPropertyValue('--gold')||'').trim()||'#c8b38a';const font=getComputedStyle(document.body).fontFamily||'Helvetica, Arial, sans-serif';
+  x.textAlign='center';x.fillStyle='#fff';x.font=`600 54px ${font}`;x.fillText('BEACHOUSE × 38°',W/2,170);
+  x.fillStyle=gold;x.font=`500 34px ${font}`;x.fillText(new Date().toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long'}).toUpperCase(),W/2,228);
+  const stats=[[d.mins||'–','MINUTES'],[d.sets||0,'SETS'],[(+d.ton||0).toFixed(1),'TONNES']];const prs=(d.prs||[]).slice(0,3);
+  let y=H-(prs.length?560+prs.length*70:420);
+  stats.forEach((s,i)=>{const cx=W/6+i*W/3;x.fillStyle='#fff';x.font=`700 110px ${font}`;x.fillText(String(s[0]),cx,y);x.fillStyle='rgba(255,255,255,.75)';x.font=`500 32px ${font}`;x.fillText(s[1],cx,y+52);});
+  if(prs.length){y+=150;x.fillStyle=gold;x.font=`600 40px ${font}`;x.fillText('NEW PERSONAL BEST'+(prs.length>1?'S':''),W/2,y);x.fillStyle='#fff';x.font=`500 44px ${font}`;prs.forEach((p,i)=>x.fillText(`${p.n}  ${p.v}`,W/2,y+70*(i+1)));}
+  x.fillStyle='#fff';x.font=`600 46px ${font}`;x.fillText('@beachousebondi',W/2,H-150);
+  return await new Promise(r=>c.toBlob(r,'image/jpeg',.9));}
+function blobToB64(b){return new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(String(fr.result).split(',')[1]);fr.readAsDataURL(b);});}
+async function shareStory(blob){const tag='@beachousebondi';try{await navigator.clipboard.writeText(tag);}catch(e){}
+  try{const P=window.Capacitor&&window.Capacitor.Plugins;
+    if(NATIVE&&P&&P.Share&&P.Filesystem){const w=await P.Filesystem.writeFile({path:'beachouse-story.jpg',data:await blobToB64(blob),directory:'CACHE'});await P.Share.share({title:'Beachouse',files:[w.uri]});}
+    else{const file=new File([blob],'beachouse-story.jpg',{type:'image/jpeg'});
+      if(navigator.canShare&&navigator.canShare({files:[file]}))await navigator.share({files:[file],title:'Beachouse'});
+      else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='beachouse-story.jpg';document.body.appendChild(a);a.click();a.remove();toast('Saved. Post it from your camera roll');}}
+    closeSheet();track('Share',{method:'instagram_story'});
+    try{if(NATIVE&&P&&P.Haptics)P.Haptics.notification({type:'SUCCESS'});}catch(e){}}
+  catch(err){if(!(err&&err.name==='AbortError'))toast('Sharing did not open. Try again');}}
+
 </script>
 
 </body>

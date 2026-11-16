@@ -25,7 +25,12 @@ workflows:
       - name: App permissions
         script: |
           PLIST=ios/App/App/Info.plist
-          /usr/libexec/PlistBuddy -c "Add :NSCameraUsageDescription string 'Scan the QR code on a machine to log your sets.'" $PLIST || true
+          /usr/libexec/PlistBuddy -c "Add :NSCameraUsageDescription string 'Scan the QR code on a machine to log your sets, and take a photo to share your session to your Instagram story.'" $PLIST || true
+          /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryUsageDescription string 'Pick a photo to share your session to your Instagram story.'" $PLIST || true
+          /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryAddUsageDescription string 'Save your session story image to your photos.'" $PLIST || true
+          /usr/libexec/PlistBuddy -c "Add :FacebookAppID string '1949031732729226'" $PLIST || true
+          /usr/libexec/PlistBuddy -c "Add :LSApplicationQueriesSchemes array" $PLIST || true
+          /usr/libexec/PlistBuddy -c "Add :LSApplicationQueriesSchemes:0 string 'instagram-stories'" $PLIST || true
           /usr/libexec/PlistBuddy -c "Add :ITSAppUsesNonExemptEncryption bool false" $PLIST || true
       - name: Signing
         script: xcode-project use-profiles
